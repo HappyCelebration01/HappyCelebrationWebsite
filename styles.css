@@ -49,7 +49,7 @@ select {
 
 .phone-frame {
   width: min(430px, 100%);
-  min-height: min(900px, calc(100vh - 48px));
+  height: min(900px, calc(100vh - 48px));
   padding: 10px;
   border-radius: 44px;
   background:
@@ -59,7 +59,7 @@ select {
 
 .screen {
   position: relative;
-  min-height: calc(min(900px, 100vh - 48px) - 20px);
+  height: calc(min(900px, 100vh - 48px) - 20px);
   overflow: hidden;
   border-radius: 35px;
   background:
@@ -662,7 +662,10 @@ select {
 }
 
 .family-workspace {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
   gap: 16px;
 }
 
@@ -1231,7 +1234,7 @@ select {
 }
 
 
-@media (max-width: 480px) {
+@media (max-width: 430px) {
   .app-shell {
     padding: 0;
     background: #050507;
@@ -1240,14 +1243,18 @@ select {
   .phone-frame {
     width: 100%;
     min-height: 100vh;
+    height: auto;
     padding: 0;
     border-radius: 0;
     background: transparent;
+    box-shadow: none;
   }
 
   .screen {
     min-height: 100vh;
+    height: auto;
     border-radius: 0;
+    box-shadow: none;
   }
 
   .home-view {
@@ -1435,11 +1442,17 @@ select {
   box-shadow: 0 4px 12px rgba(245, 199, 110, 0.35);
 }
 
-/* Family Editor View */
 .family-editor-view {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.family-preview-view {
+  flex: 1;
+  min-height: 0;
 }
 
 .editor-header {
@@ -2433,7 +2446,7 @@ select {
   cursor: pointer;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 430px) {
   .whatsapp-fab {
     width: 50px;
     height: 50px;
@@ -2467,6 +2480,11 @@ select {
   padding-bottom: 20px;
   min-height: 0 !important;
   height: 100% !important;
+  overflow: hidden !important; /* Hide scrollbar for family tree workspace */
+}
+.screen:has(#panelView.active .family-workspace) .panel-content {
+  height: calc(100% - 70px) !important;
+  position: relative !important;
 }
 
 /* Fix screen height to prevent outer scrolling and maximize vertical space */
@@ -2474,7 +2492,7 @@ select {
   height: calc(min(900px, 100vh - 48px) - 20px);
   overflow: hidden;
 }
-@media (max-width: 480px) {
+@media (max-width: 430px) {
   .screen:has(#panelView.active .family-workspace) {
     height: 100vh;
   }
@@ -2485,7 +2503,7 @@ select {
   height: calc(100vh - 215px) !important;
   max-height: calc(100vh - 215px) !important;
 }
-@media (min-width: 481px) {
+@media (min-width: 431px) {
   .screen:has(#panelView.active .family-workspace) .tree-canvas-wrapper {
     height: calc(min(900px, 100vh - 48px) - 235px) !important;
     max-height: calc(min(900px, 100vh - 48px) - 235px) !important;
@@ -2509,7 +2527,7 @@ select {
   flex-direction: column;
   gap: 12px;
 }
-@media (min-width: 481px) {
+@media (min-width: 431px) {
   .members-list-list {
     max-height: calc(min(900px, 100vh - 48px) - 260px);
   }
@@ -2540,6 +2558,7 @@ body.fullscreen-mode .app-shell {
 body.fullscreen-mode .phone-frame {
   width: 100%;
   min-height: 100vh;
+  height: auto;
   padding: 0;
   border-radius: 0;
   background: transparent;
@@ -2548,6 +2567,7 @@ body.fullscreen-mode .phone-frame {
 
 body.fullscreen-mode .screen {
   min-height: 100vh;
+  height: auto;
   border-radius: 0;
   box-shadow: none;
 }
