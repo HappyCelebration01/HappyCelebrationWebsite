@@ -1370,3 +1370,21 @@ document.addEventListener("keydown", (event) => {
 
 // Initial registration state check on page load
 updateRegistrationState();
+
+// Support URL parameters for fullscreen mode and direct panel opening
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has("fullscreen") || urlParams.has("fullpage")) {
+  document.body.classList.add("fullscreen-mode");
+}
+const initialPanel = urlParams.get("panel");
+if (initialPanel && panels[initialPanel]) {
+  // Wait a moment for templates and DOM to be fully ready
+  window.addEventListener("DOMContentLoaded", () => {
+    openPanel(initialPanel);
+  });
+  // Also run immediately if DOM is already loaded
+  if (document.readyState === "interactive" || document.readyState === "complete") {
+    openPanel(initialPanel);
+  }
+}
+

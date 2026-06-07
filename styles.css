@@ -1231,7 +1231,7 @@ select {
 }
 
 
-@media (max-width: 430px) {
+@media (max-width: 768px) {
   .app-shell {
     padding: 0;
     background: #050507;
@@ -2433,7 +2433,7 @@ select {
   cursor: pointer;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 768px) {
   .whatsapp-fab {
     width: 50px;
     height: 50px;
@@ -2472,7 +2472,7 @@ select {
   height: calc(min(900px, 100vh - 48px) - 20px);
   overflow: hidden;
 }
-@media (max-width: 430px) {
+@media (max-width: 768px) {
   .screen:has(#panelView.active .family-workspace) {
     height: 100vh;
   }
@@ -2483,7 +2483,7 @@ select {
   height: calc(100vh - 215px) !important;
   max-height: calc(100vh - 215px) !important;
 }
-@media (min-width: 431px) {
+@media (min-width: 769px) {
   .screen:has(#panelView.active .family-workspace) .tree-canvas-wrapper {
     height: calc(min(900px, 100vh - 48px) - 235px) !important;
     max-height: calc(min(900px, 100vh - 48px) - 235px) !important;
@@ -2507,7 +2507,7 @@ select {
   flex-direction: column;
   gap: 12px;
 }
-@media (min-width: 431px) {
+@media (min-width: 769px) {
   .members-list-list {
     max-height: calc(min(900px, 100vh - 48px) - 260px);
   }
@@ -2527,6 +2527,40 @@ select {
 }
 .members-list-list::-webkit-scrollbar-thumb:hover {
   background: rgba(245, 199, 110, 0.45);
+}
+
+/* Fullscreen / Full-page URL parameter overrides */
+body.fullscreen-mode .app-shell {
+  padding: 0;
+  background: #050507;
+}
+
+body.fullscreen-mode .phone-frame {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body.fullscreen-mode .screen {
+  min-height: 100vh;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+body.fullscreen-mode .screen:has(#panelView.active .family-workspace) {
+  height: 100vh;
+}
+
+body.fullscreen-mode .screen:has(#panelView.active .family-workspace) .tree-canvas-wrapper {
+  height: calc(100vh - 215px) !important;
+  max-height: calc(100vh - 215px) !important;
+}
+
+body.fullscreen-mode .members-list-list {
+  max-height: calc(100vh - 240px);
 }
 
 
