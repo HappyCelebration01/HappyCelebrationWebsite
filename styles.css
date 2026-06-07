@@ -1809,10 +1809,10 @@ select {
   display: block;
 }
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch.child-left:first-child::before {
-  left: calc(50% - 25px);
+  left: calc(50% - 27px); /* Overlap left vertical line */
 }
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch.child-right:first-child::before {
-  left: calc(50% + 25px);
+  left: calc(50% + 23px); /* Overlap right vertical line */
 }
 
 /* Last child connector horizontal bar */
@@ -1829,10 +1829,10 @@ select {
   display: block;
 }
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch.child-left:last-child::before {
-  right: calc(50% + 25px);
+  right: calc(50% + 23px); /* Overlap left vertical line */
 }
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch.child-right:last-child::before {
-  right: calc(50% - 25px);
+  right: calc(50% - 27px); /* Overlap right vertical line */
 }
 
 /* Middle child connector horizontal bar (spans the entire branch width) */
@@ -1857,7 +1857,7 @@ select {
   content: "";
   position: absolute;
   top: -4px;
-  left: calc(50% - 25px);
+  left: calc(50% - 27px); /* Overlap left vertical line */
   right: 50%;
   height: 0;
   border-top: 4px solid var(--gold-300);
@@ -1870,7 +1870,7 @@ select {
   position: absolute;
   top: -4px;
   left: 50%;
-  right: calc(50% - 25px);
+  right: calc(50% - 27px); /* Overlap right vertical line */
   height: 0;
   border-top: 4px solid var(--gold-300);
   background: none;
