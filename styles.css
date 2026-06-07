@@ -1276,6 +1276,7 @@ select {
     height: auto;
     border-radius: 0;
     box-shadow: none;
+    overflow: visible !important;
   }
 
   .home-view {
@@ -2523,6 +2524,7 @@ select {
 @media (pointer: coarse), (max-width: 430px) {
   .screen:has(#panelView.active .family-workspace) {
     height: 100vh;
+    overflow: hidden !important;
   }
 }
 
