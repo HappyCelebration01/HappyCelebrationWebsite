@@ -1231,7 +1231,7 @@ select {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .app-shell {
     padding: 0;
     background: #050507;
@@ -2433,7 +2433,7 @@ select {
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .whatsapp-fab {
     width: 50px;
     height: 50px;
@@ -2472,7 +2472,7 @@ select {
   height: calc(min(900px, 100vh - 48px) - 20px);
   overflow: hidden;
 }
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .screen:has(#panelView.active .family-workspace) {
     height: 100vh;
   }
@@ -2483,7 +2483,7 @@ select {
   height: calc(100vh - 215px) !important;
   max-height: calc(100vh - 215px) !important;
 }
-@media (min-width: 769px) {
+@media (min-width: 481px) {
   .screen:has(#panelView.active .family-workspace) .tree-canvas-wrapper {
     height: calc(min(900px, 100vh - 48px) - 235px) !important;
     max-height: calc(min(900px, 100vh - 48px) - 235px) !important;
@@ -2507,7 +2507,7 @@ select {
   flex-direction: column;
   gap: 12px;
 }
-@media (min-width: 769px) {
+@media (min-width: 481px) {
   .members-list-list {
     max-height: calc(min(900px, 100vh - 48px) - 260px);
   }
