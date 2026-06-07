@@ -63,9 +63,9 @@ select {
   overflow: hidden;
   border-radius: 35px;
   background:
-    radial-gradient(circle at 86% 22%, rgba(245, 199, 110, 0.12), transparent 8rem),
-    radial-gradient(circle at 14% 33%, rgba(233, 45, 86, 0.12), transparent 9rem),
-    linear-gradient(180deg, rgba(35, 1, 10, 0.96), rgba(12, 0, 4, 0.99) 70%),
+    radial-gradient(circle at 86% 22%, rgba(245, 199, 110, 0.18), transparent 7rem),
+    radial-gradient(circle at 14% 33%, rgba(233, 45, 86, 0.18), transparent 8rem),
+    linear-gradient(180deg, rgba(77, 0, 18, 0.92), rgba(25, 0, 7, 0.98) 64%),
     var(--wine-950);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 0 38px rgba(0, 0, 0, 0.65);
 }
@@ -73,23 +73,16 @@ select {
 .screen::before {
   content: "";
   position: absolute;
-  inset: -150px -150px auto -150px;
-  height: 480px;
+  inset: 118px -50px auto -50px;
+  height: 210px;
   background:
-    radial-gradient(circle at 20% 30%, rgba(229, 39, 78, 0.26), transparent 18rem),
-    radial-gradient(circle at 80% 70%, rgba(245, 199, 110, 0.22), transparent 18rem),
-    radial-gradient(circle at 50% 50%, rgba(130, 4, 33, 0.16), transparent 22rem);
-  filter: blur(45px);
-  opacity: 0.95;
-  animation: glowShift 14s infinite alternate ease-in-out;
-  pointer-events: none;
+    linear-gradient(154deg, transparent 25%, rgba(244, 63, 101, 0.33), transparent 54%),
+    radial-gradient(ellipse at 50% 100%, transparent 28%, rgba(252, 201, 111, 0.62) 29%, transparent 30%),
+    linear-gradient(165deg, transparent 42%, rgba(168, 0, 42, 0.72) 43%, rgba(98, 0, 25, 0.26) 60%, transparent 61%);
+  transform: rotate(-5deg);
+  opacity: 0.9;
   z-index: 1;
-}
-
-@keyframes glowShift {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  50% { transform: translate(25px, -35px) scale(1.15) rotate(12deg); }
-  100% { transform: translate(-15px, 25px) scale(0.95) rotate(-6deg); }
+  pointer-events: none;
 }
 
 .screen::after {
@@ -110,13 +103,13 @@ select {
   z-index: 2;
   display: grid;
   justify-items: center;
-  min-height: 110px;
-  padding-top: 12px;
+  min-height: 202px;
+  padding-top: 18px;
 }
 
 .brand-mark {
-  width: 100px;
-  height: 65px;
+  width: 206px;
+  height: 128px;
   display: grid;
   justify-items: center;
   align-content: center;
@@ -125,8 +118,8 @@ select {
 }
 
 .brand-logo {
-  width: 90px;
-  height: 60px;
+  width: 190px;
+  height: 122px;
   display: block;
   object-fit: contain;
 }
@@ -210,24 +203,14 @@ select {
   letter-spacing: 4px;
   text-indent: 4px;
   font-weight: 700;
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.85);
   text-align: center;
-  background: linear-gradient(135deg, var(--gold-100), var(--gold-300) 40%, #ff416c);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
 }
 
 .sparkle {
   text-align: center;
   color: var(--gold-300);
   margin: 8px 0 12px;
-  animation: twinkle 2s infinite ease-in-out;
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0.4; transform: scale(0.9); text-shadow: 0 0 2px rgba(245, 199, 110, 0.2); }
-  50% { opacity: 1; transform: scale(1.15); text-shadow: 0 0 14px rgba(245, 199, 110, 0.95); }
 }
 
 .menu-grid {
@@ -238,183 +221,28 @@ select {
 
 .menu-card {
   height: 125px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(229, 39, 78, 0.84);
   border-radius: 18px;
   color: #fff;
-  background: rgba(30, 4, 12, 0.42);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 
-    0 12px 24px rgba(0, 0, 0, 0.4), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(145deg, rgba(130, 4, 33, 0.54), rgba(59, 0, 15, 0.78)),
+    rgba(75, 0, 19, 0.56);
+  box-shadow: 0 16px 22px rgba(0, 0, 0, 0.3), inset 0 0 24px rgba(255, 78, 117, 0.04);
   display: grid;
   place-items: center;
   align-content: center;
   gap: 8px;
   padding: 12px 10px;
   cursor: pointer;
-  transition: 
-    transform 280ms cubic-bezier(0.16, 1, 0.3, 1), 
-    border-color 280ms ease, 
-    box-shadow 280ms ease,
-    background-color 280ms ease;
-  position: relative;
-  overflow: hidden;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
-.menu-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.18),
-    transparent
-  );
-  transform: skewX(-25deg);
-  transition: 0.75s;
-  pointer-events: none;
-}
-
-.menu-card:hover::before {
-  left: 150%;
-}
-
-/* Unique color definitions for each panel card */
-
-/* 1. Book Event (Sunset Red/Orange Glow) */
-.menu-card[data-panel="book"] {
-  border-color: rgba(255, 75, 43, 0.35);
-  background: rgba(255, 75, 43, 0.08);
-}
-.menu-card[data-panel="book"]:hover,
-.menu-card[data-panel="book"]:focus-visible {
-  border-color: #ff4b2b;
-  box-shadow: 
-    0 16px 32px rgba(255, 75, 43, 0.25), 
-    0 0 15px rgba(255, 75, 43, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2);
-  background: rgba(255, 75, 43, 0.16);
-  transform: translateY(-4px) scale(1.02);
-  outline: 0;
-}
-.menu-card[data-panel="book"] .icon {
-  background: linear-gradient(135deg, #ff8c00, #ff4b2b);
-}
-
-/* 2. Gallery (Vibrant Purple/Magenta Glow) */
-.menu-card[data-panel="gallery"] {
-  border-color: rgba(218, 34, 255, 0.35);
-  background: rgba(218, 34, 255, 0.08);
-}
-.menu-card[data-panel="gallery"]:hover,
-.menu-card[data-panel="gallery"]:focus-visible {
-  border-color: #da22ff;
-  box-shadow: 
-    0 16px 32px rgba(218, 34, 255, 0.25), 
-    0 0 15px rgba(218, 34, 255, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2);
-  background: rgba(218, 34, 255, 0.16);
-  transform: translateY(-4px) scale(1.02);
-  outline: 0;
-}
-.menu-card[data-panel="gallery"] .icon {
-  background: linear-gradient(135deg, #f953c6, #b91d73);
-}
-
-/* 3. About Us (Fresh Teal/Emerald Glow) */
-.menu-card[data-panel="about"] {
-  border-color: rgba(56, 239, 125, 0.35);
-  background: rgba(56, 239, 125, 0.08);
-}
-.menu-card[data-panel="about"]:hover,
-.menu-card[data-panel="about"]:focus-visible {
-  border-color: #38ef7d;
-  box-shadow: 
-    0 16px 32px rgba(56, 239, 125, 0.25), 
-    0 0 15px rgba(56, 239, 125, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2);
-  background: rgba(56, 239, 125, 0.16);
-  transform: translateY(-4px) scale(1.02);
-  outline: 0;
-}
-.menu-card[data-panel="about"] .icon {
-  background: linear-gradient(135deg, #11998e, #38ef7d);
-}
-
-/* 4. Family Tree (Electric Blue/Indigo Glow) */
-.menu-card[data-panel="family"] {
-  border-color: rgba(0, 198, 255, 0.35);
-  background: rgba(0, 198, 255, 0.08);
-}
-.menu-card[data-panel="family"]:hover,
-.menu-card[data-panel="family"]:focus-visible {
-  border-color: #00c6ff;
-  box-shadow: 
-    0 16px 32px rgba(0, 198, 255, 0.25), 
-    0 0 15px rgba(0, 198, 255, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2);
-  background: rgba(0, 198, 255, 0.16);
-  transform: translateY(-4px) scale(1.02);
-  outline: 0;
-}
-.menu-card[data-panel="family"] .icon {
-  background: linear-gradient(135deg, #00c6ff, #0072ff);
-}
-
-/* 5. Register (Vibrant Coral/Rose Glow) */
-.menu-card[data-panel="register"] {
-  border-color: rgba(248, 87, 166, 0.35);
-  background: rgba(248, 87, 166, 0.08);
-}
-.menu-card[data-panel="register"]:hover,
-.menu-card[data-panel="register"]:focus-visible {
-  border-color: #f857a6;
-  box-shadow: 
-    0 16px 32px rgba(248, 87, 166, 0.25), 
-    0 0 15px rgba(248, 87, 166, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2);
-  background: rgba(248, 87, 166, 0.16);
-  transform: translateY(-4px) scale(1.02);
-  outline: 0;
-}
-.menu-card[data-panel="register"] .icon {
-  background: linear-gradient(135deg, #ff5e62, #ff9966);
-}
-
-/* 6. Contact Us (Metallic Gold/Amber Glow) */
-.menu-card[data-panel="contact"] {
-  border-color: rgba(245, 199, 110, 0.35);
-  background: rgba(245, 199, 110, 0.08);
-}
-.menu-card[data-panel="contact"]:hover,
-.menu-card[data-panel="contact"]:focus-visible {
+.menu-card:hover,
+.menu-card:focus-visible {
   border-color: var(--gold-300);
-  box-shadow: 
-    0 16px 32px rgba(245, 199, 110, 0.25), 
-    0 0 15px rgba(245, 199, 110, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2);
-  background: rgba(245, 199, 110, 0.16);
-  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 18px 28px rgba(0, 0, 0, 0.38), 0 0 0 3px rgba(245, 199, 110, 0.18);
+  transform: translateY(-3px);
   outline: 0;
-}
-.menu-card[data-panel="contact"] .icon {
-  background: linear-gradient(135deg, #ffe259, #ffa751);
-}
-
-/* Icon micro-interactions */
-.menu-card:hover .icon {
-  animation: iconBounce 0.65s ease-out;
-}
-
-@keyframes iconBounce {
-  0%, 100% { transform: translateY(0); }
-  45% { transform: translateY(-7px) scale(1.08); }
-  75% { transform: translateY(2px) scale(0.96); }
 }
 
 .menu-card span:last-of-type {
@@ -422,7 +250,6 @@ select {
   font-weight: 700;
   text-align: center;
   line-height: 1.25;
-  z-index: 2;
 }
 
 .menu-card i {
@@ -431,7 +258,6 @@ select {
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--gold-300), transparent);
   margin-top: 2px;
-  z-index: 2;
 }
 
 .icon {
