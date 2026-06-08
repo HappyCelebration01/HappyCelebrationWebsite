@@ -1,4 +1,22 @@
 :root {
+  /* Wine Red (default) */
+  --screen-bg: #150006;
+  --screen-radial-1: rgba(245, 199, 110, 0.18);
+  --screen-radial-2: rgba(233, 45, 86, 0.18);
+  --screen-linear: linear-gradient(180deg, rgba(77, 0, 18, 0.92), rgba(25, 0, 7, 0.98) 64%);
+  
+  --diagonal-glow-1: rgba(244, 63, 101, 0.33);
+  --diagonal-glow-2: rgba(168, 0, 42, 0.72);
+  --diagonal-glow-3: rgba(98, 0, 25, 0.26);
+  
+  --card-border: rgba(229, 39, 78, 0.84);
+  --card-bg-gradient: linear-gradient(145deg, rgba(130, 4, 33, 0.54), rgba(59, 0, 15, 0.78));
+  --card-bg-solid: rgba(75, 0, 19, 0.56);
+  --card-shadow-inner: rgba(255, 78, 117, 0.04);
+  
+  --dropdown-bg: rgba(30, 4, 12, 0.95);
+  --dropdown-border: rgba(255, 255, 255, 0.15);
+
   --wine-950: #150006;
   --wine-900: #25000a;
   --wine-800: #430014;
@@ -10,6 +28,70 @@
   --ink: #ffffff;
   --soft: rgba(255, 255, 255, 0.78);
   --shadow: rgba(0, 0, 0, 0.48);
+}
+
+body.theme-emerald {
+  --screen-bg: #03120a;
+  --screen-radial-1: rgba(245, 199, 110, 0.15);
+  --screen-radial-2: rgba(10, 154, 79, 0.15);
+  --screen-linear: linear-gradient(180deg, rgba(8, 60, 33, 0.92), rgba(2, 20, 11, 0.98) 64%);
+  --diagonal-glow-1: rgba(14, 172, 98, 0.33);
+  --diagonal-glow-2: rgba(10, 154, 79, 0.72);
+  --diagonal-glow-3: rgba(8, 60, 33, 0.26);
+  --card-border: rgba(10, 154, 79, 0.84);
+  --card-bg-gradient: linear-gradient(145deg, rgba(8, 60, 33, 0.54), rgba(4, 20, 11, 0.78));
+  --card-bg-solid: rgba(4, 30, 16, 0.56);
+  --card-shadow-inner: rgba(10, 154, 79, 0.04);
+  --dropdown-bg: rgba(6, 30, 16, 0.95);
+  --dropdown-border: rgba(255, 255, 255, 0.15);
+}
+
+body.theme-sapphire {
+  --screen-bg: #020c1b;
+  --screen-radial-1: rgba(245, 199, 110, 0.15);
+  --screen-radial-2: rgba(29, 114, 185, 0.15);
+  --screen-linear: linear-gradient(180deg, rgba(8, 41, 85, 0.92), rgba(2, 12, 28, 0.98) 64%);
+  --diagonal-glow-1: rgba(29, 134, 229, 0.33);
+  --diagonal-glow-2: rgba(29, 114, 185, 0.72);
+  --diagonal-glow-3: rgba(8, 41, 85, 0.26);
+  --card-border: rgba(29, 114, 185, 0.84);
+  --card-bg-gradient: linear-gradient(145deg, rgba(8, 41, 85, 0.54), rgba(2, 12, 28, 0.78));
+  --card-bg-solid: rgba(4, 20, 51, 0.56);
+  --card-shadow-inner: rgba(29, 114, 185, 0.04);
+  --dropdown-bg: rgba(4, 20, 51, 0.95);
+  --dropdown-border: rgba(255, 255, 255, 0.15);
+}
+
+body.theme-violet {
+  --screen-bg: #0c0216;
+  --screen-radial-1: rgba(245, 199, 110, 0.15);
+  --screen-radial-2: rgba(139, 22, 180, 0.15);
+  --screen-linear: linear-gradient(180deg, rgba(42, 8, 69, 0.92), rgba(10, 2, 18, 0.98) 64%);
+  --diagonal-glow-1: rgba(172, 14, 229, 0.33);
+  --diagonal-glow-2: rgba(139, 22, 180, 0.72);
+  --diagonal-glow-3: rgba(42, 8, 69, 0.26);
+  --card-border: rgba(139, 22, 180, 0.84);
+  --card-bg-gradient: linear-gradient(145deg, rgba(42, 8, 69, 0.54), rgba(10, 2, 18, 0.78));
+  --card-bg-solid: rgba(24, 6, 40, 0.56);
+  --card-shadow-inner: rgba(139, 22, 180, 0.04);
+  --dropdown-bg: rgba(24, 6, 40, 0.95);
+  --dropdown-border: rgba(255, 255, 255, 0.15);
+}
+
+body.theme-luxury {
+  --screen-bg: #09090b;
+  --screen-radial-1: rgba(255, 255, 255, 0.05);
+  --screen-radial-2: rgba(201, 130, 45, 0.15);
+  --screen-linear: linear-gradient(180deg, rgba(28, 28, 31, 0.92), rgba(10, 10, 11, 0.98) 64%);
+  --diagonal-glow-1: rgba(245, 199, 110, 0.2);
+  --diagonal-glow-2: rgba(201, 130, 45, 0.5);
+  --diagonal-glow-3: rgba(28, 28, 31, 0.26);
+  --card-border: rgba(201, 130, 45, 0.84);
+  --card-bg-gradient: linear-gradient(145deg, rgba(28, 28, 31, 0.54), rgba(10, 10, 11, 0.78));
+  --card-bg-solid: rgba(18, 18, 20, 0.56);
+  --card-shadow-inner: rgba(201, 130, 45, 0.04);
+  --dropdown-bg: rgba(18, 18, 20, 0.95);
+  --dropdown-border: rgba(255, 255, 255, 0.15);
 }
 
 * {
@@ -63,10 +145,10 @@ select {
   overflow: hidden;
   border-radius: 35px;
   background:
-    radial-gradient(circle at 86% 22%, rgba(245, 199, 110, 0.18), transparent 7rem),
-    radial-gradient(circle at 14% 33%, rgba(233, 45, 86, 0.18), transparent 8rem),
-    linear-gradient(180deg, rgba(77, 0, 18, 0.92), rgba(25, 0, 7, 0.98) 64%),
-    var(--wine-950);
+    radial-gradient(circle at 86% 22%, var(--screen-radial-1), transparent 7rem),
+    radial-gradient(circle at 14% 33%, var(--screen-radial-2), transparent 8rem),
+    var(--screen-linear),
+    var(--screen-bg);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 0 38px rgba(0, 0, 0, 0.65);
 }
 
@@ -76,9 +158,9 @@ select {
   inset: 118px -50px auto -50px;
   height: 210px;
   background:
-    linear-gradient(154deg, transparent 25%, rgba(244, 63, 101, 0.33), transparent 54%),
+    linear-gradient(154deg, transparent 25%, var(--diagonal-glow-1), transparent 54%),
     radial-gradient(ellipse at 50% 100%, transparent 28%, rgba(252, 201, 111, 0.62) 29%, transparent 30%),
-    linear-gradient(165deg, transparent 42%, rgba(168, 0, 42, 0.72) 43%, rgba(98, 0, 25, 0.26) 60%, transparent 61%);
+    linear-gradient(165deg, transparent 42%, var(--diagonal-glow-2), var(--diagonal-glow-3) 60%, transparent 61%);
   transform: rotate(-5deg);
   opacity: 0.9;
   z-index: 1;
@@ -221,13 +303,11 @@ select {
 
 .menu-card {
   height: 125px;
-  border: 1px solid rgba(229, 39, 78, 0.84);
+  border: 1px solid var(--card-border);
   border-radius: 18px;
   color: #fff;
-  background:
-    linear-gradient(145deg, rgba(130, 4, 33, 0.54), rgba(59, 0, 15, 0.78)),
-    rgba(75, 0, 19, 0.56);
-  box-shadow: 0 16px 22px rgba(0, 0, 0, 0.3), inset 0 0 24px rgba(255, 78, 117, 0.04);
+  background: var(--card-bg-gradient), var(--card-bg-solid);
+  box-shadow: 0 16px 22px rgba(0, 0, 0, 0.3), inset 0 0 24px var(--card-shadow-inner);
   display: grid;
   place-items: center;
   align-content: center;
@@ -360,10 +440,10 @@ select {
 .story-card,
 .family-board,
 .contact-list {
-  border: 1px solid rgba(178, 31, 63, 0.84);
+  border: 1px solid var(--card-border);
   border-radius: 18px;
-  background: rgba(48, 0, 13, 0.72);
-  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.32);
+  background: var(--card-bg-gradient), var(--card-bg-solid);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.32), inset 0 0 24px var(--card-shadow-inner);
 }
 
 .lux-form {
@@ -2436,6 +2516,109 @@ body.fullscreen-mode .screen:has(#panelView.active .family-workspace) .tree-canv
 body.fullscreen-mode .members-list-list {
   max-height: calc(100vh - 240px);
 }
+
+/* Theme Settings Toggle Button */
+.theme-settings-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.theme-settings-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.theme-picker-icon {
+  width: 18px;
+  height: 18px;
+  background: var(--gold-300);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 2C15.43 2 2 15.43 2 32s13.43 30 30 30c2.81 0 5.15-2.22 5.15-5 0-1.12-.41-2.16-1.09-3-.7-.86-1.12-1.97-1.12-3.17 0-2.81 2.22-5.15 5-5.15h5.22c9.2 0 16.84-7.64 16.84-16.84C62 14.34 48.54 2 32 2ZM15.5 35a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Zm7.5-12a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Zm16 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Zm9.5 12a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 2C15.43 2 2 15.43 2 32s13.43 30 30 30c2.81 0 5.15-2.22 5.15-5 0-1.12-.41-2.16-1.09-3-.7-.86-1.12-1.97-1.12-3.17 0-2.81 2.22-5.15 5-5.15h5.22c9.2 0 16.84-7.64 16.84-16.84C62 14.34 48.54 2 32 2ZM15.5 35a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Zm7.5-12a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Zm16 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Zm9.5 12a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform 0.4s ease;
+}
+
+.theme-settings-btn:hover .theme-picker-icon {
+  transform: rotate(30deg);
+}
+
+/* Theme Dropdown */
+.theme-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 18px;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--dropdown-border);
+  border-radius: 16px;
+  padding: 12px;
+  width: 180px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.theme-dropdown-title {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--soft);
+  margin-bottom: 8px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.theme-options {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.theme-opt {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.theme-opt:hover {
+  transform: scale(1.15);
+}
+
+.theme-opt.active {
+  border-color: #fff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+/* Theme color swatches */
+.theme-opt.wine { background: #b21f3f !important; }
+.theme-opt.emerald { background: #168b4f !important; }
+.theme-opt.sapphire { background: #1d72b9 !important; }
+.theme-opt.violet { background: #8b16b4 !important; }
+.theme-opt.luxury { background: #c9822d !important; }
 
 
 

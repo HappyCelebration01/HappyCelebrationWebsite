@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=48">
+    <link rel="stylesheet" href="styles.css?v=49">
   </head>
   <body>
     <main class="app-shell" aria-label="Happy Celebration application">
@@ -16,6 +16,20 @@
           <header class="hero">
             <div class="brand-mark" aria-label="Happy Celebration">
               <img class="brand-logo" src="assets/hc-logo-mark.png" alt="Happy Celebration">
+            </div>
+            <!-- Theme Settings Toggle -->
+            <button class="theme-settings-btn" id="themeSettingsBtn" aria-label="Change color theme" type="button">
+              <span class="theme-picker-icon"></span>
+            </button>
+            <div class="theme-dropdown" id="themeDropdown" style="display: none;">
+              <span class="theme-dropdown-title">Choose Color</span>
+              <div class="theme-options">
+                <button class="theme-opt wine active" data-theme="wine" title="Wine Red" type="button"></button>
+                <button class="theme-opt emerald" data-theme="emerald" title="Emerald Green" type="button"></button>
+                <button class="theme-opt sapphire" data-theme="sapphire" title="Sapphire Blue" type="button"></button>
+                <button class="theme-opt violet" data-theme="violet" title="Midnight Violet" type="button"></button>
+                <button class="theme-opt luxury" data-theme="luxury" title="Black & Gold" type="button"></button>
+              </div>
             </div>
           </header>
 
@@ -308,6 +322,6 @@
       </div>
     </template>
 
-    <script src="script.js?v=48"></script>
+    <script src="script.js?v=49"></script>
   </body>
 </html>

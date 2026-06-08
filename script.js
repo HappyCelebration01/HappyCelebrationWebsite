@@ -1393,3 +1393,52 @@ if (initialPanel && panels[initialPanel]) {
   }
 }
 
+// Theme Selection Logic
+document.addEventListener("DOMContentLoaded", () => {
+  const themeSettingsBtn = document.getElementById("themeSettingsBtn");
+  const themeDropdown = document.getElementById("themeDropdown");
+  
+  if (themeSettingsBtn && themeDropdown) {
+    themeSettingsBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      themeDropdown.style.display = themeDropdown.style.display === "none" ? "block" : "none";
+    });
+    
+    document.addEventListener("click", () => {
+      themeDropdown.style.display = "none";
+    });
+    
+    themeDropdown.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+    
+    const themeOpts = themeDropdown.querySelectorAll(".theme-opt");
+    const savedTheme = localStorage.getItem("happyCelebrationTheme") || "wine";
+    
+    // Apply saved theme immediately
+    applyTheme(savedTheme);
+    
+    themeOpts.forEach(opt => {
+      opt.addEventListener("click", () => {
+        const selectedTheme = opt.dataset.theme;
+        applyTheme(selectedTheme);
+      });
+    });
+    
+    function applyTheme(themeName) {
+      document.body.classList.remove("theme-wine", "theme-emerald", "theme-sapphire", "theme-violet", "theme-luxury");
+      document.body.classList.add(`theme-${themeName}`);
+      
+      themeOpts.forEach(opt => {
+        if (opt.dataset.theme === themeName) {
+          opt.classList.add("active");
+        } else {
+          opt.classList.remove("active");
+        }
+      });
+      
+      localStorage.setItem("happyCelebrationTheme", themeName);
+    }
+  }
+});
+
