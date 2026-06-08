@@ -291,6 +291,7 @@ const panels = {
         const treeCanvasWrapper = root.querySelector("#treeCanvasWrapper");
         const clearTreeBtn = root.querySelector("#clearTreeBtn");
         const clearTreeZoomBtn = root.querySelector("#clearTreeZoomBtn");
+        const exportCsvBtn = root.querySelector("#exportCsvBtn");
         const zoomLabel = root.querySelector("#zoomLabel");
         const zoomInBtn = root.querySelector("#zoomInBtn");
         const zoomOutBtn = root.querySelector("#zoomOutBtn");
@@ -735,6 +736,48 @@ const panels = {
 
         clearTreeBtn?.addEventListener("click", handleClearTree);
         clearTreeZoomBtn?.addEventListener("click", handleClearTree);
+
+        if (exportCsvBtn) {
+          exportCsvBtn.addEventListener("click", () => {
+            if (!members || members.length === 0) {
+              alert("No family members found to export!");
+              return;
+            }
+            
+            // CSV Headers
+            const headers = ["Member ID", "Name", "Gender", "Relation", "Spouse Name", "Parent Name", "Birth Date", "Anniversary Date"];
+            
+            const rows = members.map(m => {
+              const spouse = members.find(s => s.id === m.spouseId);
+              const parent = members.find(p => p.id === m.parentId);
+              
+              return [
+                m.id,
+                m.name,
+                m.gender || "",
+                m.relation || "",
+                spouse ? spouse.name : "",
+                parent ? parent.name : "",
+                m.birthDate || "",
+                m.anniversaryDate || ""
+              ].map(val => `"${String(val).replace(/"/g, '""')}"`); // Escape quotes and wrap in quotes for CSV safety
+            });
+            
+            // Add BOM (\uFEFF) for Excel UTF-8 compatibility
+            const csvContent = "\uFEFF" + [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
+            
+            // Trigger browser download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "happy_celebration_family_tree.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          });
+        }
 
         // Form submit handler
         modalForm.addEventListener("submit", (e) => {
