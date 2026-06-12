@@ -1491,15 +1491,15 @@ const panelTitle = document.querySelector("#panelTitle");
 const panelKicker = document.querySelector("#panelKicker");
 const panelContent = document.querySelector("#panelContent");
 const backButton = document.querySelector("#backButton");
-
 function openPanel(name) {
   const panel = panels[name];
   if (!panel) return;
 
-  // Clear floating celebration container to immediately remove active bubbles
+  // Clear floating celebration container to immediately remove active bubbles and hide it
   const container = document.getElementById("floatingCelebrationContainer");
   if (container) {
     container.innerHTML = "";
+    container.style.display = "none";
   }
 
   const template = document.querySelector(`#${panel.template}`);
@@ -1514,6 +1514,12 @@ function openPanel(name) {
 function closePanel() {
   panelView.classList.remove("active");
   homeView.classList.add("active");
+
+  // Show floating celebration container again when returning to home view
+  const container = document.getElementById("floatingCelebrationContainer");
+  if (container) {
+    container.style.display = "block";
+  }
 }
 
 document.querySelectorAll("[data-panel]").forEach((button) => {
