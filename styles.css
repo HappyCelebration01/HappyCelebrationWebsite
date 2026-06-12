@@ -1820,10 +1820,10 @@ select {
 .tree-canvas-wrapper.circular-mode .tree-node-card.circular:not(.rel-grandparent)::before {
   content: "";
   position: absolute;
-  top: -26px; /* drop line goes up to overlap the horizontal connector by 2px */
+  top: -24px; /* align exactly with horizontal connector */
   left: 50%;
   width: 4px;
-  height: 26px;
+  height: 24px;
   background: var(--gold-300);
   transform: translateX(-50%);
   z-index: 12;
@@ -1833,14 +1833,14 @@ select {
 /* Couple cards - descendant left drop line */
 .tree-canvas-wrapper.circular-mode .tree-node-card.circular.couple.descendant-left:not(.rel-grandparent)::before {
   left: 30px;
-  top: -26px;
+  top: -24px;
   transform: translateX(-50%);
 }
 
 /* Couple cards - descendant right drop line */
 .tree-canvas-wrapper.circular-mode .tree-node-card.circular.couple.descendant-right:not(.rel-grandparent)::before {
   left: 80px;
-  top: -26px;
+  top: -24px;
   transform: translateX(-50%);
 }
 
