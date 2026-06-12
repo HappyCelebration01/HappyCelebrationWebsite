@@ -232,20 +232,76 @@ const panels = {
       const form = root.querySelector("#bookingForm");
       const note = root.querySelector("#bookingNote");
 
+      const monthSel = root.querySelector("#bookingMonth");
+      const daySel = root.querySelector("#bookingDay");
+      const yearSel = root.querySelector("#bookingYear");
+
+      // Populate Days (1 to 31)
+      if (daySel) {
+        for (let i = 1; i <= 31; i++) {
+          const val = String(i).padStart(2, '0');
+          const opt = document.createElement("option");
+          opt.value = val;
+          opt.textContent = i;
+          daySel.appendChild(opt);
+        }
+      }
+
+      // Populate Years (current year to current year + 5)
+      if (yearSel) {
+        const currentYear = new Date().getFullYear();
+        for (let i = currentYear; i <= currentYear + 5; i++) {
+          const opt = document.createElement("option");
+          opt.value = i;
+          opt.textContent = i;
+          yearSel.appendChild(opt);
+        }
+      }
+
       // Auto-prefill fields if shortcuts were clicked
       if (window.prefilledBooking) {
         if (form.name) form.name.value = window.prefilledBooking.name || "";
         if (form.eventType) form.eventType.value = window.prefilledBooking.eventType || "Birthday";
-        if (form.date) form.date.value = window.prefilledBooking.date || "";
+        if (window.prefilledBooking.date && monthSel && daySel && yearSel) {
+          const parts = window.prefilledBooking.date.split("/");
+          if (parts.length === 3) {
+            monthSel.value = parts[0];
+            daySel.value = parts[1];
+            yearSel.value = parts[2];
+          }
+        }
         if (form.guests) form.guests.value = 100;
         window.prefilledBooking = null; // Clear prefill
       }
 
       form.addEventListener("submit", (event) => {
         event.preventDefault();
+        
+        // Assemble date string as MM/DD/YYYY
+        const m = monthSel ? monthSel.value : "";
+        const d = daySel ? daySel.value : "";
+        const y = yearSel ? yearSel.value : "";
+        
+        if (!m || !d || !y) {
+          note.textContent = "Please select a valid Month, Day, and Year.";
+          note.style.color = "#ff9aa2";
+          return;
+        }
+
+        const dateString = `${m}/${d}/${y}`;
         const data = Object.fromEntries(new FormData(form));
+        
+        // Remove individual selector fields from saved form payload
+        delete data.bookingMonth;
+        delete data.bookingDay;
+        delete data.bookingYear;
+        
+        // Attach the composite date string
+        data.date = dateString;
+
         localStorage.setItem("happyCelebrationBooking", JSON.stringify(data));
         note.textContent = "Booking request saved. We will contact you shortly.";
+        note.style.color = "";
       });
     },
   },
@@ -317,10 +373,50 @@ const panels = {
         const modalAddChildRowBtn = root.querySelector("#modalAddChildRowBtn");
         const modalChildrenList = root.querySelector("#modalChildrenList");
 
-        // Modal Dates fields
-        const modalBirthDate = root.querySelector("#modalBirthDate");
+        // Modal Dates fields (Dropdown selects)
+        const modalBirthMonth = root.querySelector("#modalBirthMonth");
+        const modalBirthDay = root.querySelector("#modalBirthDay");
+        const modalBirthYear = root.querySelector("#modalBirthYear");
+
         const modalAnniversaryLabel = root.querySelector("#modalAnniversaryLabel");
-        const modalAnniversaryDate = root.querySelector("#modalAnniversaryDate");
+        const modalAnniversaryMonth = root.querySelector("#modalAnniversaryMonth");
+        const modalAnniversaryDay = root.querySelector("#modalAnniversaryDay");
+        const modalAnniversaryYear = root.querySelector("#modalAnniversaryYear");
+
+        // Populate modal Days selects (1 to 31)
+        [modalBirthDay, modalAnniversaryDay].forEach(daySel => {
+          if (daySel) {
+            for (let i = 1; i <= 31; i++) {
+              const val = String(i).padStart(2, '0');
+              const opt = document.createElement("option");
+              opt.value = val;
+              opt.textContent = i;
+              daySel.appendChild(opt);
+            }
+          }
+        });
+
+        // Populate modal Birth Years (current down to 1900)
+        if (modalBirthYear) {
+          const currentYear = new Date().getFullYear();
+          for (let i = currentYear; i >= 1900; i--) {
+            const opt = document.createElement("option");
+            opt.value = i;
+            opt.textContent = i;
+            modalBirthYear.appendChild(opt);
+          }
+        }
+
+        // Populate modal Anniversary Years (current down to 1940)
+        if (modalAnniversaryYear) {
+          const currentYear = new Date().getFullYear();
+          for (let i = currentYear; i >= 1940; i--) {
+            const opt = document.createElement("option");
+            opt.value = i;
+            opt.textContent = i;
+            modalAnniversaryYear.appendChild(opt);
+          }
+        }
         
         const modalSubmitBtn = root.querySelector("#modalSubmitBtn");
         const modalCancelBtn = root.querySelector("#modalCancelBtn");
@@ -503,6 +599,33 @@ const panels = {
 
 
 
+        function setDropdownDate(daySel, monthSel, yearSel, usDate) {
+          if (!usDate) {
+            if (daySel) daySel.value = "";
+            if (monthSel) monthSel.value = "";
+            if (yearSel) yearSel.value = "";
+            return;
+          }
+          const parts = usDate.split("/");
+          if (parts.length === 3) {
+            if (monthSel) monthSel.value = parts[0];
+            if (daySel) daySel.value = parts[1];
+            if (yearSel) yearSel.value = parts[2];
+          } else {
+            if (daySel) daySel.value = "";
+            if (monthSel) monthSel.value = "";
+            if (yearSel) yearSel.value = "";
+          }
+        }
+
+        function getDropdownDate(daySel, monthSel, yearSel) {
+          const d = daySel ? daySel.value : "";
+          const m = monthSel ? monthSel.value : "";
+          const y = yearSel ? yearSel.value : "";
+          if (!d || !m || !y) return "";
+          return `${m}/${d}/${y}`;
+        }
+
         function openModal(actionType, targetId = "") {
           modalActionType.value = actionType;
           modalTargetId.value = targetId;
@@ -511,11 +634,9 @@ const panels = {
           modalSpouseName.value = "";
           modalChildrenList.innerHTML = "";
           
-          modalBirthDate.value = "";
-          modalAnniversaryDate.value = "";
+          setDropdownDate(modalBirthDay, modalBirthMonth, modalBirthYear, "");
+          setDropdownDate(modalAnniversaryDay, modalAnniversaryMonth, modalAnniversaryYear, "");
           modalAnniversaryLabel.style.display = "none";
-
-
           
           if (actionType === "add-root") {
             modalTitle.textContent = "Add Root Member";
@@ -536,14 +657,14 @@ const panels = {
               modalSpouseContainer.style.display = "block";
               
               // Load dates
-              modalBirthDate.value = toISOFormat(member.birthDate || "");
+              setDropdownDate(modalBirthDay, modalBirthMonth, modalBirthYear, member.birthDate || "");
               
               if (member.spouseId) {
                 modalAnniversaryLabel.style.display = "block";
                 const spouse = members.find(m => m.id === member.spouseId);
                 if (spouse) {
                   modalSpouseName.value = spouse.name;
-                  modalAnniversaryDate.value = toISOFormat(member.anniversaryDate || spouse.anniversaryDate || "");
+                  setDropdownDate(modalAnniversaryDay, modalAnniversaryMonth, modalAnniversaryYear, member.anniversaryDate || spouse.anniversaryDate || "");
                 }
               } else {
                 // If grandparent or parent but doesn't have spouse yet, we allow adding spouse name
@@ -679,17 +800,7 @@ const panels = {
 
         modalCancelBtn.addEventListener("click", closeModal);
 
-        // Open calendar datepicker dropdown when clicking anywhere inside the date input fields
-        if (modalBirthDate) {
-          modalBirthDate.addEventListener("click", () => {
-            try { modalBirthDate.showPicker(); } catch (e) {}
-          });
-        }
-        if (modalAnniversaryDate) {
-          modalAnniversaryDate.addEventListener("click", () => {
-            try { modalAnniversaryDate.showPicker(); } catch (e) {}
-          });
-        }
+
 
         function deleteMemberTree(targetId) {
           members = members.filter(m => m.id !== targetId);
@@ -850,8 +961,8 @@ const panels = {
               member.gender = gender;
               
               // Save dates
-              member.birthDate = toUSFormat(modalBirthDate.value.trim());
-              member.anniversaryDate = toUSFormat(modalAnniversaryDate.value.trim());
+              member.birthDate = getDropdownDate(modalBirthDay, modalBirthMonth, modalBirthYear);
+              member.anniversaryDate = getDropdownDate(modalAnniversaryDay, modalAnniversaryMonth, modalAnniversaryYear);
               
               // Process spouse
               const spouseNameValue = modalSpouseName.value.trim();

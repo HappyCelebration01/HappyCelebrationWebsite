@@ -2371,11 +2371,6 @@ select {
   background: #fff;
 }
 
-/* Style the Webkit native calendar icon to fit gold/wine design */
-.lux-form input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.8) sepia(60%) saturate(1200%) hue-rotate(340deg);
-  cursor: pointer;
-}
 
 @media (pointer: coarse), (max-width: 430px) {
   .whatsapp-fab {
@@ -2696,6 +2691,44 @@ body.theme-luxury .float-bubble {
   100% {
     margin-left: 25px;
   }
+}
+
+/* Date Dropdown Group Selectors */
+.dropdown-group {
+  display: flex;
+  gap: 8px;
+}
+
+.dropdown-group select {
+  flex: 1;
+  background: rgba(30, 4, 12, 0.85);
+  border: 1px solid rgba(245, 199, 110, 0.4);
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-height: 42px;
+}
+
+/* Theme overrides for dropdown selects */
+body.theme-wine .dropdown-group select { border-color: rgba(229, 39, 78, 0.5); }
+body.theme-emerald .dropdown-group select { border-color: rgba(10, 154, 79, 0.5); }
+body.theme-sapphire .dropdown-group select { border-color: rgba(29, 114, 185, 0.5); }
+body.theme-violet .dropdown-group select { border-color: rgba(139, 22, 180, 0.5); }
+body.theme-luxury .dropdown-group select { border-color: rgba(201, 130, 45, 0.5); }
+
+.dropdown-group select:focus {
+  border-color: var(--gold-300) !important;
+  box-shadow: 0 0 8px rgba(245, 199, 110, 0.25);
+}
+
+.dropdown-group select option {
+  background: var(--screen-bg);
+  color: #fff;
 }
 
 

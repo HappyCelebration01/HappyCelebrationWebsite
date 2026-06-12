@@ -113,7 +113,29 @@
         </label>
         <label>
           <span>Date</span>
-          <input name="date" type="text" placeholder="MM/DD/YYYY" pattern="(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/[0-9]{4}" required>
+          <div class="dropdown-group">
+            <select name="bookingMonth" id="bookingMonth" required>
+              <option value="">Month</option>
+              <option value="01">Jan</option>
+              <option value="02">Feb</option>
+              <option value="03">Mar</option>
+              <option value="04">Apr</option>
+              <option value="05">May</option>
+              <option value="06">Jun</option>
+              <option value="07">Jul</option>
+              <option value="08">Aug</option>
+              <option value="09">Sep</option>
+              <option value="10">Oct</option>
+              <option value="11">Nov</option>
+              <option value="12">Dec</option>
+            </select>
+            <select name="bookingDay" id="bookingDay" required>
+              <option value="">Day</option>
+            </select>
+            <select name="bookingYear" id="bookingYear" required>
+              <option value="">Year</option>
+            </select>
+          </div>
         </label>
         <label>
           <span>Guests</span>
@@ -232,15 +254,59 @@
                   </div>
                 </label>
 
-                <!-- Date Fields (Inline) -->
+                <!-- Date Fields (Inline Dropdowns) -->
                 <label id="modalBirthDateLabel" style="margin-top: 14px;">
                   <span>Birth Date</span>
-                  <input name="modalBirthDate" id="modalBirthDate" type="date" autocomplete="off">
+                  <div class="dropdown-group">
+                    <select name="modalBirthMonth" id="modalBirthMonth">
+                      <option value="">Month</option>
+                      <option value="01">Jan</option>
+                      <option value="02">Feb</option>
+                      <option value="03">Mar</option>
+                      <option value="04">Apr</option>
+                      <option value="05">May</option>
+                      <option value="06">Jun</option>
+                      <option value="07">Jul</option>
+                      <option value="08">Aug</option>
+                      <option value="09">Sep</option>
+                      <option value="10">Oct</option>
+                      <option value="11">Nov</option>
+                      <option value="12">Dec</option>
+                    </select>
+                    <select name="modalBirthDay" id="modalBirthDay">
+                      <option value="">Day</option>
+                    </select>
+                    <select name="modalBirthYear" id="modalBirthYear">
+                      <option value="">Year</option>
+                    </select>
+                  </div>
                 </label>
                 
                 <label id="modalAnniversaryLabel" style="display: none; margin-top: 14px;">
                   <span>Anniversary Date</span>
-                  <input name="modalAnniversaryDate" id="modalAnniversaryDate" type="date" autocomplete="off">
+                  <div class="dropdown-group">
+                    <select name="modalAnniversaryMonth" id="modalAnniversaryMonth">
+                      <option value="">Month</option>
+                      <option value="01">Jan</option>
+                      <option value="02">Feb</option>
+                      <option value="03">Mar</option>
+                      <option value="04">Apr</option>
+                      <option value="05">May</option>
+                      <option value="06">Jun</option>
+                      <option value="07">Jul</option>
+                      <option value="08">Aug</option>
+                      <option value="09">Sep</option>
+                      <option value="10">Oct</option>
+                      <option value="11">Nov</option>
+                      <option value="12">Dec</option>
+                    </select>
+                    <select name="modalAnniversaryDay" id="modalAnniversaryDay">
+                      <option value="">Day</option>
+                    </select>
+                    <select name="modalAnniversaryYear" id="modalAnniversaryYear">
+                      <option value="">Year</option>
+                    </select>
+                  </div>
                 </label>
               </div>
 
