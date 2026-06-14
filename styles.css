@@ -302,17 +302,17 @@ select {
 }
 
 .menu-card {
-  height: 125px;
+  height: 105px;
   border: 1px solid var(--card-border);
-  border-radius: 18px;
+  border-radius: 12px;
   color: #fff;
   background: var(--card-bg-gradient), var(--card-bg-solid);
-  box-shadow: 0 16px 22px rgba(0, 0, 0, 0.3), inset 0 0 24px var(--card-shadow-inner);
+  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.3), inset 0 0 24px var(--card-shadow-inner);
   display: grid;
   place-items: center;
   align-content: center;
-  gap: 8px;
-  padding: 12px 10px;
+  gap: 6px;
+  padding: 8px 6px;
   cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
@@ -326,7 +326,7 @@ select {
 }
 
 .menu-card span:last-of-type {
-  font-size: clamp(14px, 4.2vw, 17px);
+  font-size: 14px;
   font-weight: 700;
   text-align: center;
   line-height: 1.25;
@@ -334,15 +334,15 @@ select {
 
 .menu-card i {
   display: block;
-  width: 32px;
+  width: 24px;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--gold-300), transparent);
   margin-top: 2px;
 }
 
 .icon {
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   display: inline-block;
   background: linear-gradient(135deg, var(--gold-100), var(--gold-500));
   filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.35));
@@ -1199,19 +1199,19 @@ select {
   }
 
   .menu-card {
-    height: 115px;
-    border-radius: 14px;
-    gap: 6px;
-    padding: 10px 8px;
+    height: 90px;
+    border-radius: 10px;
+    gap: 4px;
+    padding: 6px 4px;
   }
 
   .menu-card span:last-of-type {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .icon {
-    width: 38px;
-    height: 38px;
+    width: 26px;
+    height: 26px;
   }
 
 }
