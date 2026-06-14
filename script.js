@@ -391,6 +391,7 @@ const panels = {
         const googleSheetUrlInput = root.querySelector("#googleSheetUrlInput");
         const saveSyncConfigBtn = root.querySelector("#saveSyncConfigBtn");
         const pushToSheetsBtn = root.querySelector("#pushToSheetsBtn");
+        const pullFromSheetsBtn = root.querySelector("#pullFromSheetsBtn");
         const copyAppsScriptBtn = root.querySelector("#copyAppsScriptBtn");
         const generateWaLinkBtn = root.querySelector("#generateWaLinkBtn");
         const syncStatusMessage = root.querySelector("#syncStatusMessage");
@@ -1251,6 +1252,20 @@ const panels = {
           });
         }
 
+        if (pullFromSheetsBtn) {
+          pullFromSheetsBtn.addEventListener("click", () => {
+            const googleSheetUrl = googleSheetUrlInput.value.trim();
+            if (!googleSheetUrl) {
+              if (syncStatusMessage) {
+                syncStatusMessage.style.color = "#f87171";
+                syncStatusMessage.textContent = "Please enter your Google Apps Script URL first.";
+              }
+              return;
+            }
+            fetchMembersFromGoogleSheets();
+          });
+        }
+
         if (copyAppsScriptBtn) {
           copyAppsScriptBtn.addEventListener("click", () => {
             const scriptCode = `function doPost(e) {
@@ -1305,7 +1320,57 @@ const panels = {
 }
 
 function doGet(e) {
-  return HtmlService.createHtmlOutput("<h3>Google Sheets Sync API is active!</h3><p>Please use POST requests to submit data.</p>");
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var rows = sheet.getDataRange().getValues();
+    if (rows.length <= 1) {
+      return ContentService.createTextOutput(JSON.stringify([]))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    var headers = rows[0];
+    var data = [];
+    
+    for (var i = 1; i < rows.length; i++) {
+      var row = rows[i];
+      var member = {};
+      
+      headers.forEach(function(header, index) {
+        var key = header.toLowerCase().replace(/ /g, "");
+        if (key === "memberid") key = "id";
+        if (key === "name") key = "name";
+        if (key === "gender") key = "gender";
+        if (key === "relation") key = "relation";
+        if (key === "spouseid" || key === "spouse") key = "spouseId";
+        if (key === "parentid" || key === "parent") key = "parentId";
+        if (key === "birthdate" || key === "dob") key = "birthDate";
+        if (key === "anniversarydate") key = "anniversaryDate";
+        if (key === "phonenumber" || key === "phone") key = "phone";
+        if (key === "emailid" || key === "email") key = "email";
+        
+        member[key] = String(row[index] || "");
+      });
+      
+      data.push(member);
+    }
+    
+    data.forEach(function(m) {
+      if (m.spouseId && !m.spouseId.startsWith("mem_")) {
+        var foundSpouse = data.find(function(s) { return s.name.toLowerCase() === m.spouseId.toLowerCase(); });
+        if (foundSpouse) m.spouseId = foundSpouse.id;
+      }
+      if (m.parentId && !m.parentId.startsWith("mem_")) {
+        var foundParent = data.find(function(p) { return p.name.toLowerCase() === m.parentId.toLowerCase(); });
+        if (foundParent) m.parentId = foundParent.id;
+      }
+    });
+    
+    return ContentService.createTextOutput(JSON.stringify(data))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(error) {
+    return ContentService.createTextOutput(JSON.stringify({status: "error", message: error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }`;
             
             navigator.clipboard.writeText(scriptCode)
@@ -1374,6 +1439,51 @@ function doGet(e) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
           }).catch(err => console.error("Auto-sync error:", err));
+        }
+
+        function fetchMembersFromGoogleSheets() {
+          const syncConfigRaw = localStorage.getItem("happyCelebrationSyncConfig");
+          if (!syncConfigRaw) return;
+          const config = JSON.parse(syncConfigRaw);
+          const url = config.googleSheetUrl;
+          if (!url) return;
+          
+          if (syncStatusMessage) {
+            syncStatusMessage.style.color = "var(--gold-300)";
+            syncStatusMessage.textContent = "Pulling data from Google Sheets...";
+          }
+          
+          fetch(url)
+            .then(res => res.json())
+            .then(data => {
+              if (Array.isArray(data)) {
+                members = data;
+                localStorage.setItem("happyCelebrationFamily", JSON.stringify(members));
+                renderMemberList();
+                renderTree();
+                updateRegistrationState();
+                
+                if (syncStatusMessage) {
+                  syncStatusMessage.style.color = "#a3e635";
+                  syncStatusMessage.textContent = "Synced successfully! Tree updated.";
+                  setTimeout(() => { syncStatusMessage.textContent = ""; }, 3000);
+                }
+              } else if (data.status === "error") {
+                console.error("Sheets sync error:", data.message);
+                if (syncStatusMessage) {
+                  syncStatusMessage.style.color = "#f87171";
+                  syncStatusMessage.textContent = "Error: " + data.message;
+                }
+              }
+            })
+            .catch(err => {
+              console.error("Fetch error from sheets:", err);
+              if (syncStatusMessage) {
+                syncStatusMessage.style.color = "#f87171";
+                syncStatusMessage.textContent = "Unable to connect to Google Sheets. Using local cache.";
+                setTimeout(() => { syncStatusMessage.textContent = ""; }, 4000);
+              }
+            });
         }
 
         // Event delegation on tree canvas
@@ -1638,6 +1748,9 @@ function doGet(e) {
         renderMemberList();
         renderTree();
         setTimeout(fitToScreen, 100);
+        
+        // Auto-fetch from Google Sheets at startup if URL configured
+        fetchMembersFromGoogleSheets();
 
       } catch (err) {
         console.error("Family panel error:", err);

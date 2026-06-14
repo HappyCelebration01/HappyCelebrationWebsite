@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=60">
+    <link rel="stylesheet" href="styles.css?v=61">
   </head>
   <body>
     <main class="app-shell" aria-label="Happy Celebration application">
@@ -235,9 +235,12 @@
               <input type="url" id="googleSheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" style="width: 100%; min-height: 42px; padding: 10px; border-radius: 8px; border: 1px solid rgba(245, 199, 110, 0.4); background: rgba(30, 4, 12, 0.85); color: #fff;">
             </label>
             
-            <div class="sync-actions" style="margin-top: 14px; display: flex; gap: 10px;">
-              <button class="primary-action" id="pushToSheetsBtn" type="button" style="flex: 1; min-height: 40px; font-size: 13px;">Push All to Google Sheets</button>
-              <button class="secondary-action" id="saveSyncConfigBtn" type="button" style="flex: 1; min-height: 40px; font-size: 13px;">Save Config</button>
+            <div class="sync-actions" style="margin-top: 14px; display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; gap: 10px; width: 100%;">
+                <button class="primary-action" id="pullFromSheetsBtn" type="button" style="flex: 1; min-height: 40px; font-size: 13px;">Pull from Google Sheets</button>
+                <button class="primary-action" id="pushToSheetsBtn" type="button" style="flex: 1; min-height: 40px; font-size: 13px;">Push to Google Sheets</button>
+              </div>
+              <button class="secondary-action" id="saveSyncConfigBtn" type="button" style="width: 100%; min-height: 40px; font-size: 13px;">Save Config</button>
             </div>
             
             <div id="syncStatusMessage" style="margin-top: 12px; font-size: 13px; color: var(--gold-300); font-weight: 500; text-align: center;"></div>
@@ -444,6 +447,6 @@
       </div>
     </template>
 
-    <script src="script.js?v=60"></script>
+    <script src="script.js?v=61"></script>
   </body>
 </html>
