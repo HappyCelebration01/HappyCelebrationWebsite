@@ -1345,10 +1345,10 @@ select {
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 12px;
-  padding: 4px;
-  margin-bottom: 16px;
-  gap: 4px;
+  border-radius: 8px;
+  padding: 3px;
+  margin-bottom: 12px;
+  gap: 3px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -1357,10 +1357,10 @@ select {
   background: none;
   border: 0;
   color: var(--soft);
-  padding: 10px 4px;
-  border-radius: 8px;
+  padding: 7px 2px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1370,7 +1370,7 @@ select {
 .family-tab-nav-btn.active {
   background: linear-gradient(135deg, var(--gold-100), var(--gold-500));
   color: #2c0b00;
-  box-shadow: 0 4px 12px rgba(245, 199, 110, 0.35);
+  box-shadow: 0 2px 8px rgba(245, 199, 110, 0.25);
 }
 
 .family-editor-view {
