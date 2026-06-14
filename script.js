@@ -449,18 +449,10 @@ const panels = {
         const isAdmin = checkIsAdmin();
 
         // Admin vs Customer segregation
-        const tabsNav = root.querySelector(".family-tabs-nav");
-        const swipeHint = root.querySelector(".swipe-hint");
-        
         if (!isAdmin) {
-          if (tabsNav) tabsNav.style.display = "none";
-          familyEditorView.style.display = "none";
-          familySyncView.style.display = "none";
-          familyPreviewView.style.display = "block";
-          if (swipeHint) swipeHint.textContent = "↔ Swipe/zoom to explore tree ↔";
-        } else {
-          if (tabsNav) tabsNav.style.display = "flex";
-          if (swipeHint) swipeHint.textContent = "↔ Tap circles to edit/delete. Swipe/zoom to explore tree ↔";
+          if (syncTabBtn) syncTabBtn.style.display = "none";
+          if (exportCsvBtn) exportCsvBtn.style.display = "none";
+          if (clearTreeBtn) clearTreeBtn.style.display = "none";
         }
         
         const modalSubmitBtn = root.querySelector("#modalSubmitBtn");
@@ -702,7 +694,6 @@ const panels = {
         }
 
         function openModal(actionType, targetId = "") {
-          if (!isAdmin) return;
           modalActionType.value = actionType;
           modalTargetId.value = targetId;
           
@@ -1521,8 +1512,6 @@ function doGet(e) {
 
         // Event delegation on tree canvas
         treeCanvas.addEventListener("click", (e) => {
-          if (!isAdmin) return; // Restrict customer edits
-          
           const card = e.target.closest(".tree-node-card");
           if (card) {
             const memberId = card.dataset.id;
