@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=69">
+    <link rel="stylesheet" href="styles.css?v=76">
   </head>
   <body>
     <main class="app-shell" aria-label="Happy Celebration application">
@@ -369,6 +369,7 @@
                 <a href="#" id="profileEmailAction" class="quick-action-btn email" title="Email"><span class="action-icon">✉️</span>Email</a>
               </div>
               <button type="button" class="primary-action" id="profileEditBtn" style="width: 100%; margin-top: 14px;">Edit Details</button>
+              <button type="button" class="primary-action" id="profileAddRelativeBtn" style="width: 100%; margin-top: 8px; background: var(--gold-300); color: #100006; display: none;">Add Relative</button>
             </div>
           </div>
         </div>
@@ -382,6 +383,32 @@
               <!-- Add hidden inputs to keep track of targets -->
               <input type="hidden" id="modalActionType" value="add">
               <input type="hidden" id="modalTargetId" value="">
+              
+              <!-- Multiple Parents Fields (shown for add-parents) -->
+              <div id="modalMultipleParentsContainer" style="display: none;">
+                <div style="margin-bottom: 16px; border-bottom: 1px solid rgba(245, 199, 110, 0.2); padding-bottom: 12px;">
+                  <span style="color: var(--gold-300); font-weight: bold; display: block; margin-bottom: 8px; font-size: 14px;">Father's Details</span>
+                  <label>
+                    <span>Father's Name</span>
+                    <input id="modalFatherName" type="text" placeholder="Name" autocomplete="off">
+                  </label>
+                  <label style="margin-top: 10px; display: block;">
+                    <span>Birth Year</span>
+                    <input id="modalFatherBirthYear" type="number" placeholder="e.g. 1940" min="1800" max="2026" style="width: 100%; min-height: 42px; padding: 10px; border-radius: 8px; border: 1px solid rgba(245, 199, 110, 0.4); background: rgba(30, 4, 12, 0.85); color: #fff;">
+                  </label>
+                </div>
+                <div>
+                  <span style="color: var(--gold-300); font-weight: bold; display: block; margin-bottom: 8px; font-size: 14px;">Mother's Details</span>
+                  <label>
+                    <span>Mother's Name (Maiden Name)</span>
+                    <input id="modalMotherName" type="text" placeholder="Name" autocomplete="off">
+                  </label>
+                  <label style="margin-top: 10px; display: block;">
+                    <span>Birth Year</span>
+                    <input id="modalMotherBirthYear" type="number" placeholder="e.g. 1945" min="1800" max="2026" style="width: 100%; min-height: 42px; padding: 10px; border-radius: 8px; border: 1px solid rgba(245, 199, 110, 0.4); background: rgba(30, 4, 12, 0.85); color: #fff;">
+                  </label>
+                </div>
+              </div>
               
               <!-- Main Member Fields -->
               <div id="modalMainFields">
@@ -427,6 +454,39 @@
                       <option value="">Day</option>
                     </select>
                     <select name="modalBirthYear" id="modalBirthYear">
+                      <option value="">Year</option>
+                    </select>
+                  </div>
+                </label>
+
+                <!-- Alive Checkbox and Death Date -->
+                <label id="modalAliveLabel" style="margin-top: 14px; display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="modalIsAlive" id="modalIsAlive" style="width: auto; min-height: auto; margin: 0;" checked>
+                  <span>Alive</span>
+                </label>
+                
+                <label id="modalDeathDateLabel" style="display: none; margin-top: 14px;">
+                  <span>Death Date</span>
+                  <div class="dropdown-group">
+                    <select name="modalDeathMonth" id="modalDeathMonth">
+                      <option value="">Month</option>
+                      <option value="01">Jan</option>
+                      <option value="02">Feb</option>
+                      <option value="03">Mar</option>
+                      <option value="04">Apr</option>
+                      <option value="05">May</option>
+                      <option value="06">Jun</option>
+                      <option value="07">Jul</option>
+                      <option value="08">Aug</option>
+                      <option value="09">Sep</option>
+                      <option value="10">Oct</option>
+                      <option value="11">Nov</option>
+                      <option value="12">Dec</option>
+                    </select>
+                    <select name="modalDeathDay" id="modalDeathDay">
+                      <option value="">Day</option>
+                    </select>
+                    <select name="modalDeathYear" id="modalDeathYear">
                       <option value="">Year</option>
                     </select>
                   </div>
@@ -505,6 +565,59 @@
             </form>
           </div>
         </div>
+
+        <!-- Custom Relationship Selector Modal -->
+        <div id="relationshipSelectorModal" class="tree-modal-overlay" style="display: none;">
+          <div class="tree-modal-content relationship-selector-content">
+            <button type="button" class="profile-close-btn" id="relationshipSelectorCloseBtn" aria-label="Close relationship selector">&times;</button>
+            <h3 id="relationshipSelectorTitle">Add a relative</h3>
+            
+            <div class="relationship-options-container">
+              <!-- Top Row -->
+              <div class="relationship-row top-row">
+                <button type="button" class="rel-opt-btn male" data-relation="father">
+                  <div class="rel-icon-circle"><span class="rel-icon">👴</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add father</span>
+                </button>
+                <button type="button" class="rel-opt-btn female" data-relation="mother">
+                  <div class="rel-icon-circle"><span class="rel-icon">👵</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add mother</span>
+                </button>
+              </div>
+              
+              <!-- Middle Row -->
+              <div class="relationship-row middle-row">
+                <button type="button" class="rel-opt-btn couple" data-relation="partner">
+                  <div class="rel-icon-circle"><span class="rel-icon">💍</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add partner</span>
+                </button>
+                <button type="button" class="rel-opt-btn male" data-relation="brother">
+                  <div class="rel-icon-circle"><span class="rel-icon">👦</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add brother</span>
+                </button>
+                <button type="button" class="rel-opt-btn female" data-relation="sister">
+                  <div class="rel-icon-circle"><span class="rel-icon">👧</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add sister</span>
+                </button>
+              </div>
+              
+              <!-- Bottom Row -->
+              <div class="relationship-row bottom-row">
+                <button type="button" class="rel-opt-btn male" data-relation="son">
+                  <div class="rel-icon-circle"><span class="rel-icon">👶</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add son</span>
+                </button>
+                <button type="button" class="rel-opt-btn female" data-relation="daughter">
+                  <div class="rel-icon-circle"><span class="rel-icon">👶</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add daughter</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="or-separator">OR</div>
+            <button type="button" class="primary-action" id="relationshipSelectorMultipleBtn" style="width: 100%;">Add multiple relatives</button>
+          </div>
+        </div>
       </div>
     </template>
 
@@ -579,6 +692,6 @@
       </div>
     </template>
 
-    <script src="script.js?v=69"></script>
+    <script src="script.js?v=76"></script>
   </body>
 </html>

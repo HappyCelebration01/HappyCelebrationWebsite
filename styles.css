@@ -1853,10 +1853,10 @@ select {
   text-align: center;
 }
 
-/* Circular Tree Overrides */
+/* Circular Tree Overrides - Restyled as Sleek Rectangular Cards */
 .tree-canvas-wrapper.circular-mode .tree-canvas {
   gap: 36px;
-  padding-bottom: 48px; /* Room for absolute text at the bottom */
+  padding-bottom: 48px;
 }
 
 .tree-node-card.circular {
@@ -1864,118 +1864,187 @@ select {
   border: none;
   box-shadow: none;
   padding: 0;
-  width: 50px;
-  min-width: 50px;
-  max-width: 50px;
-  height: 50px;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+  height: 80px;
   position: relative;
+  display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .tree-node-card.circular:hover {
   transform: none;
 }
 
-.tree-node-card.circular .node-avatar {
-  width: 50px;
-  height: 50px;
-  border: 2px solid rgba(245, 199, 110, 0.4);
-  border-radius: 50%;
-  font-size: 22px; /* Increased from 18px for better visibility */
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-
-
-.tree-node-card.circular.male .node-avatar {
-  border: 3px solid #3b82f6 !important;
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.45);
-}
-
-.tree-node-card.circular.female .node-avatar {
-  border: 3px solid #ec4899 !important;
-  box-shadow: 0 0 8px rgba(236, 72, 153, 0.45);
-}
-
-.tree-node-card.circular:hover .node-avatar {
-  transform: scale(1.1);
-}
-
-.tree-node-card.circular.male:hover .node-avatar {
-  border-color: #60a5fa !important;
-  box-shadow: 0 0 16px rgba(59, 130, 246, 0.7), inset 0 0 6px rgba(59, 130, 246, 0.4);
-}
-
-.tree-node-card.circular.female:hover .node-avatar {
-  border-color: #f472b6 !important;
-  box-shadow: 0 0 16px rgba(236, 72, 153, 0.7), inset 0 0 6px rgba(236, 72, 153, 0.4);
-}
-
+/* Hide original circular node parts */
+.tree-node-card.circular .node-avatar,
 .tree-node-card.circular .node-details {
-  position: absolute;
-  top: 56px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90px;
-  text-align: center;
-  align-items: center;
+  display: none;
+}
+
+/* Sleek Rectangular Family Member Card */
+.family-member-card {
   display: flex;
   flex-direction: column;
-  z-index: 5;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 80px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(30, 4, 12, 0.95), rgba(15, 0, 3, 0.98));
+  border: 2px solid rgba(245, 199, 110, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 6px;
+  box-sizing: border-box;
 }
 
-.tree-node-card.circular .node-name {
-  font-family: 'Poppins', Inter, system-ui, sans-serif !important;
-  font-size: 13px;
-  white-space: normal;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+.family-member-card.male {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2), 0 4px 12px rgba(0, 0, 0, 0.55);
+}
+
+.family-member-card.female {
+  border-color: #ec4899 !important;
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.2), 0 4px 12px rgba(0, 0, 0, 0.55);
+}
+
+.family-member-card:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 0 18px rgba(245, 199, 110, 0.25), 0 8px 18px rgba(0, 0, 0, 0.65);
+  z-index: 10;
+}
+
+.family-member-card.male:hover {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 18px rgba(59, 130, 246, 0.6), 0 8px 18px rgba(0, 0, 0, 0.65);
+}
+
+.family-member-card.female:hover {
+  border-color: #f472b6 !important;
+  box-shadow: 0 0 18px rgba(236, 72, 153, 0.6), 0 8px 18px rgba(0, 0, 0, 0.65);
+}
+
+/* Details inside family card */
+.family-member-card .node-avatar {
+  display: grid !important;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  place-items: center;
+  font-weight: 800;
+  font-size: 11px;
+  color: #fff;
+  margin-bottom: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.family-member-card.male .node-avatar {
+  background: linear-gradient(135deg, #93c5fd, #2563eb);
+}
+
+.family-member-card.female .node-avatar {
+  background: linear-gradient(135deg, #fbcfe8, #db2777);
+}
+
+.family-member-card .node-details {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   overflow: hidden;
-  line-height: 1.3;
-  color: #ffffff !important;
-  font-weight: 500 !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-  -webkit-font-smoothing: antialiased;
+  position: static !important;
+  transform: none !important;
 }
 
-.tree-node-card.circular .node-relation {
+.family-member-card .node-name {
   font-family: 'Poppins', Inter, system-ui, sans-serif !important;
-  font-size: 9px;
-  margin-top: 2px;
-  opacity: 1 !important;
-  color: var(--gold-300) !important;
+  font-size: 10px;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 1.2;
+}
+
+.family-member-card .node-relation {
+  font-family: 'Poppins', Inter, system-ui, sans-serif !important;
+  font-size: 7.5px;
   font-weight: 700 !important;
-  letter-spacing: 0.5px;
+  color: var(--gold-300) !important;
   text-transform: uppercase;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-  -webkit-font-smoothing: antialiased;
+  margin-top: 1px;
+  letter-spacing: 0.5px;
+}
+
+.family-member-card .node-status {
+  font-family: 'Poppins', Inter, system-ui, sans-serif !important;
+  font-size: 7.5px;
+  color: #a1a1aa !important;
+  margin-top: 1px;
+}
+
+/* Interactive Add Relative button */
+.add-relative-btn {
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%) scale(1);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gold-300);
+  border: 1.5px solid #100006;
+  color: #100006;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.2s ease;
+  line-height: 1;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+.add-relative-btn:hover {
+  transform: translateX(-50%) scale(1.25);
+  background: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 2px 5px rgba(0,0,0,0.4);
 }
 
 /* Connector overrides for circular tree */
-
-/* Vertical line down from circular parent card (single or couple) */
 .tree-canvas-wrapper.circular-mode .tree-branch.has-children > .tree-node-card::after {
   content: "";
   position: absolute;
-  top: 50px;
+  top: 80px;
   left: 50%;
-  width: 4px;
-  height: 81px; /* reaches the children container horizontal line at y=131px */
+  width: 1.5px;
+  height: 85px; /* reaches the children container horizontal line at y=165px */
   background: var(--gold-300);
   transform: translateX(-50%);
   z-index: 1;
 }
 
-/* If the parent card is a couple, its height is 60px, so adjust top/height of vertical line */
+/* If the parent card is a couple, height is also 80px */
 .tree-canvas-wrapper.circular-mode .tree-branch.has-children > .tree-node-card.circular.couple::after {
-  top: 60px;
-  height: 81px;
+  top: 80px;
+  height: 85px;
 }
 
 /* Padding and spacing for child branches in circular mode */
 .tree-canvas-wrapper.circular-mode .tree-children-container {
-  margin-top: 85px; /* increased from 48px to make generation lines longer and spacious */
+  margin-top: 85px;
   gap: 32px;
 }
 
@@ -1996,68 +2065,68 @@ select {
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch:first-child::before {
   content: "";
   position: absolute;
-  top: -4px;
+  top: -1.5px;
   left: 50%;
-  right: -16px; /* extend 16px past right edge into the gap */
+  right: -16px;
   height: 0;
-  border-top: 4px solid var(--gold-300);
+  border-top: 1.5px solid var(--gold-300);
   background: none;
   z-index: 1;
   display: block;
 }
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch.child-left:first-child::before {
-  left: calc(50% - 27px); /* Overlap left vertical line */
+  left: calc(50% - 68px); /* Overlap left vertical line */
 }
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch.child-right:first-child::before {
-  left: calc(50% + 23px); /* Overlap right vertical line */
+  left: calc(50% + 68px); /* Overlap right vertical line */
 }
 
 /* Last child connector horizontal bar */
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch:last-child::before {
   content: "";
   position: absolute;
-  top: -4px;
+  top: -1.5px;
   right: 50%;
-  left: -16px; /* extend 16px past left edge into the gap */
+  left: -16px;
   height: 0;
-  border-top: 4px solid var(--gold-300);
+  border-top: 1.5px solid var(--gold-300);
   background: none;
   z-index: 1;
   display: block;
 }
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch.child-left:last-child::before {
-  right: calc(50% + 23px); /* Overlap left vertical line */
+  right: calc(50% + 68px); /* Overlap left vertical line */
 }
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch.child-right:last-child::before {
-  right: calc(50% - 27px); /* Overlap right vertical line */
+  right: calc(50% - 68px); /* Overlap right vertical line */
 }
 
-/* Middle child connector horizontal bar (spans the entire branch width) */
+/* Middle child connector horizontal bar */
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch:not(:first-child):not(:last-child)::before {
   content: "";
   position: absolute;
-  top: -4px;
-  left: -16px; /* extend 16px left */
-  right: -16px; /* extend 16px right */
+  top: -1.5px;
+  left: -16px;
+  right: -16px;
   height: 0;
-  border-top: 4px solid var(--gold-300);
+  border-top: 1.5px solid var(--gold-300);
   background: none;
   z-index: 1;
   display: block;
 }
 
-/* Only child connector horizontal bar (only needed if the only-child is a couple, to connect parent midpoint to descendant side) */
+/* Only child connector horizontal bar */
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch:only-child::before {
   display: none;
 }
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch.child-left:only-child::before {
   content: "";
   position: absolute;
-  top: -4px;
-  left: calc(50% - 27px); /* Overlap left vertical line */
+  top: -1.5px;
+  left: calc(50% - 68px); /* Overlap left vertical line */
   right: 50%;
   height: 0;
-  border-top: 4px solid var(--gold-300);
+  border-top: 1.5px solid var(--gold-300);
   background: none;
   z-index: 1;
   display: block;
@@ -2065,17 +2134,17 @@ select {
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch.child-right:only-child::before {
   content: "";
   position: absolute;
-  top: -4px;
+  top: -1.5px;
   left: 50%;
-  right: calc(50% - 27px); /* Overlap right vertical line */
+  right: calc(50% - 68px); /* Overlap right vertical line */
   height: 0;
-  border-top: 4px solid var(--gold-300);
+  border-top: 1.5px solid var(--gold-300);
   background: none;
   z-index: 1;
   display: block;
 }
 
-/* Disable vertical drop line properties on the branch containers (vertical drops are handled by the cards) */
+/* Disable vertical drop line properties on the branch containers */
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch::after,
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch:only-child::after,
 .tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch:not(:first-child):not(:last-child)::after,
@@ -2084,36 +2153,35 @@ select {
   display: none !important;
 }
 
-/* Couple Card pill/capsule style overrides */
+/* Couple Card transparent layout container holding two sub-cards side-by-side */
 .tree-node-card.circular.couple {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: rgba(30, 4, 12, 0.88);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px; /* Pill capsule container */
-  padding: 4px 8px;
-  width: 110px;
-  min-width: 110px;
-  max-width: 110px;
-  height: 60px;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  width: 256px;
+  min-width: 256px;
+  max-width: 256px;
+  height: 80px;
+  gap: 16px;
   position: relative;
-  box-shadow: 
-    0 8px 20px rgba(0, 0, 0, 0.5), 
-    inset 0 1px 1px rgba(255, 255, 255, 0.08);
-  transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+  transition: transform 250ms ease;
   transform-style: preserve-3d;
   backface-visibility: hidden;
 }
 
-/* Vertical drop lines directly on descendant circles/couples (touching top edge) */
+/* Vertical drop lines directly on descendant cards (touching top edge) */
 .tree-canvas-wrapper.circular-mode .tree-node-card.circular:not(.rel-grandparent)::before {
   content: "";
   position: absolute;
   top: -24px; /* align exactly with horizontal connector */
   left: 50%;
-  width: 4px;
+  width: 1.5px;
   height: 24px;
   background: var(--gold-300);
   transform: translateX(-50%);
@@ -2123,14 +2191,14 @@ select {
 
 /* Couple cards - descendant left drop line */
 .tree-canvas-wrapper.circular-mode .tree-node-card.circular.couple.descendant-left:not(.rel-grandparent)::before {
-  left: 30px;
+  left: 60px;
   top: -24px;
   transform: translateX(-50%);
 }
 
 /* Couple cards - descendant right drop line */
 .tree-canvas-wrapper.circular-mode .tree-node-card.circular.couple.descendant-right:not(.rel-grandparent)::before {
-  left: 80px;
+  left: 196px;
   top: -24px;
   transform: translateX(-50%);
 }
@@ -3556,6 +3624,142 @@ body.theme-luxury .dashboard-card { border-color: rgba(201, 130, 45, 0.2); }
   font-size: 11px;
   color: #eee;
 }
+
+/* Relationship Selector Modal styling */
+.relationship-selector-content {
+  max-width: 380px !important;
+  background: rgba(26, 3, 10, 0.98) !important;
+  border: 1.5px solid var(--gold-300) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+  padding: 24px !important;
+}
+
+#relationshipSelectorTitle {
+  font-family: Georgia, serif;
+  color: var(--gold-100);
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 6px;
+}
+
+.relationship-options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.relationship-row {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  width: 100%;
+}
+
+.rel-opt-btn {
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 80px;
+  transition: transform 0.2s ease !important;
+  padding: 0 !important;
+}
+
+.rel-opt-btn:hover {
+  transform: scale(1.1) !important;
+}
+
+.rel-icon-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.rel-opt-btn.male .rel-icon-circle {
+  border-color: rgba(59, 130, 246, 0.6) !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+.rel-opt-btn.male:hover .rel-icon-circle {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5) !important;
+}
+
+.rel-opt-btn.female .rel-icon-circle {
+  border-color: rgba(236, 72, 153, 0.6) !important;
+  background: rgba(236, 72, 153, 0.1) !important;
+}
+.rel-opt-btn.female:hover .rel-icon-circle {
+  border-color: #ec4899 !important;
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.5) !important;
+}
+
+.rel-opt-btn.couple .rel-icon-circle {
+  border-color: rgba(245, 199, 110, 0.6) !important;
+  background: rgba(245, 199, 110, 0.1) !important;
+}
+.rel-opt-btn.couple:hover .rel-icon-circle {
+  border-color: var(--gold-300) !important;
+  box-shadow: 0 0 12px rgba(245, 199, 110, 0.5) !important;
+}
+
+.rel-icon-circle .plus-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: #f97316 !important;
+  color: #fff !important;
+  border-radius: 50% !important;
+  width: 16px;
+  height: 16px;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #100006 !important;
+  line-height: 1;
+}
+
+.rel-label {
+  font-size: 11px;
+  color: #d1d5db !important;
+  text-align: center;
+  font-weight: 500;
+}
+
+.or-separator {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  margin: 14px 0;
+  position: relative;
+  width: 100%;
+}
+.or-separator::before, .or-separator::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 38%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.or-separator::before { left: 0; }
+.or-separator::after { right: 0; }
 
 
 

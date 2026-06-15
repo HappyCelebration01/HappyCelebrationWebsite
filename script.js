@@ -636,10 +636,36 @@ const panels = {
         const profileWaAction = root.querySelector("#profileWaAction");
         const profileEmailAction = root.querySelector("#profileEmailAction");
         const profileEditBtn = root.querySelector("#profileEditBtn");
+        const profileAddRelativeBtn = root.querySelector("#profileAddRelativeBtn");
+
+        // Relationship Selector Modal DOM Elements
+        const relationshipSelectorModal = root.querySelector("#relationshipSelectorModal");
+        const relationshipSelectorCloseBtn = root.querySelector("#relationshipSelectorCloseBtn");
+        const relationshipSelectorTitle = root.querySelector("#relationshipSelectorTitle");
+        const relationshipSelectorMultipleBtn = root.querySelector("#relationshipSelectorMultipleBtn");
+
+        // Alive and Death Date Elements
+        const modalIsAlive = root.querySelector("#modalIsAlive");
+        const modalDeathDateLabel = root.querySelector("#modalDeathDateLabel");
+        const modalDeathMonth = root.querySelector("#modalDeathMonth");
+        const modalDeathDay = root.querySelector("#modalDeathDay");
+        const modalDeathYear = root.querySelector("#modalDeathYear");
+
+        // Multiple Parents Elements
+        const modalMultipleParentsContainer = root.querySelector("#modalMultipleParentsContainer");
+        const modalFatherName = root.querySelector("#modalFatherName");
+        const modalFatherBirthYear = root.querySelector("#modalFatherBirthYear");
+        const modalMotherName = root.querySelector("#modalMotherName");
+        const modalMotherBirthYear = root.querySelector("#modalMotherBirthYear");
+        const modalMainFields = root.querySelector("#modalMainFields");
+
+        let relationshipSelectorTargetId = null;
 
         // Populate modal Days selects (1 to 31)
-        [modalBirthDay, modalAnniversaryDay].forEach(daySel => {
+        [modalBirthDay, modalAnniversaryDay, modalDeathDay].forEach(daySel => {
           if (daySel) {
+            // Keep the placeholder first option
+            daySel.innerHTML = '<option value="">Day</option>';
             for (let i = 1; i <= 31; i++) {
               const val = String(i).padStart(2, '0');
               const opt = document.createElement("option");
@@ -650,19 +676,23 @@ const panels = {
           }
         });
 
-        // Populate modal Birth Years (current down to 1900)
-        if (modalBirthYear) {
-          const currentYear = new Date().getFullYear();
-          for (let i = currentYear; i >= 1900; i--) {
-            const opt = document.createElement("option");
-            opt.value = i;
-            opt.textContent = i;
-            modalBirthYear.appendChild(opt);
+        // Populate modal Birth/Death Years (current down to 1900)
+        [modalBirthYear, modalDeathYear].forEach(yearSel => {
+          if (yearSel) {
+            yearSel.innerHTML = '<option value="">Year</option>';
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i >= 1900; i--) {
+              const opt = document.createElement("option");
+              opt.value = i;
+              opt.textContent = i;
+              yearSel.appendChild(opt);
+            }
           }
-        }
+        });
 
         // Populate modal Anniversary Years (current down to 1940)
         if (modalAnniversaryYear) {
+          modalAnniversaryYear.innerHTML = '<option value="">Year</option>';
           const currentYear = new Date().getFullYear();
           for (let i = currentYear; i >= 1940; i--) {
             const opt = document.createElement("option");
@@ -670,6 +700,127 @@ const panels = {
             opt.textContent = i;
             modalAnniversaryYear.appendChild(opt);
           }
+        }
+
+        // Toggle Death Date dropdown visibility
+        if (modalIsAlive) {
+          modalIsAlive.addEventListener("change", () => {
+            if (modalDeathDateLabel) {
+              modalDeathDateLabel.style.display = modalIsAlive.checked ? "none" : "block";
+            }
+          });
+        }
+
+        // Relationship Selector Modal Helpers & Handlers
+        function closeRelationshipSelector() {
+          if (relationshipSelectorModal) {
+            relationshipSelectorModal.style.display = "none";
+          }
+          relationshipSelectorTargetId = null;
+        }
+
+        if (relationshipSelectorCloseBtn) {
+          relationshipSelectorCloseBtn.addEventListener("click", closeRelationshipSelector);
+        }
+
+        function openRelationshipSelector(memberId) {
+          const target = members.find(m => m.id === memberId);
+          if (!target) return;
+          
+          relationshipSelectorTargetId = memberId;
+          relationshipSelectorTitle.textContent = `Add a relative to ${target.name}`;
+          
+          const hasSpouse = !!target.spouseId;
+          
+          let hasFather = false;
+          let hasMother = false;
+          if (target.parentId) {
+            const p1 = members.find(m => m.id === target.parentId);
+            if (p1) {
+              if (p1.gender === "Male") hasFather = true;
+              else if (p1.gender === "Female") hasMother = true;
+              if (p1.spouseId) {
+                const p2 = members.find(m => m.id === p1.spouseId);
+                if (p2) {
+                  if (p2.gender === "Male") hasFather = true;
+                  else if (p2.gender === "Female") hasMother = true;
+                }
+              }
+            }
+          }
+          
+          const buttons = relationshipSelectorModal.querySelectorAll(".rel-opt-btn");
+          buttons.forEach(btn => {
+            const rel = btn.getAttribute("data-relation");
+            let disable = false;
+            
+            if (rel === "father") {
+              disable = hasFather;
+            } else if (rel === "mother") {
+              disable = hasMother;
+            } else if (rel === "partner") {
+              disable = hasSpouse;
+            } else if (rel === "brother" || rel === "sister") {
+              disable = false;
+            } else if (rel === "son" || rel === "daughter") {
+              disable = false;
+            }
+            
+            btn.disabled = disable;
+            if (disable) {
+              btn.style.opacity = "0.3";
+              btn.style.pointerEvents = "none";
+            } else {
+              btn.style.opacity = "1";
+              btn.style.pointerEvents = "auto";
+            }
+          });
+          
+          if (relationshipSelectorMultipleBtn) {
+            const disableParents = hasFather && hasMother;
+            relationshipSelectorMultipleBtn.disabled = disableParents;
+            if (disableParents) {
+              relationshipSelectorMultipleBtn.style.opacity = "0.3";
+              relationshipSelectorMultipleBtn.style.pointerEvents = "none";
+            } else {
+              relationshipSelectorMultipleBtn.style.opacity = "1";
+              relationshipSelectorMultipleBtn.style.pointerEvents = "auto";
+            }
+          }
+          
+          relationshipSelectorModal.style.display = "flex";
+        }
+
+                const relButtons = relationshipSelectorModal.querySelectorAll(".rel-opt-btn");
+        relButtons.forEach(btn => {
+          btn.addEventListener("click", () => {
+            const rel = btn.getAttribute("data-relation");
+            const targetId = relationshipSelectorTargetId;
+            closeRelationshipSelector();
+            if (rel === "father") {
+              openModal("add-father", targetId);
+            } else if (rel === "mother") {
+              openModal("add-mother", targetId);
+            } else if (rel === "partner") {
+              openModal("add-spouse", targetId);
+            } else if (rel === "brother") {
+              openModal("add-brother", targetId);
+            } else if (rel === "sister") {
+              openModal("add-sister", targetId);
+            } else if (rel === "son") {
+              openModal("add-son", targetId);
+            } else if (rel === "daughter") {
+              openModal("add-daughter", targetId);
+            }
+          });
+        });
+
+        if (relationshipSelectorMultipleBtn) {
+          relationshipSelectorMultipleBtn.addEventListener("click", () => {
+            const targetId = relationshipSelectorTargetId;
+            closeRelationshipSelector();
+            openModal("add-parents", targetId);
+          });
         }
 
         function checkIsAdmin() {
@@ -1043,10 +1194,24 @@ const panels = {
           
           setDropdownDate(modalBirthDay, modalBirthMonth, modalBirthYear, "");
           setDropdownDate(modalAnniversaryDay, modalAnniversaryMonth, modalAnniversaryYear, "");
+          setDropdownDate(modalDeathDay, modalDeathMonth, modalDeathYear, "");
           modalAnniversaryLabel.style.display = "none";
+          if (modalDeathDateLabel) modalDeathDateLabel.style.display = "none";
+          if (modalIsAlive) modalIsAlive.checked = true;
+          if (modalMultipleParentsContainer) {
+            modalMultipleParentsContainer.style.display = "none";
+            modalFatherName.value = "";
+            modalFatherBirthYear.value = "";
+            modalMotherName.value = "";
+            modalMotherBirthYear.value = "";
+          }
+          if (modalMainFields) modalMainFields.style.display = "block";
 
           if (modalPhone) modalPhone.value = "";
           if (modalEmail) modalEmail.value = "";
+
+          // Reset gender radios back to enabled
+          modalForm.querySelectorAll('input[name="modalGender"]').forEach(el => el.disabled = false);
           
           if (actionType === "add-root") {
             modalTitle.textContent = "Add Root Member";
@@ -1072,6 +1237,15 @@ const panels = {
               if (modalPhone) modalPhone.value = member.phone || "";
               if (modalEmail) modalEmail.value = member.email || "";
               
+              // Load deceased status
+              if (modalIsAlive) {
+                modalIsAlive.checked = !member.isDeceased;
+                if (modalDeathDateLabel) {
+                  modalDeathDateLabel.style.display = member.isDeceased ? "block" : "none";
+                }
+              }
+              setDropdownDate(modalDeathDay, modalDeathMonth, modalDeathYear, member.deathDate || "");
+
               if (member.spouseId) {
                 modalAnniversaryLabel.style.display = "block";
                 const spouse = members.find(m => m.id === member.spouseId);
@@ -1080,7 +1254,6 @@ const panels = {
                   setDropdownDate(modalAnniversaryDay, modalAnniversaryMonth, modalAnniversaryYear, member.anniversaryDate || spouse.anniversaryDate || "");
                 }
               } else {
-                // If grandparent or parent but doesn't have spouse yet, we allow adding spouse name
                 modalAnniversaryLabel.style.display = "none";
               }
               
@@ -1105,11 +1278,83 @@ const panels = {
               
               modalDeleteBtn.style.display = "block";
             }
+          } else if (actionType === "add-father") {
+            const member = members.find(m => m.id === targetId);
+            modalTitle.textContent = `Add Father to ${member ? member.name : ""}`;
+            setGenderSelection("Male");
+            modalForm.querySelectorAll('input[name="modalGender"]').forEach(el => el.disabled = true);
+            
+            modalSpouseContainer.style.display = "none";
+            modalChildrenSection.style.display = "none";
+            modalRelationsSection.style.display = "none";
+            modalDeleteBtn.style.display = "none";
+          } else if (actionType === "add-mother") {
+            const member = members.find(m => m.id === targetId);
+            modalTitle.textContent = `Add Mother to ${member ? member.name : ""}`;
+            setGenderSelection("Female");
+            modalForm.querySelectorAll('input[name="modalGender"]').forEach(el => el.disabled = true);
+            
+            modalSpouseContainer.style.display = "none";
+            modalChildrenSection.style.display = "none";
+            modalRelationsSection.style.display = "none";
+            modalDeleteBtn.style.display = "none";
           } else if (actionType === "add-spouse") {
             const member = members.find(m => m.id === targetId);
-            modalTitle.textContent = `Add Spouse to ${member ? member.name : ''}`;
+            modalTitle.textContent = `Add Partner to ${member ? member.name : ''}`;
             const spouseGender = member && member.gender === "Male" ? "Female" : "Male";
             setGenderSelection(spouseGender);
+            modalForm.querySelectorAll('input[name="modalGender"]').forEach(el => el.disabled = true);
+            
+            modalSpouseContainer.style.display = "none";
+            modalChildrenSection.style.display = "none";
+            modalRelationsSection.style.display = "none";
+            modalDeleteBtn.style.display = "none";
+          } else if (actionType === "add-brother") {
+            const member = members.find(m => m.id === targetId);
+            modalTitle.textContent = `Add Brother to ${member ? member.name : ""}`;
+            setGenderSelection("Male");
+            modalForm.querySelectorAll('input[name="modalGender"]').forEach(el => el.disabled = true);
+            
+            modalSpouseContainer.style.display = "none";
+            modalChildrenSection.style.display = "none";
+            modalRelationsSection.style.display = "none";
+            modalDeleteBtn.style.display = "none";
+          } else if (actionType === "add-sister") {
+            const member = members.find(m => m.id === targetId);
+            modalTitle.textContent = `Add Sister to ${member ? member.name : ""}`;
+            setGenderSelection("Female");
+            modalForm.querySelectorAll('input[name="modalGender"]').forEach(el => el.disabled = true);
+            
+            modalSpouseContainer.style.display = "none";
+            modalChildrenSection.style.display = "none";
+            modalRelationsSection.style.display = "none";
+            modalDeleteBtn.style.display = "none";
+          } else if (actionType === "add-son") {
+            const member = members.find(m => m.id === targetId);
+            modalTitle.textContent = `Add Son to ${member ? member.name : ""}`;
+            setGenderSelection("Male");
+            modalForm.querySelectorAll('input[name="modalGender"]').forEach(el => el.disabled = true);
+            
+            modalSpouseContainer.style.display = "none";
+            modalChildrenSection.style.display = "none";
+            modalRelationsSection.style.display = "none";
+            modalDeleteBtn.style.display = "none";
+          } else if (actionType === "add-daughter") {
+            const member = members.find(m => m.id === targetId);
+            modalTitle.textContent = `Add Daughter to ${member ? member.name : ""}`;
+            setGenderSelection("Female");
+            modalForm.querySelectorAll('input[name="modalGender"]').forEach(el => el.disabled = true);
+            
+            modalSpouseContainer.style.display = "none";
+            modalChildrenSection.style.display = "none";
+            modalRelationsSection.style.display = "none";
+            modalDeleteBtn.style.display = "none";
+          } else if (actionType === "add-parents") {
+            const member = members.find(m => m.id === targetId);
+            modalTitle.textContent = `Add Parents to ${member ? member.name : ""}`;
+            
+            if (modalMainFields) modalMainFields.style.display = "none";
+            if (modalMultipleParentsContainer) modalMultipleParentsContainer.style.display = "block";
             
             modalSpouseContainer.style.display = "none";
             modalChildrenSection.style.display = "none";
@@ -1132,6 +1377,13 @@ const panels = {
         function closeModal() {
           treeModal.style.display = "none";
           modalForm.reset();
+          // Reset gender radios back to enabled
+          modalForm.querySelectorAll('input[name="modalGender"]').forEach(el => el.disabled = false);
+          // Reset layouts
+          if (modalMainFields) modalMainFields.style.display = "block";
+          if (modalMultipleParentsContainer) modalMultipleParentsContainer.style.display = "none";
+          if (modalDeathDateLabel) modalDeathDateLabel.style.display = "none";
+          if (modalIsAlive) modalIsAlive.checked = true;
         }
 
         let activeProfileMemberId = null;
@@ -1214,12 +1466,12 @@ const panels = {
 
           // Enforce Client Edit Restrictions on Profile Popup Card
           const loggedInMemberId = localStorage.getItem("happyCelebrationLoggedInMemberId") || "";
+          const showActions = isAdmin || !loggedInMemberId || (loggedInMemberId === memberId);
           if (profileEditBtn) {
-            if (isAdmin || (loggedInMemberId && loggedInMemberId === memberId)) {
-              profileEditBtn.style.display = "block";
-            } else {
-              profileEditBtn.style.display = "none";
-            }
+            profileEditBtn.style.display = showActions ? "block" : "none";
+          }
+          if (profileAddRelativeBtn) {
+            profileAddRelativeBtn.style.display = showActions ? "block" : "none";
           }
 
           profileCardOverlay.style.display = "flex";
@@ -1248,6 +1500,16 @@ const panels = {
               const targetId = activeProfileMemberId;
               closeProfileCard();
               openModal("edit", targetId);
+            }
+          });
+        }
+
+        if (profileAddRelativeBtn) {
+          profileAddRelativeBtn.addEventListener("click", () => {
+            if (activeProfileMemberId) {
+              const targetId = activeProfileMemberId;
+              closeProfileCard();
+              openRelationshipSelector(targetId);
             }
           });
         }
@@ -1433,7 +1695,12 @@ const panels = {
           const phone = modalPhone ? modalPhone.value.trim() : "";
           const email = modalEmail ? modalEmail.value.trim() : "";
 
-          if (!name) return;
+          if (action !== "add-parents" && !name) return;
+
+          const isDeceased = modalIsAlive ? !modalIsAlive.checked : false;
+          const birthDate = getDropdownDate(modalBirthDay, modalBirthMonth, modalBirthYear);
+          const deathDate = isDeceased ? getDropdownDate(modalDeathDay, modalDeathMonth, modalDeathYear) : "";
+          const anniversaryDate = getDropdownDate(modalAnniversaryDay, modalAnniversaryMonth, modalAnniversaryYear);
 
           if (action === "add-root") {
             const rootId = "mem_" + Math.random().toString(36).substr(2, 9);
@@ -1441,13 +1708,15 @@ const panels = {
               id: rootId,
               name,
               gender,
-              relation: "Grandparent",
+              relation: "Self",
               spouseId: "",
               parentId: "",
-              birthDate: "",
-              anniversaryDate: "",
+              birthDate,
+              anniversaryDate,
               phone,
-              email
+              email,
+              isDeceased,
+              deathDate
             };
             
             const spouseNameValue = modalSpouseName.value.trim();
@@ -1458,13 +1727,15 @@ const panels = {
                 id: spouseId,
                 name: spouseNameValue,
                 gender: spouseGender,
-                relation: "Grandparent",
+                relation: "Spouse",
                 spouseId: rootId,
                 parentId: "",
                 birthDate: "",
-                anniversaryDate: "",
+                anniversaryDate: anniversaryDate,
                 phone: "",
-                email: ""
+                email: "",
+                isDeceased: false,
+                deathDate: ""
               };
               rootMember.spouseId = spouseId;
               members.push(spouseMember);
@@ -1484,13 +1755,15 @@ const panels = {
                   id: childId,
                   name: childName,
                   gender: childGender,
-                  relation: "Parent",
+                  relation: "Child",
                   spouseId: "",
                   parentId: rootId,
                   birthDate: "",
                   anniversaryDate: "",
                   phone: "",
-                  email: ""
+                  email: "",
+                  isDeceased: false,
+                  deathDate: ""
                 };
                 members.push(childMember);
               }
@@ -1501,9 +1774,11 @@ const panels = {
               member.name = name;
               member.gender = gender;
               
-              // Save dates
-              member.birthDate = getDropdownDate(modalBirthDay, modalBirthMonth, modalBirthYear);
-              member.anniversaryDate = getDropdownDate(modalAnniversaryDay, modalAnniversaryMonth, modalAnniversaryYear);
+              // Save dates and deceased status
+              member.birthDate = birthDate;
+              member.anniversaryDate = anniversaryDate;
+              member.isDeceased = isDeceased;
+              member.deathDate = deathDate;
               
               member.phone = phone;
               member.email = email;
@@ -1548,10 +1823,10 @@ const panels = {
               }
 
               // Process children
-              if (member.relation === "Grandparent" || member.relation === "Parent") {
+              if (member.relation === "Self" || member.relation === "Child") {
                 const childCards = modalChildrenList.querySelectorAll(".modal-child-row");
                 const processedChildIds = new Set();
-                const childRelation = member.relation === "Grandparent" ? "Parent" : "Child";
+                const childRelation = member.relation === "Self" ? "Child" : "Child";
                 
                 childCards.forEach(card => {
                   const childRowId = card.dataset.rowId;
@@ -1576,13 +1851,15 @@ const panels = {
                         id: childId,
                         name: childName,
                         gender: childGender,
-                        relation: childRelation,
+                        relation: action === "add-son" ? "Son" : "Daughter",
                         spouseId: "",
                         parentId: member.id,
                         birthDate: "",
                         anniversaryDate: "",
                         phone: "",
-                        email: ""
+                        email: "",
+                        isDeceased: false,
+                        deathDate: ""
                       };
                       members.push(childMember);
                     }
@@ -1600,6 +1877,70 @@ const panels = {
                 });
               }
             }
+          } else if (action === "add-father") {
+            const target = members.find(m => m.id === targetId);
+            if (target) {
+              const fId = "mem_" + Math.random().toString(36).substr(2, 9);
+              const parentRelation = target.relation === "Child" ? "Child" : "Self";
+              const father = {
+                id: fId,
+                name,
+                gender: "Male",
+                relation: "Father",
+                spouseId: "",
+                parentId: "",
+                birthDate,
+                anniversaryDate,
+                phone,
+                email,
+                isDeceased,
+                deathDate
+              };
+              
+              const oldParentId = target.parentId;
+              if (oldParentId) {
+                const oldParent = members.find(p => p.id === oldParentId);
+                if (oldParent && oldParent.gender === "Female") {
+                  father.spouseId = oldParent.id;
+                  oldParent.spouseId = fId;
+                }
+              }
+              
+              target.parentId = fId;
+              members.push(father);
+            }
+          } else if (action === "add-mother") {
+            const target = members.find(m => m.id === targetId);
+            if (target) {
+              const mId = "mem_" + Math.random().toString(36).substr(2, 9);
+              const parentRelation = target.relation === "Child" ? "Child" : "Self";
+              const mother = {
+                id: mId,
+                name,
+                gender: "Female",
+                relation: "Mother",
+                spouseId: "",
+                parentId: "",
+                birthDate,
+                anniversaryDate,
+                phone,
+                email,
+                isDeceased,
+                deathDate
+              };
+              
+              const oldParentId = target.parentId;
+              if (oldParentId) {
+                const oldParent = members.find(p => p.id === oldParentId);
+                if (oldParent && oldParent.gender === "Male") {
+                  mother.spouseId = oldParent.id;
+                  oldParent.spouseId = mId;
+                }
+              }
+              
+              target.parentId = mId;
+              members.push(mother);
+            }
           } else if (action === "add-spouse") {
             const targetMember = members.find(m => m.id === targetId);
             if (targetMember) {
@@ -1608,22 +1949,151 @@ const panels = {
                 id: spouseId,
                 name,
                 gender,
-                relation: targetMember.relation,
+                relation: "Spouse",
                 spouseId: targetMember.id,
                 parentId: targetMember.parentId,
-                birthDate: "",
-                anniversaryDate: "",
+                birthDate,
+                anniversaryDate,
                 phone,
-                email
+                email,
+                isDeceased,
+                deathDate
               };
               targetMember.spouseId = spouseId;
               members.push(spouseMember);
+            }
+          } else if (action === "add-brother" || action === "add-sister") {
+            const target = members.find(m => m.id === targetId);
+            if (target) {
+              const sibId = "mem_" + Math.random().toString(36).substr(2, 9);
+              const sibling = {
+                id: sibId,
+                name,
+                gender: action === "add-brother" ? "Male" : "Female",
+                relation: action === "add-brother" ? "Brother" : "Sister",
+                spouseId: "",
+                parentId: target.parentId || "",
+                birthDate,
+                anniversaryDate,
+                phone,
+                email,
+                isDeceased,
+                deathDate
+              };
+              
+              if (!target.parentId) {
+                const pId = "mem_" + Math.random().toString(36).substr(2, 9);
+                const parentRelation = target.relation === "Child" ? "Child" : "Self";
+                const dummyParent = {
+                  id: pId,
+                  name: "Parent of " + target.name,
+                  gender: "Male",
+                  relation: "Father",
+                  spouseId: "",
+                  parentId: "",
+                  birthDate: "",
+                  anniversaryDate: "",
+                  phone: "",
+                  email: "",
+                  isDeceased: false,
+                  deathDate: ""
+                };
+                target.parentId = pId;
+                sibling.parentId = pId;
+                members.push(dummyParent);
+              }
+              
+              members.push(sibling);
+            }
+          } else if (action === "add-son" || action === "add-daughter") {
+            const target = members.find(m => m.id === targetId);
+            if (target) {
+              const cId = "mem_" + Math.random().toString(36).substr(2, 9);
+              const childRelation = target.relation === "Self" ? "Child" : "Child";
+              const child = {
+                id: cId,
+                name,
+                gender: action === "add-son" ? "Male" : "Female",
+                relation: gender === "Male" ? "Son" : "Daughter",
+                spouseId: "",
+                parentId: target.id,
+                birthDate,
+                anniversaryDate,
+                phone,
+                email,
+                isDeceased,
+                deathDate
+              };
+              members.push(child);
+            }
+          } else if (action === "add-parents") {
+            const target = members.find(m => m.id === targetId);
+            if (target) {
+              const fName = modalFatherName.value.trim();
+              const fBirthYear = modalFatherBirthYear.value.trim();
+              const mName = modalMotherName.value.trim();
+              const mBirthYear = modalMotherBirthYear.value.trim();
+              
+              let fId = "";
+              let mId = "";
+              const parentRelation = target.relation === "Child" ? "Child" : "Self";
+              
+              if (fName) {
+                fId = "mem_" + Math.random().toString(36).substr(2, 9);
+                const father = {
+                  id: fId,
+                  name: fName,
+                  gender: "Male",
+                  relation: "Mother",
+                  spouseId: "",
+                  parentId: "",
+                  birthDate: fBirthYear ? "01/01/" + fBirthYear : "",
+                  anniversaryDate: "",
+                  phone: "",
+                  email: "",
+                  isDeceased: false,
+                  deathDate: ""
+                };
+                members.push(father);
+                target.parentId = fId;
+              }
+              
+              if (mName) {
+                mId = "mem_" + Math.random().toString(36).substr(2, 9);
+                const mother = {
+                  id: mId,
+                  name: mName,
+                  gender: "Female",
+                  relation: parentRelation,
+                  spouseId: "",
+                  parentId: "",
+                  birthDate: mBirthYear ? "01/01/" + mBirthYear : "",
+                  anniversaryDate: "",
+                  phone: "",
+                  email: "",
+                  isDeceased: false,
+                  deathDate: ""
+                };
+                members.push(mother);
+                if (!fName) {
+                  target.parentId = mId;
+                }
+              }
+              
+              if (fName && mName) {
+                const father = members.find(m => m.id === fId);
+                const mother = members.find(m => m.id === mId);
+                if (father && mother) {
+                  father.spouseId = mId;
+                  mother.spouseId = fId;
+                }
+              }
             }
           } else if (action === "add-child") {
             const targetMember = members.find(m => m.id === targetId);
             if (targetMember) {
               const childId = "mem_" + Math.random().toString(36).substr(2, 9);
-              const childRelation = targetMember.relation === "Grandparent" ? "Parent" : "Child";
+              const childRelation = targetMember.relation === "Self" ? "Child" : "Child";
               const childMember = {
                 id: childId,
                 name,
@@ -1634,7 +2104,9 @@ const panels = {
                 birthDate: "",
                 anniversaryDate: "",
                 phone,
-                email
+                email,
+                isDeceased: false,
+                deathDate: ""
               };
               members.push(childMember);
             }
@@ -1970,12 +2442,21 @@ function doGet(e) {
 
         // Event delegation on tree canvas
         treeCanvas.addEventListener("click", (e) => {
-          const card = e.target.closest(".tree-node-card");
+          const addBtn = e.target.closest(".add-relative-btn");
+          if (addBtn) {
+            e.stopPropagation();
+            const memberId = addBtn.dataset.id;
+            openRelationshipSelector(memberId);
+            return;
+          }
+          
+          const card = e.target.closest(".family-member-card");
           if (card) {
             const memberId = card.dataset.id;
             openProfileCard(memberId);
             return;
           }
+          
           const addFirstBtn = e.target.closest("#addFirstMemberBtn");
           if (addFirstBtn) {
             openModal("add-root");
@@ -2009,7 +2490,7 @@ function doGet(e) {
                 <button type="button" class="secondary-action edit-row-btn" data-id="${m.id}">Edit</button>
                 <button type="button" class="danger-action delete-row-btn" data-id="${m.id}">Delete</button>
               `;
-            } else if (loggedInMemberId && loggedInMemberId === m.id) {
+            } else if (!loggedInMemberId || loggedInMemberId === m.id) {
               actionsHtml = `
                 <button type="button" class="secondary-action edit-row-btn" data-id="${m.id}">Edit</button>
               `;
@@ -2105,7 +2586,12 @@ function doGet(e) {
             }
           });
           
-          const order = { "Grandparent": 1, "Parent": 2, "Child": 3 };
+          const order = { 
+            "Grandparent": 1, "Grandfather": 1, "Grandmother": 1,
+            "Father": 2, "Mother": 2, "Parent": 2, "Spouse": 2, "Partner": 2,
+            "Self": 3, "Me": 3, "Primary": 3, "Brother": 3, "Sister": 3,
+            "Son": 4, "Daughter": 4, "Child": 4
+          };
           const sortNodes = (a, b) => {
             const aRel = a.type === "couple" ? a.member1.relation : a.member.relation;
             const bRel = b.type === "couple" ? b.member1.relation : b.member.relation;
@@ -2125,76 +2611,85 @@ function doGet(e) {
           return roots;
         }
 
-        function renderCardHTML(m) {
+        function getMemberStatusText(m) {
+          let birthYear = "";
+          if (m.birthDate) {
+            const parts = m.birthDate.split("/");
+            if (parts.length === 3) birthYear = parts[2];
+          }
+          
+          if (m.isDeceased) {
+            let deathYear = "";
+            if (m.deathDate) {
+              const parts = m.deathDate.split("/");
+              if (parts.length === 3) deathYear = parts[2];
+            }
+            if (birthYear) {
+              return `${birthYear} - ${deathYear || "Deceased"}`;
+            } else {
+              return deathYear ? `Deceased (d. ${deathYear})` : "Deceased";
+            }
+          } else {
+            return birthYear ? `${birthYear} - Present` : "";
+          }
+        }
+
+        function renderCardHTML(m, isCoupleMember = false) {
           const initials = m.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
           const genderClass = m.gender.toLowerCase();
-          const relationClass = "rel-" + m.relation.toLowerCase();
+          
+          // Connectors rely on .rel-grandparent to hide top drop-lines. Root cards get .rel-grandparent.
+          const isRoot = !m.parentId;
+          const relationClass = isRoot ? "rel-grandparent" : ("rel-" + m.relation.toLowerCase());
+          
+          const loggedInMemberId = localStorage.getItem("happyCelebrationLoggedInMemberId") || "";
+          const showAddBtn = isAdmin || !loggedInMemberId || (loggedInMemberId === m.id);
+          const addBtnHTML = showAddBtn ? `<button type="button" class="add-relative-btn" data-id="${m.id}" title="Add relative">+</button>` : "";
+          
+          const statusText = getMemberStatusText(m);
+          const statusHTML = statusText ? `<span class="node-status">${escapeHtml(statusText)}</span>` : "";
+
+          const cardClasses = isCoupleMember 
+            ? `family-member-card ${genderClass} ${relationClass}`
+            : `tree-node-card circular family-member-card ${genderClass} ${relationClass}`;
+
           return `
-            <div class="tree-node-card circular ${genderClass} ${relationClass}" data-id="${m.id}">
+            <div class="${cardClasses}" data-id="${m.id}">
               <div class="node-avatar">${initials}</div>
               <div class="node-details">
                 <span class="node-name" title="${escapeHtml(m.name)}">${escapeHtml(m.name)}</span>
                 <span class="node-relation">${escapeHtml(m.relation)}</span>
+                ${statusHTML}
               </div>
+              ${addBtnHTML}
             </div>
           `;
         }
 
         function renderCoupleCardHTML(node) {
           let memberLeft, memberRight;
-          let isLeftSpouse = false;
-          let isRightSpouse = false;
-          const isGrandparent = node.member1.relation === "Grandparent";
+          const isRoot = !node.member1.parentId && !node.member2.parentId;
 
-          if (isGrandparent) {
+          if (isRoot) {
             memberLeft = node.member1;
             memberRight = node.member2;
           } else {
             if (node.member1.parentId) {
               memberLeft = node.member1;
               memberRight = node.member2;
-              isRightSpouse = true;
             } else {
               memberLeft = node.member2;
               memberRight = node.member1;
-              isLeftSpouse = true;
             }
           }
 
-          const initLeft = memberLeft.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
-          const initRight = memberRight.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
-          const genderLeft = memberLeft.gender.toLowerCase();
-          const genderRight = memberRight.gender.toLowerCase();
-          const relationClass = "rel-" + node.member1.relation.toLowerCase();
+          const descendantClass = isRoot ? "" : (node.member1.parentId ? "descendant-left" : "descendant-right");
+          const relationClass = isRoot ? "rel-grandparent" : ("rel-" + node.member1.relation.toLowerCase());
           
-          const classLeft = `node-avatar ${genderLeft}${isLeftSpouse ? " spouse" : " descendant"}`;
-          const classRight = `node-avatar ${genderRight}${isRightSpouse ? " spouse" : " descendant"}`;
-          
-          const tooltipLeft = `${escapeHtml(memberLeft.name)}${isLeftSpouse ? " (Spouse)" : " (Direct Descendant)"}`;
-          const tooltipRight = `${escapeHtml(memberRight.name)}${isRightSpouse ? " (Spouse)" : " (Direct Descendant)"}`;
-          
-          const badgeLeft = isLeftSpouse ? `<span class="spouse-badge" title="Spouse">💍</span>` : "";
-          const badgeRight = isRightSpouse ? `<span class="spouse-badge" title="Spouse">💍</span>` : "";
-
-          const fullName = `${memberLeft.name} & ${memberRight.name}`;
-          const descendantClass = isGrandparent ? "" : (isRightSpouse ? "descendant-left" : "descendant-right");
-
           return `
             <div class="tree-node-card circular couple ${relationClass} ${descendantClass}" data-id="${node.member1.id}">
-              <div class="couple-avatars">
-                <div class="${classLeft}" title="${tooltipLeft}">
-                  ${initLeft}
-                  ${badgeLeft}
-                </div>
-                <div class="${classRight}" title="${tooltipRight}">
-                  ${initRight}
-                  ${badgeRight}
-                </div>
-              </div>
-              <div class="node-details">
-                <span class="node-name" title="${escapeHtml(fullName)}">${escapeHtml(fullName)}</span>
-                <span class="node-relation">${escapeHtml(node.member1.relation)}</span>
-              </div>
+              ${renderCardHTML(memberLeft, true)}
+              ${renderCardHTML(memberRight, true)}
             </div>
           `;
         }
@@ -2206,8 +2701,8 @@ function doGet(e) {
           
           if (node.type === "couple") {
             headerHTML = renderCoupleCardHTML(node);
-            const isGrandparent = node.member1.relation === "Grandparent";
-            if (!isGrandparent) {
+            const isRoot = !node.member1.parentId && !node.member2.parentId;
+            if (!isRoot) {
               if (node.member1.parentId) {
                 branchClass = "child-left";
               } else {
