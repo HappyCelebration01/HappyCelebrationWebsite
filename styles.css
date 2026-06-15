@@ -3092,6 +3092,270 @@ body.theme-sapphire .sync-card { border-color: rgba(29, 114, 185, 0.3); }
 body.theme-violet .sync-card { border-color: rgba(139, 22, 180, 0.3); }
 body.theme-luxury .sync-card { border-color: rgba(201, 130, 45, 0.3); }
 
+/* Book Workspace Tabs Navigation */
+.book-workspace {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.book-tabs-nav {
+  display: flex;
+  background: rgba(30, 4, 12, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 8px;
+  padding: 3px;
+  margin-bottom: 12px;
+  gap: 3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.book-tab-nav-btn {
+  flex: 1;
+  background: none;
+  border: 0;
+  color: var(--soft);
+  padding: 7px 2px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
+}
+
+.book-tab-nav-btn.active {
+  background: linear-gradient(135deg, var(--gold-100), var(--gold-500));
+  color: #2c0b00;
+  box-shadow: 0 2px 8px rgba(245, 199, 110, 0.25);
+}
+
+/* Theme overrides for active tab button */
+body.theme-emerald .book-tab-nav-btn.active {
+  background: linear-gradient(135deg, #a7ffd0, var(--emerald-glow));
+  color: #002c11;
+  box-shadow: 0 2px 8px rgba(167, 255, 208, 0.25);
+}
+body.theme-sapphire .book-tab-nav-btn.active {
+  background: linear-gradient(135deg, #9ae2ff, var(--sapphire-glow));
+  color: #001a2c;
+  box-shadow: 0 2px 8px rgba(154, 226, 255, 0.25);
+}
+body.theme-violet .book-tab-nav-btn.active {
+  background: linear-gradient(135deg, #f7d2ff, var(--violet-glow));
+  color: #26002c;
+  box-shadow: 0 2px 8px rgba(247, 210, 255, 0.25);
+}
+body.theme-luxury .book-tab-nav-btn.active {
+  background: linear-gradient(135deg, #ffe5be, var(--gold-500));
+  color: #2c1a00;
+  box-shadow: 0 2px 8px rgba(255, 229, 190, 0.25);
+}
+
+/* Live Quote Estimator Card */
+.live-quote-card {
+  background: rgba(30, 4, 12, 0.45);
+  border: 1px solid rgba(245, 199, 110, 0.25);
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+body.theme-wine .live-quote-card { border-color: rgba(229, 39, 78, 0.3); }
+body.theme-emerald .live-quote-card { border-color: rgba(10, 154, 79, 0.3); }
+body.theme-sapphire .live-quote-card { border-color: rgba(29, 114, 185, 0.3); }
+body.theme-violet .live-quote-card { border-color: rgba(139, 22, 180, 0.3); }
+body.theme-luxury .live-quote-card { border-color: rgba(201, 130, 45, 0.3); }
+
+.quote-header {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold-100);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.quote-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--soft);
+}
+
+.quote-val {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #fff;
+}
+
+.quote-divider {
+  height: 1px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+  margin: 4px 0;
+}
+
+.quote-row.total {
+  font-size: 15px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.quote-row.total .quote-val {
+  font-size: 17px;
+  color: var(--gold-100);
+  text-shadow: 0 0 8px rgba(245, 199, 110, 0.4);
+}
+
+/* Pricing Card Styles */
+.pricing-card {
+  background: rgba(30, 4, 12, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.pricing-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 199, 110, 0.2);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+body.theme-wine .pricing-card:hover { border-color: rgba(229, 39, 78, 0.25); }
+body.theme-emerald .pricing-card:hover { border-color: rgba(10, 154, 79, 0.25); }
+body.theme-sapphire .pricing-card:hover { border-color: rgba(29, 114, 185, 0.25); }
+body.theme-violet .pricing-card:hover { border-color: rgba(139, 22, 180, 0.25); }
+body.theme-luxury .pricing-card:hover { border-color: rgba(201, 130, 45, 0.25); }
+
+.pricing-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 8px;
+}
+
+.pricing-card-title {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--gold-100);
+}
+
+.pricing-card-badge {
+  background: rgba(245, 199, 110, 0.15);
+  color: var(--gold-100);
+  border: 1px solid rgba(245, 199, 110, 0.3);
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pricing-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.pricing-field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--soft);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pricing-field-val {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+}
+
+.pricing-card-description {
+  font-size: 12px;
+  color: #ddd;
+  line-height: 1.45;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--gold-300);
+}
+
+/* Edit State Inputs */
+.pricing-card-input {
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(20, 2, 8, 0.65);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  transition: border-color 0.2s;
+}
+
+.pricing-card-input:focus {
+  outline: none;
+  border-color: var(--gold-300);
+}
+
+.pricing-card-textarea {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(20, 2, 8, 0.65);
+  color: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  resize: vertical;
+  line-height: 1.4;
+  transition: border-color 0.2s;
+}
+
+.pricing-card-textarea:focus {
+  outline: none;
+  border-color: var(--gold-300);
+}
+
+.pricing-card-save-btn {
+  margin-top: 4px;
+  min-height: 34px !important;
+  font-size: 12px !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+
 
 
 

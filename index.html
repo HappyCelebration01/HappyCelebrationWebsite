@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=67">
+    <link rel="stylesheet" href="styles.css?v=68">
   </head>
   <body>
     <main class="app-shell" aria-label="Happy Celebration application">
@@ -97,57 +97,92 @@
     </main>
 
     <template id="bookTemplate">
-      <form class="lux-form book-form" id="bookingForm">
-        <label>
-          <span>Name</span>
-          <input name="name" type="text" placeholder="Your name" required>
-        </label>
-        <label>
-          <span>Event Type</span>
-          <select name="eventType" required>
-            <option value="Birthday">Birthday</option>
-            <option value="Wedding">Wedding</option>
-            <option value="Anniversary">Anniversary</option>
-            <option value="Corporate Celebration">Corporate Celebration</option>
-          </select>
-        </label>
-        <label>
-          <span>Date</span>
-          <div class="dropdown-group">
-            <select name="bookingMonth" id="bookingMonth" required>
-              <option value="">Month</option>
-              <option value="01">Jan</option>
-              <option value="02">Feb</option>
-              <option value="03">Mar</option>
-              <option value="04">Apr</option>
-              <option value="05">May</option>
-              <option value="06">Jun</option>
-              <option value="07">Jul</option>
-              <option value="08">Aug</option>
-              <option value="09">Sep</option>
-              <option value="10">Oct</option>
-              <option value="11">Nov</option>
-              <option value="12">Dec</option>
-            </select>
-            <select name="bookingDay" id="bookingDay" required>
-              <option value="">Day</option>
-            </select>
-            <select name="bookingYear" id="bookingYear" required>
-              <option value="">Year</option>
-            </select>
-          </div>
-        </label>
-        <label>
-          <span>Guests</span>
-          <input name="guests" type="number" min="10" max="1000" value="100" required>
-        </label>
-        <label>
-          <span>Venue</span>
-          <input name="venue" type="text" placeholder="City or venue name" required>
-        </label>
-        <button class="primary-action" type="submit">Send Booking</button>
-        <p class="form-note" id="bookingNote"></p>
-      </form>
+      <div class="book-workspace" style="display: flex; flex-direction: column; height: 100%; min-height: 0;">
+        <!-- Custom Tabs Navigation -->
+        <div class="book-tabs-nav">
+          <button type="button" class="book-tab-nav-btn active" id="bookNowTabBtn">Book Now</button>
+          <button type="button" class="book-tab-nav-btn" id="basePricesTabBtn">Base Prices</button>
+        </div>
+
+        <!-- Book Now View -->
+        <div class="book-now-view active" id="bookNowView" style="display: flex; flex-direction: column; flex: 1; min-height: 0; overflow-y: auto; padding-bottom: 24px;">
+          <form class="lux-form book-form" id="bookingForm" style="display: flex; flex-direction: column; gap: 14px; margin-top: 4px;">
+            <label>
+              <span>Name</span>
+              <input name="name" type="text" placeholder="Your name" required autocomplete="off">
+            </label>
+            <label>
+              <span>Event Type</span>
+              <select name="eventType" id="bookingEventType" required>
+                <option value="Birthday">Birthday</option>
+                <option value="Wedding">Wedding</option>
+                <option value="Anniversary">Anniversary</option>
+                <option value="Corporate Celebration">Corporate Celebration</option>
+              </select>
+            </label>
+            <label>
+              <span>Date</span>
+              <div class="dropdown-group">
+                <select name="bookingMonth" id="bookingMonth" required>
+                  <option value="">Month</option>
+                  <option value="01">Jan</option>
+                  <option value="02">Feb</option>
+                  <option value="03">Mar</option>
+                  <option value="04">Apr</option>
+                  <option value="05">May</option>
+                  <option value="06">Jun</option>
+                  <option value="07">Jul</option>
+                  <option value="08">Aug</option>
+                  <option value="09">Sep</option>
+                  <option value="10">Oct</option>
+                  <option value="11">Nov</option>
+                  <option value="12">Dec</option>
+                </select>
+                <select name="bookingDay" id="bookingDay" required>
+                  <option value="">Day</option>
+                </select>
+                <select name="bookingYear" id="bookingYear" required>
+                  <option value="">Year</option>
+                </select>
+              </div>
+            </label>
+            <label>
+              <span>Guests</span>
+              <input name="guests" id="bookingGuests" type="number" min="10" max="1000" value="100" required>
+            </label>
+            <label>
+              <span>Venue</span>
+              <input name="venue" type="text" placeholder="City or venue name" required autocomplete="off">
+            </label>
+
+            <!-- Live Quote Estimation Card -->
+            <div class="live-quote-card" id="liveQuoteCard">
+              <span class="quote-header">✦ Live Price Estimation ✦</span>
+              <div class="quote-row">
+                <span>Base Setup Fee:</span>
+                <span id="quoteBaseSetup" class="quote-val">₹0</span>
+              </div>
+              <div class="quote-row">
+                <span>Catering & Setup:</span>
+                <span id="quotePerGuest" class="quote-val">₹0</span>
+              </div>
+              <div class="quote-divider"></div>
+              <div class="quote-row total">
+                <span>Estimated Total:</span>
+                <span id="quoteTotal" class="quote-val">₹0</span>
+              </div>
+            </div>
+
+            <button class="primary-action" type="submit" style="margin-top: 6px;">Send Booking</button>
+            <p class="form-note" id="bookingNote"></p>
+          </form>
+        </div>
+
+        <!-- Base Prices View -->
+        <div class="base-prices-view" id="basePricesView" style="display: none; flex-direction: column; gap: 16px; padding-bottom: 24px; max-height: 480px; overflow-y: auto; padding-right: 4px; margin-top: 4px;">
+          <!-- Pricing sheets will be dynamically rendered here -->
+        </div>
+      </div>
     </template>
 
     <template id="galleryTemplate">
@@ -513,6 +548,6 @@
       </div>
     </template>
 
-    <script src="script.js?v=67"></script>
+    <script src="script.js?v=68"></script>
   </body>
 </html>

@@ -229,15 +229,95 @@ const panels = {
     kicker: "Reservation",
     template: "bookTemplate",
     setup(root) {
+      // Base Prices Data
+      const defaultBasePrices = {
+        "Birthday": { baseSetup: 5000, perGuest: 500, description: "Includes basic theme decor, birthday cake, standard sound system, and party snacks." },
+        "Wedding": { baseSetup: 50000, perGuest: 1500, description: "Includes stage decoration, standard lighting, catering service, bride/groom seating setup, and welcoming flowers." },
+        "Anniversary": { baseSetup: 8000, perGuest: 600, description: "Includes romantic stage setup, photo display zone, anniversary cake, live music background, and fine dining buffet." },
+        "Corporate Celebration": { baseSetup: 15000, perGuest: 1000, description: "Includes stage branding, projector & AV system, mocktail bar, host/emcee, and corporate dinner buffet." }
+      };
+
+      function getBasePrices() {
+        try {
+          const raw = localStorage.getItem("happyCelebrationBasePrices");
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            // Ensure all required fields exist
+            for (const key in defaultBasePrices) {
+              if (!parsed[key]) parsed[key] = { ...defaultBasePrices[key] };
+            }
+            return parsed;
+          }
+        } catch (e) {}
+        return { ...defaultBasePrices };
+      }
+
+      function saveBasePrices(prices) {
+        try {
+          localStorage.setItem("happyCelebrationBasePrices", JSON.stringify(prices));
+        } catch (e) {}
+      }
+
+      // Check Admin Role
+      function checkIsAdmin() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has("admin") && params.get("admin") === "true") return true;
+        if (params.has("role") && params.get("role") === "organizer") return true;
+        try {
+          const regData = localStorage.getItem("happyCelebrationRegistration");
+          if (regData) {
+            const data = JSON.parse(regData);
+            if (data.role === "Organizer") return true;
+          }
+        } catch(e) {}
+        return false;
+      }
+
+      const isAdmin = checkIsAdmin();
+
+      // Elements
+      const bookNowTabBtn = root.querySelector("#bookNowTabBtn");
+      const basePricesTabBtn = root.querySelector("#basePricesTabBtn");
+      const bookNowView = root.querySelector("#bookNowView");
+      const basePricesView = root.querySelector("#basePricesView");
+
       const form = root.querySelector("#bookingForm");
       const note = root.querySelector("#bookingNote");
 
       const monthSel = root.querySelector("#bookingMonth");
       const daySel = root.querySelector("#bookingDay");
       const yearSel = root.querySelector("#bookingYear");
+      
+      const eventTypeSel = root.querySelector("#bookingEventType");
+      const guestsInput = root.querySelector("#bookingGuests");
+
+      const quoteBaseSetup = root.querySelector("#quoteBaseSetup");
+      const quotePerGuest = root.querySelector("#quotePerGuest");
+      const quoteTotal = root.querySelector("#quoteTotal");
+
+      // Tab Switching
+      if (bookNowTabBtn && basePricesTabBtn) {
+        bookNowTabBtn.addEventListener("click", () => {
+          bookNowTabBtn.classList.add("active");
+          basePricesTabBtn.classList.remove("active");
+          bookNowView.style.display = "flex";
+          basePricesView.style.display = "none";
+          // Re-calculate live quote when switching back
+          updateLiveQuote();
+        });
+
+        basePricesTabBtn.addEventListener("click", () => {
+          basePricesTabBtn.classList.add("active");
+          bookNowTabBtn.classList.remove("active");
+          bookNowView.style.display = "none";
+          basePricesView.style.display = "flex";
+          renderPricingSheet();
+        });
+      }
 
       // Populate Days (1 to 31)
       if (daySel) {
+        daySel.innerHTML = '<option value="">Day</option>';
         for (let i = 1; i <= 31; i++) {
           const val = String(i).padStart(2, '0');
           const opt = document.createElement("option");
@@ -249,6 +329,7 @@ const panels = {
 
       // Populate Years (current year to current year + 5)
       if (yearSel) {
+        yearSel.innerHTML = '<option value="">Year</option>';
         const currentYear = new Date().getFullYear();
         for (let i = currentYear; i <= currentYear + 5; i++) {
           const opt = document.createElement("option");
@@ -261,7 +342,7 @@ const panels = {
       // Auto-prefill fields if shortcuts were clicked
       if (window.prefilledBooking) {
         if (form.name) form.name.value = window.prefilledBooking.name || "";
-        if (form.eventType) form.eventType.value = window.prefilledBooking.eventType || "Birthday";
+        if (eventTypeSel) eventTypeSel.value = window.prefilledBooking.eventType || "Birthday";
         if (window.prefilledBooking.date && monthSel && daySel && yearSel) {
           const parts = window.prefilledBooking.date.split("/");
           if (parts.length === 3) {
@@ -270,8 +351,127 @@ const panels = {
             yearSel.value = parts[2];
           }
         }
-        if (form.guests) form.guests.value = 100;
+        if (guestsInput) guestsInput.value = 100;
         window.prefilledBooking = null; // Clear prefill
+      }
+
+      // Live Quote Functionality
+      function updateLiveQuote() {
+        if (!eventTypeSel || !guestsInput || !quoteBaseSetup || !quotePerGuest || !quoteTotal) return;
+        const prices = getBasePrices();
+        const eventType = eventTypeSel.value || "Birthday";
+        const guests = parseInt(guestsInput.value, 10) || 0;
+
+        const config = prices[eventType] || defaultBasePrices[eventType];
+        const setupFee = config.baseSetup;
+        const perGuestFee = config.perGuest;
+        const totalPerGuest = perGuestFee * guests;
+        const total = setupFee + totalPerGuest;
+
+        quoteBaseSetup.textContent = `₹${setupFee.toLocaleString('en-IN')}`;
+        quotePerGuest.textContent = `₹${totalPerGuest.toLocaleString('en-IN')} (₹${perGuestFee.toLocaleString('en-IN')} × ${guests} guests)`;
+        quoteTotal.textContent = `₹${total.toLocaleString('en-IN')}`;
+      }
+
+      if (eventTypeSel) eventTypeSel.addEventListener("change", updateLiveQuote);
+      if (guestsInput) guestsInput.addEventListener("input", updateLiveQuote);
+      
+      // Run once initially
+      updateLiveQuote();
+
+      // Render Pricing Tab Sheet
+      function renderPricingSheet() {
+        if (!basePricesView) return;
+        const prices = getBasePrices();
+        basePricesView.innerHTML = "";
+
+        Object.keys(prices).forEach(key => {
+          const config = prices[key];
+          const card = document.createElement("div");
+          card.className = "pricing-card";
+
+          if (isAdmin) {
+            // Render editable inputs
+            card.innerHTML = `
+              <div class="pricing-card-header">
+                <span class="pricing-card-title">${key}</span>
+                <span class="pricing-card-badge">Admin Mode</span>
+              </div>
+              <div class="pricing-card-grid">
+                <label class="pricing-field-label">
+                  <span>Base Setup Fee (₹)</span>
+                  <input type="number" class="pricing-card-input setup-input" value="${config.baseSetup}" min="0" required>
+                </label>
+                <label class="pricing-field-label">
+                  <span>Per Guest Fee (₹)</span>
+                  <input type="number" class="pricing-card-input guest-input" value="${config.perGuest}" min="0" required>
+                </label>
+              </div>
+              <label class="pricing-field-label">
+                <span>Included Services & Description</span>
+                <textarea class="pricing-card-textarea desc-input" required>${escapeHtml(config.description)}</textarea>
+              </label>
+              <button class="primary-action pricing-card-save-btn" type="button">Save Prices</button>
+            `;
+
+            // Setup Save Listener
+            card.querySelector(".pricing-card-save-btn").addEventListener("click", () => {
+              const setupVal = parseInt(card.querySelector(".setup-input").value, 10);
+              const guestVal = parseInt(card.querySelector(".guest-input").value, 10);
+              const descVal = card.querySelector(".desc-input").value;
+
+              if (isNaN(setupVal) || setupVal < 0 || isNaN(guestVal) || guestVal < 0 || !descVal.trim()) {
+                alert("Please fill in valid pricing values and description.");
+                return;
+              }
+
+              const allPrices = getBasePrices();
+              allPrices[key] = {
+                baseSetup: setupVal,
+                perGuest: guestVal,
+                description: descVal.trim()
+              };
+              saveBasePrices(allPrices);
+
+              // Flash a success indication
+              const btn = card.querySelector(".pricing-card-save-btn");
+              const oldText = btn.textContent;
+              btn.textContent = "Saved ✓";
+              btn.style.background = "#2e7d32";
+              setTimeout(() => {
+                btn.textContent = oldText;
+                btn.style.background = "";
+              }, 1200);
+
+              // Also update the live quote card in the background
+              updateLiveQuote();
+            });
+
+          } else {
+            // Render view-only card
+            card.innerHTML = `
+              <div class="pricing-card-header">
+                <span class="pricing-card-title">${key}</span>
+                <span class="pricing-card-badge">Base Package</span>
+              </div>
+              <div class="pricing-card-grid">
+                <div class="pricing-field-label">
+                  <span>Base Setup Fee</span>
+                  <span class="pricing-field-val">₹${config.baseSetup.toLocaleString('en-IN')}</span>
+                </div>
+                <div class="pricing-field-label">
+                  <span>Per Guest Fee</span>
+                  <span class="pricing-field-val">₹${config.perGuest.toLocaleString('en-IN')} / guest</span>
+                </div>
+              </div>
+              <div class="pricing-card-description">
+                ${escapeHtml(config.description)}
+              </div>
+            `;
+          }
+
+          basePricesView.appendChild(card);
+        });
       }
 
       form.addEventListener("submit", (event) => {
@@ -299,8 +499,15 @@ const panels = {
         // Attach the composite date string
         data.date = dateString;
 
+        // Calculate and attach final price quote estimate for billing context
+        const prices = getBasePrices();
+        const evType = data.eventType || "Birthday";
+        const guestsNum = parseInt(data.guests, 10) || 0;
+        const config = prices[evType] || defaultBasePrices[evType];
+        data.estimatedTotal = config.baseSetup + (config.perGuest * guestsNum);
+
         localStorage.setItem("happyCelebrationBooking", JSON.stringify(data));
-        note.textContent = "Booking request saved. We will contact you shortly.";
+        note.textContent = `Booking request saved. Estimated Total: ₹${data.estimatedTotal.toLocaleString('en-IN')}. We will contact you shortly.`;
         note.style.color = "";
       });
     },
