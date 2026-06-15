@@ -27,9 +27,19 @@ function updateRegistrationState() {
   const regDataRaw = localStorage.getItem("happyCelebrationRegistration");
   const registerCard = document.querySelector('[data-panel="register"]');
   const greetingBanner = document.querySelector("#greetingBanner");
+  const userProfileBtn = document.querySelector("#userProfileBtn");
 
   if (regDataRaw) {
     const data = JSON.parse(regDataRaw);
+    if (userProfileBtn) {
+      userProfileBtn.classList.add("logged-in");
+      if (data.fullName) {
+        userProfileBtn.textContent = data.fullName.trim().charAt(0).toUpperCase();
+      } else {
+        userProfileBtn.textContent = "👤";
+      }
+    }
+
     if (registerCard) {
       const spanText = registerCard.querySelector("span:last-of-type");
       if (spanText) {
@@ -71,6 +81,11 @@ function updateRegistrationState() {
     renderCountdownBanner();
 
   } else {
+    if (userProfileBtn) {
+      userProfileBtn.classList.remove("logged-in");
+      userProfileBtn.textContent = "👤";
+    }
+
     if (registerCard) {
       const spanText = registerCard.querySelector("span:last-of-type");
       if (spanText) {
@@ -879,6 +894,7 @@ const panels = {
             }, 3000);
           }, 50);
         }
+        window.focusMemberOnTree = focusMemberOnTree;
 
         if (treeSearchInput) {
           treeSearchInput.addEventListener("input", (e) => {
@@ -1194,6 +1210,16 @@ const panels = {
           } else {
             profileEmailAction.removeAttribute("href");
             profileEmailAction.classList.add("disabled");
+          }
+
+          // Enforce Client Edit Restrictions on Profile Popup Card
+          const loggedInMemberId = localStorage.getItem("happyCelebrationLoggedInMemberId") || "";
+          if (profileEditBtn) {
+            if (isAdmin || (loggedInMemberId && loggedInMemberId === memberId)) {
+              profileEditBtn.style.display = "block";
+            } else {
+              profileEditBtn.style.display = "none";
+            }
           }
 
           profileCardOverlay.style.display = "flex";
@@ -1958,6 +1984,10 @@ function doGet(e) {
 
         // Render editor member rows
         function renderMemberList() {
+          if (addMemberBtn) {
+            addMemberBtn.style.display = isAdmin ? "block" : "none";
+          }
+
           if (!members.length) {
             membersListList.innerHTML = `
               <div class="empty-tree-container" style="padding: 32px 16px;">
@@ -1967,9 +1997,24 @@ function doGet(e) {
             return;
           }
           
+          const loggedInMemberId = localStorage.getItem("happyCelebrationLoggedInMemberId") || "";
+
           membersListList.innerHTML = members.map(m => {
             const initials = m.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
             const genderClass = m.gender.toLowerCase();
+            
+            let actionsHtml = "";
+            if (isAdmin) {
+              actionsHtml = `
+                <button type="button" class="secondary-action edit-row-btn" data-id="${m.id}">Edit</button>
+                <button type="button" class="danger-action delete-row-btn" data-id="${m.id}">Delete</button>
+              `;
+            } else if (loggedInMemberId && loggedInMemberId === m.id) {
+              actionsHtml = `
+                <button type="button" class="secondary-action edit-row-btn" data-id="${m.id}">Edit</button>
+              `;
+            }
+
             return `
               <div class="member-row-card">
                 <div class="member-row-info">
@@ -1980,8 +2025,7 @@ function doGet(e) {
                   </div>
                 </div>
                 <div class="member-row-actions">
-                  <button type="button" class="secondary-action edit-row-btn" data-id="${m.id}">Edit</button>
-                  <button type="button" class="danger-action delete-row-btn" data-id="${m.id}">Delete</button>
+                  ${actionsHtml}
                 </div>
               </div>
             `;
@@ -2231,69 +2275,301 @@ function doGet(e) {
     }
   },
   register: {
-    title: "Register",
-    kicker: "Guest Entry",
+    title: "Profile / Login",
+    kicker: "Access Control",
     template: "registerTemplate",
     setup(root) {
+      function checkIsAdmin() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has("admin") && params.get("admin") === "true") return true;
+        if (params.has("role") && params.get("role") === "organizer") return true;
+        try {
+          const regData = localStorage.getItem("happyCelebrationRegistration");
+          if (regData) {
+            const data = JSON.parse(regData);
+            if (data.role === "Organizer") return true;
+          }
+        } catch(e) {}
+        return false;
+      }
+
+      function linkUserToTreeMember(fullName, phone) {
+        try {
+          const raw = localStorage.getItem("happyCelebrationFamily");
+          const members = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(members)) return null;
+
+          const cleanNum = p => String(p || "").replace(/\D/g, "");
+          const targetPhoneClean = cleanNum(phone);
+
+          if (targetPhoneClean) {
+            const match = members.find(m => cleanNum(m.phone) === targetPhoneClean && targetPhoneClean.length > 5);
+            if (match) return match;
+          }
+
+          // Fallback to name search
+          const targetName = String(fullName || "").toLowerCase().trim();
+          if (targetName) {
+            const match = members.find(m => String(m.name || "").toLowerCase().trim() === targetName);
+            if (match) return match;
+          }
+        } catch (e) {}
+        return null;
+      }
+
       function renderRegisterView() {
         const regDataRaw = localStorage.getItem("happyCelebrationRegistration");
         if (regDataRaw) {
           const data = JSON.parse(regDataRaw);
-          root.innerHTML = `
-            <div class="lux-form" style="padding: 22px 20px; text-align: center; display: grid; gap: 16px;">
-              <div style="font-size: 48px; margin-bottom: 8px;">👤</div>
-              <h3 style="margin: 0; color: var(--gold-100); font-family: Georgia, serif; font-size: 24px;">${escapeHtml(data.fullName)}</h3>
-              <p style="margin: 0; color: var(--gold-300); font-size: 11px; text-transform: uppercase; letter-spacing: 2px;">${escapeHtml(data.role)}</p>
-              
-              <div style="text-align: left; background: rgba(0,0,0,0.25); border-radius: 12px; padding: 16px; border: 1px solid rgba(245,199,110,0.15); font-size: 13px; display: grid; gap: 10px; margin: 8px 0;">
-                <div><strong style="color: var(--soft);">Phone:</strong> <span style="color: #fff;">${escapeHtml(data.phone)}</span></div>
-                ${data.emailId ? `<div><strong style="color: var(--soft);">Email ID:</strong> <span style="color: #fff;">${escapeHtml(data.emailId)}</span></div>` : ""}
+          const loggedInMemberId = localStorage.getItem("happyCelebrationLoggedInMemberId") || "";
+
+          // Fetch family members to get relations
+          let members = [];
+          try {
+            const raw = localStorage.getItem("happyCelebrationFamily");
+            members = raw ? JSON.parse(raw) : [];
+          } catch(e) {}
+
+          const matchMember = members.find(m => m.id === loggedInMemberId);
+
+          if (matchMember) {
+            // Find relations
+            const spouse = members.find(m => m.id === matchMember.spouseId);
+            const parent = members.find(m => m.id === matchMember.parentId);
+            const children = members.filter(m => m.parentId === matchMember.id || (matchMember.spouseId && m.parentId === matchMember.spouseId));
+
+            const relationBadges = [];
+            if (spouse) relationBadges.push(`<span class="dashboard-badge">💍 Spouse: ${escapeHtml(spouse.name)}</span>`);
+            if (parent) relationBadges.push(`<span class="dashboard-badge">👴 Parent: ${escapeHtml(parent.name)}</span>`);
+            children.forEach(c => relationBadges.push(`<span class="dashboard-badge">👶 Child: ${escapeHtml(c.name)}</span>`));
+
+            root.innerHTML = `
+              <div class="dashboard-card">
+                <div class="dashboard-title">My Dashboard</div>
+                
+                <div style="text-align: center; margin-bottom: 12px;">
+                  <div style="font-size: 48px; margin-bottom: 4px;">👤</div>
+                  <h3 style="margin: 0; color: var(--gold-100); font-family: Georgia, serif; font-size: 22px;">${escapeHtml(matchMember.name)}</h3>
+                  <span style="color: var(--gold-300); font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px;">${escapeHtml(data.role)}</span>
+                </div>
+
+                <div class="dashboard-row">
+                  <span class="dashboard-label">Relationship:</span>
+                  <span class="dashboard-val">${escapeHtml(matchMember.relation)}</span>
+                </div>
+                <div class="dashboard-row">
+                  <span class="dashboard-label">Phone:</span>
+                  <span class="dashboard-val">${escapeHtml(matchMember.phone || data.phone)}</span>
+                </div>
+                ${matchMember.email || data.emailId ? `
+                <div class="dashboard-row">
+                  <span class="dashboard-label">Email ID:</span>
+                  <span class="dashboard-val">${escapeHtml(matchMember.email || data.emailId)}</span>
+                </div>
+                ` : ""}
+                ${matchMember.birthDate ? `
+                <div class="dashboard-row">
+                  <span class="dashboard-label">Birthday:</span>
+                  <span class="dashboard-val">${escapeHtml(matchMember.birthDate)}</span>
+                </div>
+                ` : ""}
+                ${matchMember.anniversaryDate ? `
+                <div class="dashboard-row">
+                  <span class="dashboard-label">Wedding Anniversary:</span>
+                  <span class="dashboard-val">${escapeHtml(matchMember.anniversaryDate)}</span>
+                </div>
+                ` : ""}
+
+                ${relationBadges.length > 0 ? `
+                <div class="dashboard-section">
+                  <span class="dashboard-section-title">My Family Connections</span>
+                  <div class="dashboard-badge-list">
+                    ${relationBadges.join("")}
+                  </div>
+                </div>
+                ` : ""}
+
+                <button class="primary-action" id="focusMyNodeBtn" type="button" style="margin-top: 14px; width: 100%;">View My Node on Tree</button>
+                <button class="danger-action" id="logoutBtn" type="button" style="margin-top: 8px; width: 100%;">Log Out</button>
               </div>
-              
-              <button class="danger-action" id="logoutBtn" type="button" style="min-height: 44px; font-weight: 700; width: 100%;">Log Out</button>
-            </div>
-          `;
-          
+            `;
+
+            // Focus on tree listener
+            root.querySelector("#focusMyNodeBtn").addEventListener("click", () => {
+              openPanel("family");
+              const previewTabBtn = document.querySelector("#previewTabBtn");
+              if (previewTabBtn) {
+                previewTabBtn.click();
+              }
+              setTimeout(() => {
+                if (typeof window.focusMemberOnTree === "function") {
+                  window.focusMemberOnTree(loggedInMemberId);
+                }
+              }, 1200); // 1.2s delay for panel rendering animation transition
+            });
+
+          } else {
+            // Linked node not found (Guest with no tree entry yet)
+            root.innerHTML = `
+              <div class="dashboard-card">
+                <div class="dashboard-title">Profile Page</div>
+                
+                <div style="text-align: center; margin-bottom: 12px;">
+                  <div style="font-size: 48px; margin-bottom: 4px;">👤</div>
+                  <h3 style="margin: 0; color: var(--gold-100); font-family: Georgia, serif; font-size: 22px;">${escapeHtml(data.fullName)}</h3>
+                  <span style="color: #ff9aa2; background: rgba(255, 74, 90, 0.1); border: 1px solid rgba(255, 74, 90, 0.25); padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-top: 6px;">Unlinked Guest</span>
+                </div>
+
+                <div class="dashboard-row">
+                  <span class="dashboard-label">Phone:</span>
+                  <span class="dashboard-val">${escapeHtml(data.phone)}</span>
+                </div>
+                ${data.emailId ? `
+                <div class="dashboard-row">
+                  <span class="dashboard-label">Email ID:</span>
+                  <span class="dashboard-val">${escapeHtml(data.emailId)}</span>
+                </div>
+                ` : ""}
+                
+                <div class="pricing-card-description" style="margin-top: 12px; border-left-color: #ff4a5a; background: rgba(255, 74, 90, 0.05); font-size: 12px; color: #ff9aa2;">
+                  ⚠️ Your phone number is not linked to any member in the family tree. Please ask the administrator to link your profile.
+                </div>
+
+                <button class="danger-action" id="logoutBtn" type="button" style="margin-top: 14px; width: 100%;">Log Out</button>
+              </div>
+            `;
+          }
+
           root.querySelector("#logoutBtn").addEventListener("click", () => {
             if (confirm("Are you sure you want to log out / clear your profile?")) {
               localStorage.removeItem("happyCelebrationRegistration");
+              localStorage.removeItem("happyCelebrationLoggedInMemberId");
               updateRegistrationState();
               renderRegisterView();
             }
           });
+
         } else {
+          // Render Tabs & Form
           root.innerHTML = `
-            <form class="lux-form" id="registerForm">
-              <label>
-                <span>Full Name</span>
-                <input name="fullName" type="text" placeholder="Your name" required autocomplete="off">
-              </label>
-              <label>
-                <span>Phone</span>
-                <input name="phone" type="tel" placeholder="+91 98765 43210" required autocomplete="off">
-              </label>
-              <label>
-                <span>Email ID</span>
-                <input name="emailId" type="email" placeholder="example@domain.com" autocomplete="off">
-              </label>
-              <label>
-                <span>Role</span>
-                <select name="role" required>
-                  <option value="Guest">Guest</option>
-                  <option value="Family Member">Family Member</option>
-                  <option value="Organizer">Organizer</option>
-                </select>
-              </label>
-              <button class="primary-action" type="submit" style="width: 100%;">Register</button>
-              <p class="form-note" id="registerNote"></p>
-            </form>
+            <div class="auth-workspace" style="display: flex; flex-direction: column; height: 100%; min-height: 0;">
+              <!-- Auth Tabs Navigation -->
+              <div class="auth-tabs-nav">
+                <button type="button" class="auth-tab-nav-btn active" id="signInTabBtn">Sign In</button>
+                <button type="button" class="auth-tab-nav-btn" id="signUpTabBtn">Sign Up</button>
+              </div>
+
+              <!-- Sign In View -->
+              <div class="auth-view active" id="signInView" style="display: flex; flex-direction: column; flex: 1; min-height: 0;">
+                <form class="lux-form" id="signInForm" style="display: flex; flex-direction: column; gap: 14px; margin-top: 4px;">
+                  <label>
+                    <span>Full Name</span>
+                    <input name="fullName" id="signInName" type="text" placeholder="Your full name" required autocomplete="off">
+                  </label>
+                  <label>
+                    <span>Phone Number</span>
+                    <input name="phone" id="signInPhone" type="tel" placeholder="e.g. +91 98765 43210" required autocomplete="off">
+                  </label>
+                  <button class="primary-action" type="submit" style="margin-top: 6px; width: 100%;">Sign In</button>
+                  <p class="form-note" id="signInNote"></p>
+                </form>
+              </div>
+
+              <!-- Sign Up View -->
+              <div class="auth-view" id="signUpView" style="display: none; flex-direction: column; flex: 1; min-height: 0;">
+                <form class="lux-form" id="registerForm" style="display: flex; flex-direction: column; gap: 14px; margin-top: 4px;">
+                  <label>
+                    <span>Full Name</span>
+                    <input name="fullName" id="registerName" type="text" placeholder="Your name" required autocomplete="off">
+                  </label>
+                  <label>
+                    <span>Phone Number</span>
+                    <input name="phone" id="registerPhone" type="tel" placeholder="e.g. +91 98765 43210" required autocomplete="off">
+                  </label>
+                  <label>
+                    <span>Email ID</span>
+                    <input name="emailId" id="registerEmail" type="email" placeholder="example@domain.com" autocomplete="off">
+                  </label>
+                  <label>
+                    <span>Role</span>
+                    <select name="role" id="registerRole" required>
+                      <option value="Guest">Guest</option>
+                      <option value="Family Member">Family Member</option>
+                      <option value="Organizer">Organizer</option>
+                    </select>
+                  </label>
+                  <button class="primary-action" type="submit" style="margin-top: 6px; width: 100%;">Register</button>
+                  <p class="form-note" id="registerNote"></p>
+                </form>
+              </div>
+            </div>
           `;
-          
-          const form = root.querySelector("#registerForm");
-          const note = root.querySelector("#registerNote");
-          form.addEventListener("submit", (event) => {
+
+          const signInTabBtn = root.querySelector("#signInTabBtn");
+          const signUpTabBtn = root.querySelector("#signUpTabBtn");
+          const signInView = root.querySelector("#signInView");
+          const signUpView = root.querySelector("#signUpView");
+
+          signInTabBtn.addEventListener("click", () => {
+            signInTabBtn.classList.add("active");
+            signUpTabBtn.classList.remove("active");
+            signInView.style.display = "flex";
+            signUpView.style.display = "none";
+          });
+
+          signUpTabBtn.addEventListener("click", () => {
+            signUpTabBtn.classList.add("active");
+            signInTabBtn.classList.remove("active");
+            signUpView.style.display = "flex";
+            signInView.style.display = "none";
+          });
+
+          // Sign In Submit
+          const signInForm = root.querySelector("#signInForm");
+          const signInNote = root.querySelector("#signInNote");
+
+          signInForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(signInForm));
+            
+            const match = linkUserToTreeMember(data.fullName, data.phone);
+            let role = "Guest";
+            if (match) {
+              if (String(match.name).toLowerCase().includes("amjad")) {
+                role = "Organizer";
+              } else {
+                role = "Family Member";
+              }
+              localStorage.setItem("happyCelebrationLoggedInMemberId", match.id);
+            }
+
+            const regData = {
+              fullName: match ? match.name : data.fullName,
+              phone: match ? match.phone : data.phone,
+              emailId: match ? (match.email || "") : "",
+              role: role
+            };
+
+            localStorage.setItem("happyCelebrationRegistration", JSON.stringify(regData));
+            updateRegistrationState();
+            
+            signInNote.style.color = "#86efac";
+            signInNote.textContent = match 
+              ? `Logged in successfully as ${match.name}!` 
+              : "Signed in successfully as Guest!";
+            
+            setTimeout(() => {
+              renderRegisterView();
+            }, 1000);
+          });
+
+          // Sign Up Submit
+          const registerForm = root.querySelector("#registerForm");
+          const registerNote = root.querySelector("#registerNote");
+
+          registerForm.addEventListener("submit", (event) => {
             event.preventDefault();
-            const formData = Object.fromEntries(new FormData(form));
+            const formData = Object.fromEntries(new FormData(registerForm));
             localStorage.setItem("happyCelebrationRegistration", JSON.stringify(formData));
             
             const nameLower = formData.fullName.toLowerCase();
@@ -2316,8 +2592,15 @@ function doGet(e) {
               }
             }
             
+            // Check if matches member in tree to link ID
+            const match = linkUserToTreeMember(formData.fullName, formData.phone);
+            if (match) {
+              localStorage.setItem("happyCelebrationLoggedInMemberId", match.id);
+            }
+
             updateRegistrationState();
-            note.textContent = `${formData.fullName} is registered.`;
+            registerNote.style.color = "#86efac";
+            registerNote.textContent = `${formData.fullName} is registered.`;
             setTimeout(() => {
               renderRegisterView();
             }, 1000);
@@ -2463,6 +2746,13 @@ document.addEventListener("DOMContentLoaded", () => {
       
       localStorage.setItem("happyCelebrationTheme", themeName);
     }
+  }
+
+  const userProfileBtn = document.getElementById("userProfileBtn");
+  if (userProfileBtn) {
+    userProfileBtn.addEventListener("click", () => {
+      openPanel("register");
+    });
   }
 });
 

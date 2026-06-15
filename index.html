@@ -24,6 +24,10 @@
             <button class="theme-settings-btn" id="themeSettingsBtn" aria-label="Change color theme" type="button">
               <span class="theme-picker-icon"></span>
             </button>
+            <!-- User Profile / Login Button -->
+            <button class="user-profile-btn" id="userProfileBtn" aria-label="Login or Profile" type="button">
+              👤
+            </button>
             <div class="theme-dropdown" id="themeDropdown" style="display: none;">
               <span class="theme-dropdown-title">Choose Color</span>
               <div class="theme-options">
@@ -505,30 +509,57 @@
     </template>
 
     <template id="registerTemplate">
-      <form class="lux-form" id="registerForm">
-        <label>
-          <span>Full Name</span>
-          <input name="fullName" type="text" placeholder="Your name" required>
-        </label>
-        <label>
-          <span>Phone</span>
-          <input name="phone" type="tel" placeholder="+91 98765 43210" required>
-        </label>
-        <label>
-          <span>Email ID</span>
-          <input name="emailId" type="email" placeholder="example@domain.com">
-        </label>
-        <label>
-          <span>Role</span>
-          <select name="role" required>
-            <option value="Guest">Guest</option>
-            <option value="Family Member">Family Member</option>
-            <option value="Organizer">Organizer</option>
-          </select>
-        </label>
-        <button class="primary-action" type="submit">Register</button>
-        <p class="form-note" id="registerNote"></p>
-      </form>
+      <div class="auth-workspace" style="display: flex; flex-direction: column; height: 100%; min-height: 0;">
+        <!-- Auth Tabs Navigation -->
+        <div class="auth-tabs-nav">
+          <button type="button" class="auth-tab-nav-btn active" id="signInTabBtn">Sign In</button>
+          <button type="button" class="auth-tab-nav-btn" id="signUpTabBtn">Sign Up</button>
+        </div>
+
+        <!-- Sign In View -->
+        <div class="auth-view active" id="signInView" style="display: flex; flex-direction: column; flex: 1; min-height: 0;">
+          <form class="lux-form" id="signInForm" style="display: flex; flex-direction: column; gap: 14px; margin-top: 4px;">
+            <label>
+              <span>Full Name</span>
+              <input name="fullName" id="signInName" type="text" placeholder="Your full name" required autocomplete="off">
+            </label>
+            <label>
+              <span>Phone Number</span>
+              <input name="phone" id="signInPhone" type="tel" placeholder="e.g. +91 98765 43210" required autocomplete="off">
+            </label>
+            <button class="primary-action" type="submit" style="margin-top: 6px; width: 100%;">Sign In</button>
+            <p class="form-note" id="signInNote"></p>
+          </form>
+        </div>
+
+        <!-- Sign Up View -->
+        <div class="auth-view" id="signUpView" style="display: none; flex-direction: column; flex: 1; min-height: 0;">
+          <form class="lux-form" id="registerForm" style="display: flex; flex-direction: column; gap: 14px; margin-top: 4px;">
+            <label>
+              <span>Full Name</span>
+              <input name="fullName" id="registerName" type="text" placeholder="Your name" required autocomplete="off">
+            </label>
+            <label>
+              <span>Phone Number</span>
+              <input name="phone" id="registerPhone" type="tel" placeholder="e.g. +91 98765 43210" required autocomplete="off">
+            </label>
+            <label>
+              <span>Email ID</span>
+              <input name="emailId" id="registerEmail" type="email" placeholder="example@domain.com" autocomplete="off">
+            </label>
+            <label>
+              <span>Role</span>
+              <select name="role" id="registerRole" required>
+                <option value="Guest">Guest</option>
+                <option value="Family Member">Family Member</option>
+                <option value="Organizer">Organizer</option>
+              </select>
+            </label>
+            <button class="primary-action" type="submit" style="margin-top: 6px; width: 100%;">Register</button>
+            <p class="form-note" id="registerNote"></p>
+          </form>
+        </div>
+      </div>
     </template>
 
     <template id="contactTemplate">
