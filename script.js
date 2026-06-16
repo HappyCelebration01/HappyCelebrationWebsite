@@ -2732,6 +2732,7 @@ function doGet(e) {
           return `
             <div class="tree-node-card circular couple ${relationClass} ${descendantClass}" data-id="${node.member1.id}">
               ${renderCardHTML(memberLeft, true)}
+              <div class="spouse-connector-line"></div>
               ${renderCardHTML(memberRight, true)}
             </div>
           `;

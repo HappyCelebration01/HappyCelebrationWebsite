@@ -1802,14 +1802,14 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 8px;
+  margin: 4px auto 8px;
   background: rgba(30, 4, 12, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 6px 12px;
+  border-radius: 8px;
+  padding: 4px 8px;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
@@ -1817,14 +1817,14 @@ select {
 }
 
 .zoom-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
   border: 1px solid rgba(245, 199, 110, 0.35);
   background: rgba(30, 4, 12, 0.5);
   color: var(--gold-100);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
   display: grid;
   place-items: center;
@@ -1839,17 +1839,18 @@ select {
 
 #zoomFitBtn {
   width: auto;
-  padding: 0 10px;
-  font-size: 11px;
+  padding: 0 8px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  height: 26px;
 }
 
 .zoom-label {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--soft);
   font-weight: 700;
-  min-width: 44px;
+  min-width: 32px;
   text-align: center;
 }
 
@@ -2201,6 +2202,18 @@ select {
   left: 196px;
   top: -24px;
   transform: translateX(-50%);
+}
+
+.spouse-connector-line {
+  position: absolute;
+  top: 50%;
+  left: 120px;
+  width: 16px;
+  height: 2px;
+  background: var(--gold-300);
+  transform: translateY(-50%);
+  z-index: 5;
+  pointer-events: none;
 }
 
 .couple-avatars {
@@ -2806,13 +2819,13 @@ select {
 
 /* Expand family tree scrollable canvas to utilize 100% of remaining vertical screen */
 .screen:has(#panelView.active .family-workspace) .tree-canvas-wrapper {
-  height: calc(100vh - 215px) !important;
-  max-height: calc(100vh - 215px) !important;
+  height: calc(100vh - 165px) !important;
+  max-height: calc(100vh - 165px) !important;
 }
 @media (min-width: 431px) {
   .screen:has(#panelView.active .family-workspace) .tree-canvas-wrapper {
-    height: calc(min(900px, 100vh - 48px) - 235px) !important;
-    max-height: calc(min(900px, 100vh - 48px) - 235px) !important;
+    height: calc(min(900px, 100vh - 48px) - 185px) !important;
+    max-height: calc(min(900px, 100vh - 48px) - 185px) !important;
   }
 }
 
