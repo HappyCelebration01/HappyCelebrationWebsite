@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Happy Celebration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=81">
+  </head>
+  <body>
+    <main class="app-shell" aria-label="Happy Celebration application">
+      <section class="phone-frame">
+        <div class="screen">
+          <!-- Floating Celebration Background Particles -->
+          <div class="floating-celebration-container" id="floatingCelebrationContainer" aria-hidden="true"></div>
+
+          <header class="dashboard-header">
+            <button class="avatar-btn" id="avatarBtn" aria-label="User Profile" type="button">
+              <img class="avatar-img" src="../assets/hc-logo-mark.png" alt="Profile">
+            </button>
+            <div class="streak-capsule" id="streakCapsule" aria-label="Streak tracker">
+              <span class="streak-fire">🔥</span>
+              <span class="streak-text"><strong id="streakCount">0</strong> day streak</span>
+              <span class="streak-emoji">👾</span>
+            </div>
+            <button class="notification-btn" id="notificationBtn" aria-label="Notifications" type="button">
+              <span class="bell-icon">🔔</span>
+              <span class="notification-badge">3</span>
+            </button>
+          </header>
+
+          <!-- Small Brand Bar -->
+          <div class="brand-bar">
+            <div class="brand-content">
+              <img class="brand-logo-small" src="../assets/hc-logo-mark.png" alt="Happy Celebration">
+              <span class="brand-text-small">HAPPY CELEBRATION</span>
+            </div>
+            <button class="theme-settings-btn" id="themeSettingsBtn" aria-label="Change color theme" type="button">
+              <span class="theme-picker-icon"></span>
+            </button>
+            <div class="theme-dropdown" id="themeDropdown" style="display: none;">
+              <span class="theme-dropdown-title">Choose Color</span>
+              <div class="theme-options">
+                <button class="theme-opt wine active" data-theme="wine" title="Wine Red" type="button"></button>
+                <button class="theme-opt emerald" data-theme="emerald" title="Emerald Green" type="button"></button>
+                <button class="theme-opt sapphire" data-theme="sapphire" title="Sapphire Blue" type="button"></button>
+                <button class="theme-opt violet" data-theme="violet" title="Midnight Violet" type="button"></button>
+                <button class="theme-opt luxury" data-theme="luxury" title="Black & Gold" type="button"></button>
+              </div>
+            </div>
+          </div>
+
+          <section class="home-view active" id="homeView" aria-label="Main menu">
+            <!-- Hero Promo Slider -->
+            <div class="hero-slider" id="heroSlider">
+              <div class="slider-wrapper">
+                <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.85)), url('../assets/celebration-bg.webp');">
+                  <div class="slide-badge">MEMBER SPECIAL</div>
+                  <h2 class="slide-title">EXCLUSIVE<br><span class="gold-text">15% + 5% OFF*</span></h2>
+                  <p class="slide-subtitle">Premium Celebration Packages</p>
+                  <button class="slide-cta" type="button" data-panel="book">BOOK NOW</button>
+                </div>
+                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.85)), url('../assets/event-lights.webp');">
+                  <div class="slide-badge">EVENT SPECIAL</div>
+                  <h2 class="slide-title">MEMORABLE<br><span class="gold-text">EVENING LIGHTS</span></h2>
+                  <p class="slide-subtitle">Magical Garden & Outdoor Setups</p>
+                  <button class="slide-cta" type="button" data-panel="book">BOOK NOW</button>
+                </div>
+                <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.85)), url('../assets/family-tree.png');">
+                  <div class="slide-badge">FAMILY TREE</div>
+                  <h2 class="slide-title">CHERISH THE<br><span class="gold-text">FAMILY MOMENTS</span></h2>
+                  <p class="slide-subtitle">Interactive Digital Family Organizers</p>
+                  <button class="slide-cta" type="button" data-panel="family">PREVIEW TREE</button>
+                </div>
+              </div>
+              <!-- Slide Indicators -->
+              <div class="slider-indicators">
+                <span class="ind active" data-slide="0"></span>
+                <span class="ind" data-slide="1"></span>
+                <span class="ind" data-slide="2"></span>
+              </div>
+            </div>
+
+            <!-- Quick Action Grid (4 columns) -->
+            <div class="quick-actions-bar">
+              <button class="quick-action-card glow-blue" type="button" data-panel="register">
+                <div class="quick-action-icon-wrapper">
+                  <span class="quick-action-icon icon-signin">🔑</span>
+                </div>
+                <span class="quick-action-label">Sign In/Up</span>
+              </button>
+              <button class="quick-action-card glow-pink" type="button" data-panel="gallery">
+                <div class="quick-action-icon-wrapper">
+                  <span class="quick-action-icon icon-gallery">🖼️</span>
+                </div>
+                <span class="quick-action-label">Gallery</span>
+              </button>
+              <button class="quick-action-card glow-gold" type="button" data-panel="contact">
+                <div class="quick-action-icon-wrapper">
+                  <span class="quick-action-icon icon-contact">📞</span>
+                </div>
+                <span class="quick-action-label">Contact Us</span>
+              </button>
+              <button class="quick-action-card glow-red" type="button" data-panel="family">
+                <div class="quick-action-icon-wrapper">
+                  <span class="quick-action-icon icon-family">🌳</span>
+                </div>
+                <span class="quick-action-label">Family Tree</span>
+              </button>
+            </div>
+
+            <!-- Activity Tracker Card -->
+            <div class="activity-tracker-card" data-panel="book" type="button">
+              <div class="activity-left">
+                <span class="activity-thunder">⚡</span>
+                <div class="activity-text">
+                  <span class="activity-count" id="activityCount">0/3</span>
+                  <span class="activity-label">Events Booked This Month</span>
+                </div>
+              </div>
+              <button class="activity-btn" type="button">BOOK</button>
+            </div>
+          </section>
+
+          <section class="panel-view" id="panelView" aria-live="polite">
+            <div class="panel-top">
+              <button class="back-button" type="button" id="backButton" aria-label="Back to menu">&lsaquo;</button>
+              <div>
+                <p id="panelKicker">Happy Celebration</p>
+                <h2 id="panelTitle">Book Event</h2>
+              </div>
+            </div>
+            <div class="panel-content" id="panelContent"></div>
+          </section>
+
+          <a class="whatsapp-fab" href="https://wa.me/918850228282" aria-label="Contact on WhatsApp" style="bottom: 85px;">
+            <span></span>
+          </a>
+
+          <!-- Bottom Navigation Bar -->
+          <nav class="bottom-nav-bar" aria-label="Bottom Navigation">
+            <button class="nav-tab active" data-tab="home" type="button">
+              <span class="nav-icon">🏠</span>
+              <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-tab" data-tab="book" type="button">
+              <span class="nav-icon">📅</span>
+              <span class="nav-label">Book</span>
+            </button>
+            <button class="nav-tab search-tab" data-tab="search" type="button">
+              <div class="search-circle">
+                <span class="nav-icon search-icon">🔍</span>
+              </div>
+            </button>
+            <button class="nav-tab" data-tab="family" type="button">
+              <span class="nav-icon">🌳</span>
+              <span class="nav-label">Family</span>
+            </button>
+            <button class="nav-tab" data-tab="about" type="button">
+              <span class="nav-icon">ℹ️</span>
+              <span class="nav-label">About</span>
+            </button>
+          </nav>
+        </div>
+      </section>
+    </main>
+
+    <template id="bookTemplate">
+      <div class="book-workspace" style="display: flex; flex-direction: column; height: 100%; min-height: 0;">
+        <!-- Custom Tabs Navigation -->
+        <div class="book-tabs-nav">
+          <button type="button" class="book-tab-nav-btn active" id="bookNowTabBtn">Book Now</button>
+          <button type="button" class="book-tab-nav-btn" id="basePricesTabBtn">Base Prices</button>
+        </div>
+
+        <!-- Book Now View -->
+        <div class="book-now-view active" id="bookNowView" style="display: flex; flex-direction: column; flex: 1; min-height: 0; overflow-y: auto; padding-bottom: 24px;">
+          <form class="lux-form book-form" id="bookingForm" style="display: flex; flex-direction: column; gap: 14px; margin-top: 4px;">
+            <label>
+              <span>Name</span>
+              <input name="name" type="text" placeholder="Your name" required autocomplete="off">
+            </label>
+            <label>
+              <span>Event Type</span>
+              <select name="eventType" id="bookingEventType" required>
+                <option value="Birthday">Birthday</option>
+                <option value="Wedding">Wedding</option>
+                <option value="Anniversary">Anniversary</option>
+                <option value="Corporate Celebration">Corporate Celebration</option>
+              </select>
+            </label>
+            <label>
+              <span>Date</span>
+              <div class="dropdown-group">
+                <select name="bookingMonth" id="bookingMonth" required>
+                  <option value="">Month</option>
+                  <option value="01">Jan</option>
+                  <option value="02">Feb</option>
+                  <option value="03">Mar</option>
+                  <option value="04">Apr</option>
+                  <option value="05">May</option>
+                  <option value="06">Jun</option>
+                  <option value="07">Jul</option>
+                  <option value="08">Aug</option>
+                  <option value="09">Sep</option>
+                  <option value="10">Oct</option>
+                  <option value="11">Nov</option>
+                  <option value="12">Dec</option>
+                </select>
+                <select name="bookingDay" id="bookingDay" required>
+                  <option value="">Day</option>
+                </select>
+                <select name="bookingYear" id="bookingYear" required>
+                  <option value="">Year</option>
+                </select>
+              </div>
+            </label>
+            <label>
+              <span>Guests</span>
+              <input name="guests" id="bookingGuests" type="number" min="10" max="1000" value="100" required>
+            </label>
+            <label>
+              <span>Venue</span>
+              <input name="venue" type="text" placeholder="City or venue name" required autocomplete="off">
+            </label>
+
+            <!-- Live Quote Estimation Card -->
+            <div class="live-quote-card" id="liveQuoteCard">
+              <span class="quote-header">✦ Live Price Estimation ✦</span>
+              <div class="quote-row">
+                <span>Base Setup Fee:</span>
+                <span id="quoteBaseSetup" class="quote-val">₹0</span>
+              </div>
+              <div class="quote-row">
+                <span>Catering & Setup:</span>
+                <span id="quotePerGuest" class="quote-val">₹0</span>
+              </div>
+              <div class="quote-divider"></div>
+              <div class="quote-row total">
+                <span>Estimated Total:</span>
+                <span id="quoteTotal" class="quote-val">₹0</span>
+              </div>
+            </div>
+
+            <button class="primary-action" type="submit" style="margin-top: 6px;">Send Booking</button>
+            <p class="form-note" id="bookingNote"></p>
+          </form>
+        </div>
+
+        <!-- Base Prices View -->
+        <div class="base-prices-view" id="basePricesView" style="display: none; flex-direction: column; gap: 16px; padding-bottom: 24px; max-height: 480px; overflow-y: auto; padding-right: 4px; margin-top: 4px;">
+          <!-- Pricing sheets will be dynamically rendered here -->
+        </div>
+      </div>
+    </template>
+
+    <template id="galleryTemplate">
+      <div class="photo-grid">
+        <figure>
+          <img src="../assets/event-lights.webp" alt="Elegant outdoor event lights">
+          <figcaption>Evening Decor</figcaption>
+        </figure>
+        <figure>
+          <img src="../assets/celebration-bg.webp" alt="Colorful celebration confetti">
+          <figcaption>Celebration Mood</figcaption>
+        </figure>
+        <figure>
+          <img src="../assets/family-tree.png" alt="Family tree artwork">
+          <figcaption>Family Moments</figcaption>
+        </figure>
+      </div>
+    </template>
+
+    <template id="aboutTemplate">
+      <article class="story-card" style="max-height: 480px; overflow-y: auto; padding-bottom: 24px;">
+        <img src="../assets/event-lights.webp" alt="Warm celebration venue">
+        <h3 style="margin-top: 20px; font-size: 19px; line-height: 1.45; color: var(--gold-100);">Never miss the chance to make memories with your family, friends and special ones.</h3>
+        <p>At Happy Celebration, we believe that every special moment deserves to be remembered and cherished. Our mission is simple: to bring joy, convenience, and thoughtful planning to your family’s most important occasions.</p>
+        <p>We collect and organize birthdays, anniversaries, and milestones, then proactively remind you before each event. With just a few taps, you can book complete celebration packages — from décor, cakes, flowers, snacks, and delicious food spreads — delivered right to your home or chosen venue.</p>
+        <p style="font-family: Georgia, serif; font-style: italic; color: var(--gold-100); font-size: 15px; font-weight: 700; text-align: center; margin: 24px 0; padding: 10px 0; border-top: 1px dashed rgba(245, 199, 110, 0.3); border-bottom: 1px dashed rgba(245, 199, 110, 0.3); text-shadow: 0 0 8px rgba(245, 199, 110, 0.4);">
+          ✦ Never miss celebrating — make it memorable. ✦
+        </p>
+        <p>Our vision is to make celebrations stress‑free, beautifully organized, and truly unforgettable. Whether it’s a cozy family gathering with light snacks or a grand event with full meals, we’re here to ensure that happiness arrives on time, every time.</p>
+        <div class="stats" style="margin-top: 20px;">
+          <span><strong>250+</strong>Events</span>
+          <span><strong>12</strong>Cities</span>
+          <span><strong>4.9</strong>Rating</span>
+        </div>
+      </article>
+    </template>
+
+    <template id="familyTemplate">
+      <div class="family-workspace">
+        <!-- Custom Tabs Navigation -->
+        <div class="family-tabs-nav">
+          <button type="button" class="family-tab-nav-btn active" id="editorTabBtn">Members</button>
+          <button type="button" class="family-tab-nav-btn" id="previewTabBtn">Preview</button>
+          <button type="button" class="family-tab-nav-btn" id="syncTabBtn">Sync</button>
+        </div>
+
+        <!-- Editor Tab View -->
+        <div class="family-editor-view active" id="familyEditorView">
+          <div class="editor-header">
+            <button class="primary-action" id="addMemberBtn" type="button">+ Add Family Member</button>
+            <button class="secondary-action" id="exportCsvBtn" type="button" style="min-height: 40px; font-size: 13px; padding: 0 16px;">Export Excel</button>
+            <button class="danger-action" id="clearTreeBtn" type="button">Reset Tree</button>
+          </div>
+          <div class="members-list-list" id="membersListList">
+            <!-- Dynamically populated list of member rows -->
+          </div>
+        </div>
+
+        <!-- Preview Tab View -->
+        <div class="family-preview-view" id="familyPreviewView" style="display: none;">
+
+          <div class="tree-zoom-controls">
+            <button type="button" class="zoom-btn" id="zoomOutBtn" aria-label="Zoom Out">−</button>
+            <span class="zoom-label" id="zoomLabel">100%</span>
+            <button type="button" class="zoom-btn" id="zoomInBtn" aria-label="Zoom In">+</button>
+            <button type="button" class="zoom-btn" id="zoomFitBtn">Auto Fit</button>
+            <button type="button" class="zoom-btn" id="clearTreeZoomBtn" style="width: auto; padding: 0 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; border-color: rgba(255, 74, 90, 0.4); color: #ff9aa2; background: rgba(255, 74, 90, 0.1); margin-left: 8px;">Reset</button>
+          </div>
+          
+          <div class="tree-canvas-wrapper circular-mode" id="treeCanvasWrapper">
+            <div id="treeCanvas" class="tree-canvas">
+              <!-- Dynamically populated interactive tree -->
+            </div>
+          </div>
+          <p class="swipe-hint">↔ Tap circles to edit/delete. Swipe/zoom to explore tree ↔</p>
+        </div>
+
+        <!-- Sync Tab View -->
+        <div class="family-sync-view" id="familySyncView" style="display: none;">
+          <div class="sync-card">
+            <h3>Google Sheets Sync</h3>
+            <p>Automatically save and backup your family tree to a Google Sheet, allowing family members to submit their details directly from their own devices.</p>
+            
+            <label class="lux-label" style="display: block; margin-bottom: 14px;">
+              <span style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 500; color: var(--gold-300);">Google Apps Script Web App URL</span>
+              <input type="url" id="googleSheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" style="width: 100%; min-height: 42px; padding: 10px; border-radius: 8px; border: 1px solid rgba(245, 199, 110, 0.4); background: rgba(30, 4, 12, 0.85); color: #fff;">
+            </label>
+            
+            <div class="sync-actions" style="margin-top: 14px; display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; gap: 10px; width: 100%;">
+                <button class="primary-action" id="pullFromSheetsBtn" type="button" style="flex: 1; min-height: 40px; font-size: 13px;">Pull from Google Sheets</button>
+                <button class="primary-action" id="pushToSheetsBtn" type="button" style="flex: 1; min-height: 40px; font-size: 13px;">Push to Google Sheets</button>
+              </div>
+              <button class="secondary-action" id="saveSyncConfigBtn" type="button" style="width: 100%; min-height: 40px; font-size: 13px;">Save Config</button>
+            </div>
+            
+            <div id="syncStatusMessage" style="margin-top: 12px; font-size: 13px; color: var(--gold-300); font-weight: 500; text-align: center;"></div>
+            
+            <div class="instructions-box" style="margin-top: 20px; padding: 14px; border: 1px dashed rgba(245, 199, 110, 0.3); border-radius: 8px; font-size: 13px; color: #eee; background: rgba(30, 4, 12, 0.35);">
+              <h4 style="color: var(--gold-100); margin-bottom: 8px;">How to set up Google Sheets (100% Free):</h4>
+              <ol style="margin-left: 16px; display: flex; flex-direction: column; gap: 6px; padding-left: 10px;">
+                <li>Create a new Google Sheet.</li>
+                <li>Go to <strong>Extensions &gt; Apps Script</strong>.</li>
+                <li>Delete any default code, paste the script code using the button below.</li>
+                <li>Click <strong>Deploy &gt; New deployment</strong>. Select "Web app", set Execute as "Me", and Who has access to "Anyone".</li>
+                <li>Deploy, authorize permissions, copy the Web App URL, and paste it here!</li>
+              </ol>
+              <button type="button" class="secondary-action" id="copyAppsScriptBtn" style="margin-top: 12px; width: 100%; min-height: 36px; font-size: 12px;">Copy Google Apps Script Code</button>
+            </div>
+          </div>
+          
+          <div class="sync-card" style="margin-top: 20px;">
+            <h3>WhatsApp Submission Tool</h3>
+            <p>Generate a direct WhatsApp sharing text message template or link that family members can use to send you their structured details.</p>
+            
+            <div class="sync-actions" style="margin-top: 14px;">
+              <button class="primary-action" id="generateWaLinkBtn" type="button" style="width: 100%; min-height: 40px; font-size: 13px;">Copy WhatsApp Format & Link</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Member Profile Details Card Overlay -->
+        <div id="profileCardOverlay" class="tree-modal-overlay" style="display: none;">
+          <div class="tree-modal-content profile-card-content">
+            <button type="button" class="profile-close-btn" id="profileCloseBtn" aria-label="Close profile">&times;</button>
+            
+            <div class="profile-header">
+              <div class="profile-avatar" id="profileAvatar">-</div>
+              <h3 class="profile-name" id="profileName">Member Name</h3>
+              <span class="profile-relation" id="profileRelation">Relation</span>
+            </div>
+            
+            <div class="profile-body">
+              <div class="profile-info-row" id="profileBirthRow">
+                <span class="info-icon">🎂</span>
+                <div>
+                  <span class="info-label">Birthday</span>
+                  <span class="info-value" id="profileBirthDate">-</span>
+                </div>
+              </div>
+              
+              <div class="profile-info-row" id="profileAnniversaryRow" style="display: none;">
+                <span class="info-icon">💍</span>
+                <div>
+                  <span class="info-label">Wedding Anniversary</span>
+                  <span class="info-value" id="profileAnniversaryDate">-</span>
+                </div>
+              </div>
+
+              <div class="profile-info-row" id="profilePhoneRow">
+                <span class="info-icon">📞</span>
+                <div>
+                  <span class="info-label">Contact Number</span>
+                  <span class="info-value" id="profilePhone">-</span>
+                </div>
+              </div>
+
+              <div class="profile-info-row" id="profileEmailRow">
+                <span class="info-icon">✉️</span>
+                <div>
+                  <span class="info-label">Email ID</span>
+                  <span class="info-value" id="profileEmail">-</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-actions">
+              <div class="contact-quick-actions">
+                <a href="#" id="profileCallAction" class="quick-action-btn call" title="Call"><span class="action-icon">📞</span>Call</a>
+                <a href="#" id="profileWaAction" class="quick-action-btn whatsapp" title="WhatsApp"><span class="action-icon">💬</span>WhatsApp</a>
+                <a href="#" id="profileEmailAction" class="quick-action-btn email" title="Email"><span class="action-icon">✉️</span>Email</a>
+              </div>
+              <button type="button" class="primary-action" id="profileEditBtn" style="width: 100%; margin-top: 14px;">Edit Details</button>
+              <button type="button" class="primary-action" id="profileAddRelativeBtn" style="width: 100%; margin-top: 8px; background: var(--gold-300); color: #100006; display: none;">Add Relative</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Glassmorphic Popup Modal Overlay -->
+        <div id="treeModal" class="tree-modal-overlay" style="display: none;">
+          <div class="tree-modal-content">
+            <h4 id="modalTitle">Add Member</h4>
+
+            <form id="modalForm" class="lux-form compact-form" onsubmit="return false;">
+              <!-- Add hidden inputs to keep track of targets -->
+              <input type="hidden" id="modalActionType" value="add">
+              <input type="hidden" id="modalTargetId" value="">
+              
+              <!-- Multiple Parents Fields (shown for add-parents) -->
+              <div id="modalMultipleParentsContainer" style="display: none;">
+                <div style="margin-bottom: 16px; border-bottom: 1px solid rgba(245, 199, 110, 0.2); padding-bottom: 12px;">
+                  <span style="color: var(--gold-300); font-weight: bold; display: block; margin-bottom: 8px; font-size: 14px;">Father's Details</span>
+                  <label>
+                    <span>Father's Name</span>
+                    <input id="modalFatherName" type="text" placeholder="Name" autocomplete="off">
+                  </label>
+                  <label style="margin-top: 10px; display: block;">
+                    <span>Birth Year</span>
+                    <input id="modalFatherBirthYear" type="number" placeholder="e.g. 1940" min="1800" max="2026" style="width: 100%; min-height: 42px; padding: 10px; border-radius: 8px; border: 1px solid rgba(245, 199, 110, 0.4); background: rgba(30, 4, 12, 0.85); color: #fff;">
+                  </label>
+                </div>
+                <div>
+                  <span style="color: var(--gold-300); font-weight: bold; display: block; margin-bottom: 8px; font-size: 14px;">Mother's Details</span>
+                  <label>
+                    <span>Mother's Name (Maiden Name)</span>
+                    <input id="modalMotherName" type="text" placeholder="Name" autocomplete="off">
+                  </label>
+                  <label style="margin-top: 10px; display: block;">
+                    <span>Birth Year</span>
+                    <input id="modalMotherBirthYear" type="number" placeholder="e.g. 1945" min="1800" max="2026" style="width: 100%; min-height: 42px; padding: 10px; border-radius: 8px; border: 1px solid rgba(245, 199, 110, 0.4); background: rgba(30, 4, 12, 0.85); color: #fff;">
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Main Member Fields -->
+              <div id="modalMainFields">
+                <label>
+                  <span>Name</span>
+                  <input name="modalName" id="modalName" type="text" placeholder="Name" required autocomplete="off">
+                </label>
+
+                <label id="modalGenderLabel">
+                  <span>Gender</span>
+                  <div class="gender-selector">
+                    <label class="gender-btn male-btn active" id="modalMaleBtn">
+                      <input type="radio" name="modalGender" value="Male" checked required>
+                      <span>Male ♂</span>
+                    </label>
+                    <label class="gender-btn female-btn" id="modalFemaleBtn">
+                      <input type="radio" name="modalGender" value="Female" required>
+                      <span>Female ♀</span>
+                    </label>
+                  </div>
+                </label>
+
+                <!-- Date Fields (Inline Dropdowns) -->
+                <label id="modalBirthDateLabel" style="margin-top: 14px;">
+                  <span>Birth Date</span>
+                  <div class="dropdown-group">
+                    <select name="modalBirthMonth" id="modalBirthMonth">
+                      <option value="">Month</option>
+                      <option value="01">Jan</option>
+                      <option value="02">Feb</option>
+                      <option value="03">Mar</option>
+                      <option value="04">Apr</option>
+                      <option value="05">May</option>
+                      <option value="06">Jun</option>
+                      <option value="07">Jul</option>
+                      <option value="08">Aug</option>
+                      <option value="09">Sep</option>
+                      <option value="10">Oct</option>
+                      <option value="11">Nov</option>
+                      <option value="12">Dec</option>
+                    </select>
+                    <select name="modalBirthDay" id="modalBirthDay">
+                      <option value="">Day</option>
+                    </select>
+                    <select name="modalBirthYear" id="modalBirthYear">
+                      <option value="">Year</option>
+                    </select>
+                  </div>
+                </label>
+
+                
+                <label id="modalAnniversaryLabel" style="display: none; margin-top: 14px;">
+                  <span>Anniversary Date</span>
+                  <div class="dropdown-group">
+                    <select name="modalAnniversaryMonth" id="modalAnniversaryMonth">
+                      <option value="">Month</option>
+                      <option value="01">Jan</option>
+                      <option value="02">Feb</option>
+                      <option value="03">Mar</option>
+                      <option value="04">Apr</option>
+                      <option value="05">May</option>
+                      <option value="06">Jun</option>
+                      <option value="07">Jul</option>
+                      <option value="08">Aug</option>
+                      <option value="09">Sep</option>
+                      <option value="10">Oct</option>
+                      <option value="11">Nov</option>
+                      <option value="12">Dec</option>
+                    </select>
+                    <select name="modalAnniversaryDay" id="modalAnniversaryDay">
+                      <option value="">Day</option>
+                    </select>
+                    <select name="modalAnniversaryYear" id="modalAnniversaryYear">
+                      <option value="">Year</option>
+                    </select>
+                  </div>
+                </label>
+
+                <label id="modalPhoneLabel" style="margin-top: 14px; display: block;">
+                  <span>Phone Number</span>
+                  <input name="modalPhone" id="modalPhone" type="tel" placeholder="e.g. +91 98765 43210" autocomplete="off" style="width: 100%; min-height: 42px; padding: 10px; border-radius: 8px; border: 1px solid rgba(245, 199, 110, 0.4); background: rgba(30, 4, 12, 0.85); color: #fff;">
+                </label>
+
+                <label id="modalEmailLabel" style="margin-top: 14px; display: block;">
+                  <span>Email ID</span>
+                  <input name="modalEmail" id="modalEmail" type="email" placeholder="e.g. name@email.com" autocomplete="off" style="width: 100%; min-height: 42px; padding: 10px; border-radius: 8px; border: 1px solid rgba(245, 199, 110, 0.4); background: rgba(30, 4, 12, 0.85); color: #fff;">
+                </label>
+              </div>
+
+              <!-- Spouse Name Field (integrated inline in same view, shown for root/grandparent members) -->
+              <div id="modalSpouseContainer" style="display: none; margin-top: 14px;">
+                <label>
+                  <span>Spouse Name</span>
+                  <input name="modalSpouseName" id="modalSpouseName" type="text" placeholder="Spouse Name" autocomplete="off">
+                </label>
+              </div>
+              
+              <!-- Children Section (integrated inline in same view, shown for root/grandparent members) -->
+              <div class="modal-children-section" id="modalChildrenSection" style="display: none;">
+                <span class="modal-relations-title" style="display: block; margin-bottom: 8px;">Children</span>
+                <div class="modal-children-list" id="modalChildrenList" style="display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; padding-right: 4px; margin-bottom: 10px;">
+                  <!-- Dynamically added child input rows -->
+                </div>
+                <button type="button" class="secondary-action" id="modalAddChildRowBtn" style="width: 100%; min-height: 36px; font-size: 13px; margin-bottom: 14px;">+ Add Child</button>
+              </div>
+              
+              <div class="modal-relations-section" id="modalRelationsSection">
+                <span class="modal-relations-title">Add Relative</span>
+                <div class="modal-relations-buttons">
+                  <button type="button" class="secondary-action" id="modalAddSpouseBtn">+ Spouse</button>
+                  <button type="button" class="secondary-action" id="modalAddChildBtn">+ Child</button>
+                </div>
+              </div>
+              
+              <div class="modal-actions" style="display: flex; gap: 10px; margin-top: 14px;">
+                <button class="primary-action" id="modalSubmitBtn" type="submit" style="flex: 1;">Save</button>
+                <button class="secondary-action" id="modalCancelBtn" type="button" style="flex: 1; min-height: 50px;">Cancel</button>
+              </div>
+              
+              <!-- Additional Delete Action button when editing an existing member -->
+              <button class="danger-action" id="modalDeleteBtn" type="button" style="width: 100%; margin-top: 8px; display: none;">Delete Member</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Custom Relationship Selector Modal -->
+        <div id="relationshipSelectorModal" class="tree-modal-overlay" style="display: none;">
+          <div class="tree-modal-content relationship-selector-content">
+            <button type="button" class="profile-close-btn" id="relationshipSelectorCloseBtn" aria-label="Close relationship selector">&times;</button>
+            <h3 id="relationshipSelectorTitle">Add a relative</h3>
+            
+            <div class="relationship-options-container">
+              <!-- Top Row -->
+              <div class="relationship-row top-row">
+                <button type="button" class="rel-opt-btn male" data-relation="father">
+                  <div class="rel-icon-circle"><span class="rel-icon">👴</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add father</span>
+                </button>
+                <button type="button" class="rel-opt-btn female" data-relation="mother">
+                  <div class="rel-icon-circle"><span class="rel-icon">👵</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add mother</span>
+                </button>
+              </div>
+              
+              <!-- Middle Row -->
+              <div class="relationship-row middle-row">
+                <button type="button" class="rel-opt-btn couple" data-relation="partner">
+                  <div class="rel-icon-circle"><span class="rel-icon">💍</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add partner</span>
+                </button>
+                <button type="button" class="rel-opt-btn male" data-relation="brother">
+                  <div class="rel-icon-circle"><span class="rel-icon">👦</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add brother</span>
+                </button>
+                <button type="button" class="rel-opt-btn female" data-relation="sister">
+                  <div class="rel-icon-circle"><span class="rel-icon">👧</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add sister</span>
+                </button>
+              </div>
+              
+              <!-- Bottom Row -->
+              <div class="relationship-row bottom-row">
+                <button type="button" class="rel-opt-btn male" data-relation="son">
+                  <div class="rel-icon-circle"><span class="rel-icon">👶</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add son</span>
+                </button>
+                <button type="button" class="rel-opt-btn female" data-relation="daughter">
+                  <div class="rel-icon-circle"><span class="rel-icon">👶</span><span class="plus-badge">+</span></div>
+                  <span class="rel-label">Add daughter</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="or-separator">OR</div>
+            <button type="button" class="primary-action" id="relationshipSelectorMultipleBtn" style="width: 100%;">Add multiple relatives</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="registerTemplate">
+      <div class="auth-workspace" style="display: flex; flex-direction: column; height: 100%; min-height: 0;">
+        <!-- Auth Tabs Navigation -->
+        <div class="auth-tabs-nav">
+          <button type="button" class="auth-tab-nav-btn active" id="signInTabBtn">Sign In</button>
+          <button type="button" class="auth-tab-nav-btn" id="signUpTabBtn">Sign Up</button>
+        </div>
+
+        <!-- Sign In View -->
+        <div class="auth-view active" id="signInView" style="display: flex; flex-direction: column; flex: 1; min-height: 0;">
+          <form class="lux-form" id="signInForm" style="display: flex; flex-direction: column; gap: 14px; margin-top: 4px;">
+            <label>
+              <span>Full Name</span>
+              <input name="fullName" id="signInName" type="text" placeholder="Your full name" required autocomplete="off">
+            </label>
+            <label>
+              <span>Phone Number</span>
+              <input name="phone" id="signInPhone" type="tel" placeholder="e.g. +91 98765 43210" required autocomplete="off">
+            </label>
+            <button class="primary-action" type="submit" style="margin-top: 6px; width: 100%;">Sign In</button>
+            <p class="form-note" id="signInNote"></p>
+          </form>
+        </div>
+
+        <!-- Sign Up View -->
+        <div class="auth-view" id="signUpView" style="display: none; flex-direction: column; flex: 1; min-height: 0;">
+          <form class="lux-form" id="registerForm" style="display: flex; flex-direction: column; gap: 14px; margin-top: 4px;">
+            <label>
+              <span>Full Name</span>
+              <input name="fullName" id="registerName" type="text" placeholder="Your name" required autocomplete="off">
+            </label>
+            <label>
+              <span>Phone Number</span>
+              <input name="phone" id="registerPhone" type="tel" placeholder="e.g. +91 98765 43210" required autocomplete="off">
+            </label>
+            <label>
+              <span>Email ID</span>
+              <input name="emailId" id="registerEmail" type="email" placeholder="example@domain.com" autocomplete="off">
+            </label>
+            <label>
+              <span>Role</span>
+              <select name="role" id="registerRole" required>
+                <option value="Guest">Guest</option>
+                <option value="Family Member">Family Member</option>
+                <option value="Organizer">Organizer</option>
+              </select>
+            </label>
+            <button class="primary-action" type="submit" style="margin-top: 6px; width: 100%;">Register</button>
+            <p class="form-note" id="registerNote"></p>
+          </form>
+        </div>
+      </div>
+    </template>
+
+    <template id="contactTemplate">
+      <div class="contact-list">
+        <a href="tel:+918850228282">
+          <span class="contact-icon">&#9742;</span>
+          <span><strong>Call</strong>+91 88502 28282</span>
+        </a>
+        <a href="mailto:happycelebration2@gmail.com">
+          <span class="contact-icon">&#9993;</span>
+          <span><strong>Email</strong>happycelebration2@gmail.com</span>
+        </a>
+        <a class="whatsapp-contact" href="https://wa.me/918850228282">
+          <span class="contact-icon whatsapp-icon"></span>
+          <span><strong>WhatsApp</strong>Quick message</span>
+        </a>
+      </div>
+    </template>
+
+    <script src="script.js?v=81"></script>
+  </body>
+</html>
