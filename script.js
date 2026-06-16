@@ -2537,8 +2537,15 @@ function doGet(e) {
             membersListList.innerHTML = `
               <div class="empty-tree-container" style="padding: 32px 16px;">
                 <p class="empty-tree-message">Your family tree is empty. Add the first member to begin!</p>
+                <button type="button" class="primary-action" id="addFirstMemberBtn">Add First Member</button>
               </div>
             `;
+            const btn = membersListList.querySelector("#addFirstMemberBtn");
+            if (btn) {
+              btn.addEventListener("click", () => {
+                openModal("add-root");
+              });
+            }
             return;
           }
           
@@ -2794,8 +2801,8 @@ function doGet(e) {
           if (!members.length) {
             treeCanvas.innerHTML = `
               <div class="empty-tree-container">
-                <p class="empty-tree-message">Your family tree is empty. Add the first member to begin!</p>
-                <button type="button" class="primary-action" id="addFirstMemberBtn">Add First Member</button>
+                <p class="empty-tree-message">No family tree to preview yet.</p>
+                <p class="empty-tree-subtitle" style="font-size: 13px; color: var(--gold-300); opacity: 0.8; margin-top: 8px;">Please go to the Members tab to add your first member.</p>
               </div>
             `;
             return;
