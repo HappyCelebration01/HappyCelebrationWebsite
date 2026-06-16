@@ -3433,54 +3433,7 @@ function initDashboardFeatures() {
     });
   });
 
-  // 3. Setup Promotional Banner Image Slider
-  let currentSlide = 0;
-  const slides = document.querySelectorAll("#heroSlider .slide");
-  const indicators = document.querySelectorAll("#heroSlider .ind");
-  let slideInterval;
-
-  function showSlide(index) {
-    if (slides.length === 0) return;
-    slides.forEach((slide, i) => {
-      if (i === index) {
-        slide.classList.add("active");
-      } else {
-        slide.classList.remove("active");
-      }
-    });
-    indicators.forEach((ind, i) => {
-      if (i === index) {
-        ind.classList.add("active");
-      } else {
-        ind.classList.remove("active");
-      }
-    });
-    currentSlide = index;
-  }
-
-  function nextSlide() {
-    let next = (currentSlide + 1) % slides.length;
-    showSlide(next);
-  }
-
-  function startSlideTimer() {
-    clearInterval(slideInterval);
-    slideInterval = setInterval(nextSlide, 4500);
-  }
-
-  indicators.forEach(ind => {
-    ind.addEventListener("click", (e) => {
-      const index = parseInt(ind.dataset.slide, 10);
-      showSlide(index);
-      startSlideTimer(); // Reset timer on manual click
-    });
-  });
-
-  // Start slider
-  if (slides.length > 0) {
-    showSlide(0);
-    startSlideTimer();
-  }
+  // 3. (Promotional slider removed)
 
   // 4. Streak Counter System
   let streak = parseInt(localStorage.getItem("happyCelebrationStreak") || "3", 10);
