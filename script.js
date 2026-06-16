@@ -965,8 +965,13 @@ const panels = {
         let zoomLevel = 1.0;
         
         function applyZoom() {
-          const prevTransform = treeCanvas.style.transform;
           treeCanvas.style.transform = "none";
+          treeCanvas.style.width = "";
+          treeCanvas.style.height = "";
+          treeCanvas.style.marginRight = "";
+          treeCanvas.style.marginBottom = "";
+          treeCanvas.style.marginLeft = "";
+          
           const wrapperWidth = treeCanvasWrapper.clientWidth;
           const canvasWidth = treeCanvas.scrollWidth || treeCanvas.offsetWidth;
           const canvasHeight = treeCanvas.scrollHeight || treeCanvas.offsetHeight;
@@ -974,16 +979,26 @@ const panels = {
           const zoomedWidth = canvasWidth * zoomLevel;
           const zoomedHeight = canvasHeight * zoomLevel;
           
+          // Always use top left origin for precise centering and scroll bounding
+          treeCanvas.style.transformOrigin = "top left";
+          treeCanvas.style.transform = `scale(${zoomLevel})`;
+          
+          // Fix layout box to match visual scaled size (prevents extra scrollbar spaces)
+          treeCanvas.style.width = `${canvasWidth}px`;
+          treeCanvas.style.height = `${canvasHeight}px`;
+          treeCanvas.style.marginRight = `-${canvasWidth * (1 - zoomLevel)}px`;
+          treeCanvas.style.marginBottom = `-${canvasHeight * (1 - zoomLevel)}px`;
+          
           if (zoomedWidth > wrapperWidth && wrapperWidth > 0) {
-            treeCanvas.style.transformOrigin = "top left";
             treeCanvas.classList.add("overflowing");
+            treeCanvas.style.marginLeft = "0px";
           } else {
-            treeCanvas.style.transformOrigin = "top center";
             treeCanvas.classList.remove("overflowing");
+            // Center the scaled canvas horizontally
+            const leftOffset = Math.max(0, (wrapperWidth - zoomedWidth) / 2);
+            treeCanvas.style.marginLeft = `${leftOffset}px`;
           }
           
-          treeCanvas.style.transform = `scale(${zoomLevel})`;
-          treeCanvasWrapper.style.height = `${zoomedHeight + 64}px`;
           zoomLabel.textContent = `${Math.round(zoomLevel * 100)}%`;
         }
 
@@ -1016,6 +1031,12 @@ const panels = {
         }
 
         zoomFitBtn.addEventListener("click", fitToScreen);
+
+        window.addEventListener("resize", () => {
+          if (familyPreviewView && familyPreviewView.style.display === "block") {
+            fitToScreen();
+          }
+        });
 
         function focusMemberOnTree(memberId) {
           const cardElement = treeCanvas.querySelector(`[data-id="${memberId}"]`);
