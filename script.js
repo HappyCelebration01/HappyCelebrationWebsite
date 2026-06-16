@@ -1617,6 +1617,15 @@ const panels = {
           updateRegistrationState(); // Update home banner
           renderMemberList();
           renderTree();
+
+          // Auto sync to Google Sheets if configured
+          const syncConfigRaw = localStorage.getItem("happyCelebrationSyncConfig");
+          if (syncConfigRaw) {
+            const config = JSON.parse(syncConfigRaw);
+            if (config.googleSheetUrl) {
+              autoSyncToGoogleSheets(config.googleSheetUrl);
+            }
+          }
         }
 
         modalDeleteBtn.addEventListener("click", () => {
@@ -1635,6 +1644,15 @@ const panels = {
             updateRegistrationState(); // Update home banner
             renderMemberList();
             renderTree();
+
+            // Auto sync to Google Sheets if configured
+            const syncConfigRaw = localStorage.getItem("happyCelebrationSyncConfig");
+            if (syncConfigRaw) {
+              const config = JSON.parse(syncConfigRaw);
+              if (config.googleSheetUrl) {
+                autoSyncToGoogleSheets(config.googleSheetUrl);
+              }
+            }
           }
         }
 
@@ -2178,22 +2196,31 @@ const panels = {
                 birthDate: m.birthDate || "",
                 anniversaryDate: m.anniversaryDate || "",
                 phone: m.phone || "",
-                email: m.email || ""
+                email: m.email || "",
+                isDeceased: m.isDeceased ? "Yes" : "No",
+                deathDate: m.deathDate || ""
               };
             });
             
             fetch(googleSheetUrl, {
               method: "POST",
-              mode: "no-cors",
               headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "text/plain"
               },
               body: JSON.stringify(payload)
             })
-            .then(() => {
-              if (syncStatusMessage) {
-                syncStatusMessage.style.color = "#a3e635"; // green
-                syncStatusMessage.textContent = "Data sent to Google Sheets! Check your sheet.";
+            .then(res => {
+              if (!res.ok) throw new Error("HTTP error " + res.status);
+              return res.json();
+            })
+            .then(data => {
+              if (data.status === "success") {
+                if (syncStatusMessage) {
+                  syncStatusMessage.style.color = "#a3e635"; // green
+                  syncStatusMessage.textContent = data.message || "Data sent to Google Sheets! Check your sheet.";
+                }
+              } else {
+                throw new Error(data.message || "Sync failed.");
               }
             })
             .catch(err => {
@@ -2229,7 +2256,7 @@ const panels = {
     
     if (Array.isArray(postContent)) {
       sheet.clear();
-      var headers = ["Member ID", "Name", "Gender", "Relation", "Spouse Name", "Parent Name", "Birth Date", "Anniversary Date", "Phone Number", "Email ID"];
+      var headers = ["Member ID", "Name", "Gender", "Relation", "Spouse Name", "Parent Name", "Birth Date", "Anniversary Date", "Phone Number", "Email ID", "Is Deceased", "Death Date"];
       sheet.appendRow(headers);
       
       postContent.forEach(function(m) {
@@ -2243,14 +2270,16 @@ const panels = {
           m.birthDate || "",
           m.anniversaryDate || "",
           m.phone || "",
-          m.email || ""
+          m.email || "",
+          m.isDeceased || "No",
+          m.deathDate || ""
         ]);
       });
       return ContentService.createTextOutput(JSON.stringify({status: "success", message: "Successfully synced " + postContent.length + " members."}))
         .setMimeType(ContentService.MimeType.JSON);
     } else {
       if (sheet.getLastRow() === 0) {
-        sheet.appendRow(["Member ID", "Name", "Gender", "Relation", "Spouse Name", "Parent Name", "Birth Date", "Anniversary Date", "Phone Number", "Email ID"]);
+        sheet.appendRow(["Member ID", "Name", "Gender", "Relation", "Spouse Name", "Parent Name", "Birth Date", "Anniversary Date", "Phone Number", "Email ID", "Is Deceased", "Death Date"]);
       }
       sheet.appendRow([
         postContent.id || "submitted_" + new Date().getTime(),
@@ -2262,7 +2291,9 @@ const panels = {
         postContent.birthDate || "",
         postContent.anniversaryDate || "",
         postContent.phone || "",
-        postContent.email || ""
+        postContent.email || "",
+        postContent.isDeceased || "No",
+        postContent.deathDate || ""
       ]);
       return ContentService.createTextOutput(JSON.stringify({status: "success", message: "Successfully added entry."}))
         .setMimeType(ContentService.MimeType.JSON);
@@ -2295,12 +2326,17 @@ function doGet(e) {
         if (key === "name") key = "name";
         if (key === "gender") key = "gender";
         if (key === "relation") key = "relation";
-        if (key === "spouseid" || key === "spouse") key = "spouseId";
-        if (key === "parentid" || key === "parent") key = "parentId";
+        if (key === "spouseid" || key === "spouse" || key === "spousename") key = "spouseId";
+        if (key === "parentid" || key === "parent" || key === "parentname") key = "parentId";
         if (key === "birthdate" || key === "dob") key = "birthDate";
         if (key === "anniversarydate") key = "anniversaryDate";
         if (key === "phonenumber" || key === "phone") key = "phone";
         if (key === "emailid" || key === "email") key = "email";
+        if (key === "isdeceased" || key === "deceased") {
+          member["isDeceased"] = String(row[index] || "").toLowerCase() === "yes" || String(row[index] || "").toLowerCase() === "true";
+          return;
+        }
+        if (key === "deathdate") key = "deathDate";
         
         member[key] = String(row[index] || "");
       });
@@ -2310,12 +2346,18 @@ function doGet(e) {
     
     data.forEach(function(m) {
       if (m.spouseId && !m.spouseId.startsWith("mem_")) {
-        var foundSpouse = data.find(function(s) { return s.name.toLowerCase() === m.spouseId.toLowerCase(); });
-        if (foundSpouse) m.spouseId = foundSpouse.id;
+        var trimmedSpouse = m.spouseId.trim().toLowerCase();
+        var foundSpouse = data.find(function(s) { 
+          return s.name && s.name.trim().toLowerCase() === trimmedSpouse; 
+        });
+        m.spouseId = foundSpouse ? foundSpouse.id : "";
       }
       if (m.parentId && !m.parentId.startsWith("mem_")) {
-        var foundParent = data.find(function(p) { return p.name.toLowerCase() === m.parentId.toLowerCase(); });
-        if (foundParent) m.parentId = foundParent.id;
+        var trimmedParent = m.parentId.trim().toLowerCase();
+        var foundParent = data.find(function(p) { 
+          return p.name && p.name.trim().toLowerCase() === trimmedParent; 
+        });
+        m.parentId = foundParent ? foundParent.id : "";
       }
     });
     
@@ -2370,7 +2412,7 @@ function doGet(e) {
         }
 
         function autoSyncToGoogleSheets(url) {
-          if (!url || !members || members.length === 0) return;
+          if (!url || !members) return;
           const payload = members.map(m => {
             const spouse = members.find(s => s.id === m.spouseId);
             const parent = members.find(p => p.id === m.parentId);
@@ -2384,13 +2426,14 @@ function doGet(e) {
               birthDate: m.birthDate || "",
               anniversaryDate: m.anniversaryDate || "",
               phone: m.phone || "",
-              email: m.email || ""
+              email: m.email || "",
+              isDeceased: m.isDeceased ? "Yes" : "No",
+              deathDate: m.deathDate || ""
             };
           });
           fetch(url, {
             method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "text/plain" },
             body: JSON.stringify(payload)
           }).catch(err => console.error("Auto-sync error:", err));
         }
@@ -3073,15 +3116,15 @@ function doGet(e) {
               if (!currentFamily || JSON.parse(currentFamily).length === 0) {
                 // Prepopulate with default family tree data, including birthdays and anniversaries!
                 const demoFamily = [
-                  { id: "grandparent", name: "Grandparent", gender: "Male", relation: "Grandparent", spouseId: "", birthDate: "05/12/1950", anniversaryDate: "", phone: "", email: "" },
-                  { id: "aleena", name: "Aleena", gender: "Female", relation: "Parent", parentId: "grandparent", spouseId: "", birthDate: "09/18/1982", anniversaryDate: "", phone: "", email: "" },
-                  { id: "alisha", name: "Alisha", gender: "Female", relation: "Parent", parentId: "grandparent", spouseId: "rafi", birthDate: "10/12/1986", anniversaryDate: "06/23/2014", phone: "", email: "" },
-                  { id: "rafi", name: "Rafi", gender: "Male", relation: "Parent", parentId: "", spouseId: "alisha", birthDate: "04/05/1984", anniversaryDate: "06/23/2014", phone: "", email: "" },
-                  { id: "amjad", name: "Amjad", gender: "Male", relation: "Parent", parentId: "grandparent", spouseId: "subeena", birthDate: "08/14/1985", anniversaryDate: "03/12/2012", phone: "", email: "" },
-                  { id: "subeena", name: "Subeena", gender: "Female", relation: "Parent", parentId: "", spouseId: "amjad", birthDate: "11/20/1988", anniversaryDate: "03/12/2012", phone: "", email: "" },
-                  { id: "adab", name: "Adab", gender: "Female", relation: "Child", parentId: "alisha", spouseId: "", birthDate: "06/15/2018", anniversaryDate: "", phone: "", email: "" },
-                  { id: "ali", name: "Ali", gender: "Male", relation: "Child", parentId: "alisha", spouseId: "", birthDate: "11/02/2020", anniversaryDate: "", phone: "", email: "" },
-                  { id: "eva", name: "Eva", gender: "Female", relation: "Child", parentId: "amjad", spouseId: "", birthDate: "06/09/2016", anniversaryDate: "", phone: "", email: "" }
+                  { id: "grandparent", name: "Grandparent", gender: "Male", relation: "Grandparent", spouseId: "", birthDate: "05/12/1950", anniversaryDate: "", phone: "", email: "", isDeceased: false, deathDate: "" },
+                  { id: "aleena", name: "Aleena", gender: "Female", relation: "Parent", parentId: "grandparent", spouseId: "", birthDate: "09/18/1982", anniversaryDate: "", phone: "", email: "", isDeceased: false, deathDate: "" },
+                  { id: "alisha", name: "Alisha", gender: "Female", relation: "Parent", parentId: "grandparent", spouseId: "rafi", birthDate: "10/12/1986", anniversaryDate: "06/23/2014", phone: "", email: "", isDeceased: false, deathDate: "" },
+                  { id: "rafi", name: "Rafi", gender: "Male", relation: "Parent", parentId: "", spouseId: "alisha", birthDate: "04/05/1984", anniversaryDate: "06/23/2014", phone: "", email: "", isDeceased: false, deathDate: "" },
+                  { id: "amjad", name: "Amjad", gender: "Male", relation: "Parent", parentId: "grandparent", spouseId: "subeena", birthDate: "08/14/1985", anniversaryDate: "03/12/2012", phone: "", email: "", isDeceased: false, deathDate: "" },
+                  { id: "subeena", name: "Subeena", gender: "Female", relation: "Parent", parentId: "", spouseId: "amjad", birthDate: "11/20/1988", anniversaryDate: "03/12/2012", phone: "", email: "", isDeceased: false, deathDate: "" },
+                  { id: "adab", name: "Adab", gender: "Female", relation: "Child", parentId: "alisha", spouseId: "", birthDate: "06/15/2018", anniversaryDate: "", phone: "", email: "", isDeceased: false, deathDate: "" },
+                  { id: "ali", name: "Ali", gender: "Male", relation: "Child", parentId: "alisha", spouseId: "", birthDate: "11/02/2020", anniversaryDate: "", phone: "", email: "", isDeceased: false, deathDate: "" },
+                  { id: "eva", name: "Eva", gender: "Female", relation: "Child", parentId: "amjad", spouseId: "", birthDate: "06/09/2016", anniversaryDate: "", phone: "", email: "", isDeceased: false, deathDate: "" }
                 ];
                 localStorage.setItem("happyCelebrationFamily", JSON.stringify(demoFamily));
               }
