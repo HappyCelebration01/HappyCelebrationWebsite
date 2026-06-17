@@ -27,25 +27,25 @@ function updateRegistrationState() {
   const regDataRaw = localStorage.getItem("happyCelebrationRegistration");
   const registerCard = document.querySelector('[data-panel="register"]');
   const greetingBanner = document.querySelector("#greetingBanner");
-  const userProfileBtn = document.querySelector("#userProfileBtn");
+  const userProfileBtn = document.querySelector("#userProfileBtn") || document.querySelector("#avatarBtn");
 
   if (regDataRaw) {
     const data = JSON.parse(regDataRaw);
     if (userProfileBtn) {
       userProfileBtn.classList.add("logged-in");
       if (data.fullName) {
-        userProfileBtn.textContent = data.fullName.trim().charAt(0).toUpperCase();
+        userProfileBtn.innerHTML = `<span class="avatar-placeholder">${data.fullName.trim().charAt(0).toUpperCase()}</span>`;
       } else {
-        userProfileBtn.textContent = "👤";
+        userProfileBtn.innerHTML = '<span class="avatar-placeholder">👤</span>';
       }
     }
 
     if (registerCard) {
-      const spanText = registerCard.querySelector("span:last-of-type");
+      const spanText = registerCard.querySelector("span:last-of-type") || registerCard.querySelector(".cultfit-label");
       if (spanText) {
         spanText.textContent = "My Profile";
       }
-      const icon = registerCard.querySelector(".icon");
+      const icon = registerCard.querySelector(".icon") || registerCard.querySelector(".cultfit-icon-circle");
       if (icon) {
         icon.style.background = "linear-gradient(135deg, var(--gold-300), var(--rose-line))";
       }
@@ -69,7 +69,7 @@ function updateRegistrationState() {
       `;
       banner.innerHTML = `Welcome back, <span style="color: #fff; text-shadow: 0 0 8px var(--gold-300);">${escapeHtml(data.fullName)}</span>! (${escapeHtml(data.role)})`;
       
-      const sparkle = document.querySelector(".sparkle");
+      const sparkle = document.querySelector(".sparkle") || document.querySelector(".logo-hero-sparkle");
       if (sparkle) {
         sparkle.after(banner);
       }
@@ -83,15 +83,15 @@ function updateRegistrationState() {
   } else {
     if (userProfileBtn) {
       userProfileBtn.classList.remove("logged-in");
-      userProfileBtn.textContent = "👤";
+      userProfileBtn.innerHTML = '<span class="avatar-placeholder">👤</span>';
     }
 
     if (registerCard) {
-      const spanText = registerCard.querySelector("span:last-of-type");
+      const spanText = registerCard.querySelector("span:last-of-type") || registerCard.querySelector(".cultfit-label");
       if (spanText) {
         spanText.textContent = "Register";
       }
-      const icon = registerCard.querySelector(".icon");
+      const icon = registerCard.querySelector(".icon") || registerCard.querySelector(".cultfit-icon-circle");
       if (icon) {
         icon.style.background = "";
       }
@@ -3157,6 +3157,155 @@ function doGet(e) {
     kicker: "Support",
     template: "contactTemplate",
   },
+  packages: {
+    title: "Celebration Packages",
+    kicker: "Curated Tiers",
+    template: "packagesTemplate",
+    setup(root) {
+      root.querySelectorAll(".book-pkg-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const pkgName = btn.dataset.package;
+          openPanel("book");
+          
+          setTimeout(() => {
+            const form = document.querySelector("#bookingForm");
+            if (form) {
+              const eventTypeSelect = form.querySelector("#bookingEventType");
+              if (eventTypeSelect) {
+                eventTypeSelect.value = "Birthday";
+                eventTypeSelect.dispatchEvent(new Event("change"));
+              }
+              const guestsInput = form.querySelector("#bookingGuests");
+              if (guestsInput) {
+                if (pkgName === "Gold") guestsInput.value = 30;
+                else if (pkgName === "Diamond") guestsInput.value = 60;
+                else if (pkgName === "Platinum") guestsInput.value = 100;
+                guestsInput.dispatchEvent(new Event("input"));
+              }
+              let pkgNotice = form.querySelector(".package-booking-notice");
+              if (!pkgNotice) {
+                pkgNotice = document.createElement("div");
+                pkgNotice.className = "package-booking-notice";
+                pkgNotice.style.cssText = "background: rgba(245, 199, 110, 0.15); border: 1px dashed var(--gold-300); color: #fff; padding: 10px; border-radius: 8px; font-size: 12px; margin-bottom: 10px; text-align: center;";
+                form.prepend(pkgNotice);
+              }
+              pkgNotice.textContent = `⚡ Booking with ${pkgName} Package pre-selected!`;
+            }
+          }, 80);
+        });
+      });
+    }
+  },
+  upcoming: {
+    title: "Upcoming Events",
+    kicker: "Anniversaries & Birthdays",
+    template: "upcomingTemplate",
+    setup(root) {
+      const container = root.querySelector("#upcomingEventsContainer");
+      if (!container) return;
+
+      let members = [];
+      try {
+        const raw = localStorage.getItem("happyCelebrationFamily");
+        members = raw ? JSON.parse(raw) : [];
+      } catch (e) {}
+
+      if (!Array.isArray(members) || members.length === 0) {
+        return;
+      }
+
+      const mockToday = new Date(2026, 5, 6);
+      const list = [];
+
+      members.forEach(m => {
+        if (m.birthDate) {
+          const parts = m.birthDate.split("/");
+          if (parts.length === 3) {
+            const bMon = parseInt(parts[0], 10) - 1;
+            const bDay = parseInt(parts[1], 10);
+            list.push({
+              name: m.name,
+              eventTitle: `${m.name}'s Birthday`,
+              type: "Birthday",
+              month: bMon,
+              day: bDay,
+              originalDate: m.birthDate
+            });
+          }
+        }
+        if (m.anniversaryDate && m.spouseId) {
+          const spouse = members.find(s => s.id === m.spouseId);
+          if (spouse && m.id < spouse.id) {
+            const parts = m.anniversaryDate.split("/");
+            if (parts.length === 3) {
+              const aMon = parseInt(parts[0], 10) - 1;
+              const aDay = parseInt(parts[1], 10);
+              list.push({
+                name: `${m.name} & ${spouse.name}`,
+                eventTitle: `${m.name} & ${spouse.name}'s Anniversary`,
+                type: "Anniversary",
+                month: aMon,
+                day: aDay,
+                originalDate: m.anniversaryDate
+              });
+            }
+          }
+        }
+      });
+
+      const eventsWithDays = list.map(ev => {
+        let evDate = new Date(2026, ev.month, ev.day);
+        if (evDate < mockToday) {
+          evDate = new Date(2027, ev.month, ev.day);
+        }
+        const diffTime = evDate - mockToday;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return { ...ev, daysLeft: diffDays, targetYear: evDate.getFullYear() };
+      });
+
+      eventsWithDays.sort((a, b) => a.daysLeft - b.daysLeft);
+
+      if (eventsWithDays.length > 0) {
+        container.innerHTML = "";
+        
+        eventsWithDays.forEach(ev => {
+          const card = document.createElement("div");
+          card.className = "upcoming-event-card";
+          
+          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          const formattedDate = `${monthNames[ev.month]} ${ev.day}, ${ev.targetYear}`;
+
+          card.innerHTML = `
+            <div class="event-details">
+              <span class="event-name">${ev.eventTitle}</span>
+              <span class="event-date">📅 ${formattedDate} (${ev.type})</span>
+            </div>
+            <button class="event-countdown-badge" type="button">
+              <span>⚡ ${ev.daysLeft}d left</span>
+            </button>
+          `;
+
+          card.querySelector(".event-countdown-badge").addEventListener("click", () => {
+            openPanel("book");
+            setTimeout(() => {
+              const form = document.querySelector("#bookingForm");
+              if (form) {
+                const nameInput = form.querySelector("input[name='name']");
+                if (nameInput) nameInput.value = ev.name;
+                const typeSelect = form.querySelector("#bookingEventType");
+                if (typeSelect) {
+                  typeSelect.value = ev.type === "Anniversary" ? "Anniversary" : "Birthday";
+                  typeSelect.dispatchEvent(new Event("change"));
+                }
+              }
+            }, 80);
+          });
+
+          container.appendChild(card);
+        });
+      }
+    }
+  },
 };
 
 const homeView = document.querySelector("#homeView");
@@ -3297,7 +3446,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const userProfileBtn = document.getElementById("userProfileBtn");
+  const userProfileBtn = document.getElementById("userProfileBtn") || document.getElementById("avatarBtn");
   if (userProfileBtn) {
     userProfileBtn.addEventListener("click", () => {
       openPanel("register");
@@ -3311,12 +3460,12 @@ function initFloatingCelebration() {
   if (!container) return;
 
   const floatImages = [
-    "assets/float-balloons.webp",
-    "assets/float-cake.jpg",
-    "assets/float-flowers.jpeg",
-    "assets/float-wedding.webp",
-    "assets/float-confetti.webp",
-    "assets/float-arch.webp"
+    "../assets/float-balloons.webp",
+    "../assets/float-cake.jpg",
+    "../assets/float-flowers.jpeg",
+    "../assets/float-wedding.webp",
+    "../assets/float-confetti.webp",
+    "../assets/float-arch.webp"
   ];
 
   function spawnBubble(initial = false) {
@@ -3424,51 +3573,174 @@ function initDashboardFeatures() {
     });
   });
 
-  // 2. Setup Quick Action Card Click Listeners (override old grids)
-  const quickActions = document.querySelectorAll(".quick-actions-bar .quick-action-card");
-  quickActions.forEach(card => {
-    card.addEventListener("click", () => {
-      const panel = card.dataset.panel;
+  // 2. Setup Cultfit Grid Tab Button Click Listeners
+  const cultfitBtns = document.querySelectorAll(".cultfit-tab-btn");
+  cultfitBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const panel = btn.dataset.panel;
       if (panel) openPanel(panel);
     });
   });
 
-  // 3. (Promotional slider removed)
+  // 3. Notification Bell Click Toggle
+  const notificationBtn = document.getElementById("notificationBtn");
+  const notificationsDropdown = document.getElementById("notificationsDropdown");
+  const clearNotificationsBtn = document.getElementById("clearNotificationsBtn");
 
-  // 4. Streak Counter System
-  let streak = parseInt(localStorage.getItem("happyCelebrationStreak") || "3", 10);
-  const lastStreakUpdate = localStorage.getItem("happyCelebrationLastStreakDate");
-  const todayStr = new Date().toDateString();
-  if (lastStreakUpdate !== todayStr) {
-    streak += 1;
-    localStorage.setItem("happyCelebrationStreak", streak);
-    localStorage.setItem("happyCelebrationLastStreakDate", todayStr);
-  }
-  const streakCountEl = document.getElementById("streakCount");
-  if (streakCountEl) {
-    streakCountEl.textContent = streak;
-  }
+  if (notificationBtn && notificationsDropdown) {
+    notificationBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      notificationsDropdown.style.display = notificationsDropdown.style.display === "none" ? "block" : "none";
+      
+      const badge = notificationBtn.querySelector(".notification-badge");
+      if (badge) {
+        badge.style.display = "none";
+      }
+    });
 
-  const streakCapsule = document.getElementById("streakCapsule");
-  if (streakCapsule) {
-    streakCapsule.addEventListener("click", () => {
-      alert(`🔥 ${streak} Day Streak!\nKeep checking in daily to maintain your celebration streak!`);
+    document.addEventListener("click", () => {
+      notificationsDropdown.style.display = "none";
+    });
+
+    notificationsDropdown.addEventListener("click", (e) => {
+      e.stopPropagation();
     });
   }
 
-  // 5. Activity Tracker Logic
-  const activityCountEl = document.getElementById("activityCount");
-  if (activityCountEl) {
-    const hasBooking = localStorage.getItem("happyCelebrationBooking");
-    activityCountEl.textContent = hasBooking ? "1/3" : "0/3";
-  }
-
-  const activityCard = document.querySelector(".activity-tracker-card");
-  if (activityCard) {
-    activityCard.addEventListener("click", () => {
-      openPanel("book");
+  if (clearNotificationsBtn) {
+    clearNotificationsBtn.addEventListener("click", () => {
+      const list = document.getElementById("notificationsList");
+      if (list) {
+        list.innerHTML = `
+          <div class="empty-state" style="text-align: center; padding: 20px; color: var(--soft); font-size: 12px;">
+            🔔 No new notifications.
+          </div>
+        `;
+      }
+      const badge = document.querySelector(".notification-badge");
+      if (badge) {
+        badge.style.display = "none";
+      }
     });
   }
+
+  // 4. Populate Dynamic Notifications
+  function populateNotifications() {
+    const list = document.getElementById("notificationsList");
+    const badge = document.querySelector(".notification-badge");
+    if (!list) return;
+
+    let notificationItems = [];
+    let members = [];
+    try {
+      const raw = localStorage.getItem("happyCelebrationFamily");
+      members = raw ? JSON.parse(raw) : [];
+    } catch (e) {}
+
+    let upcomingCount = 0;
+    if (Array.isArray(members) && members.length > 0) {
+      const mockToday = new Date(2026, 5, 6);
+      members.forEach(m => {
+        if (m.birthDate) {
+          const parts = m.birthDate.split("/");
+          if (parts.length === 3) {
+            const bMon = parseInt(parts[0], 10) - 1;
+            const bDay = parseInt(parts[1], 10);
+            let evDate = new Date(2026, bMon, bDay);
+            if (evDate < mockToday) evDate = new Date(2027, bMon, bDay);
+            const diffDays = Math.ceil((evDate - mockToday) / (1000 * 60 * 60 * 24));
+            if (diffDays <= 30) {
+              notificationItems.push({
+                text: `🎂 ${m.name}'s Birthday is in ${diffDays} days!`,
+                time: `${diffDays}d left`,
+                panel: "book",
+                prefill: { name: m.name, type: "Birthday" }
+              });
+              upcomingCount++;
+            }
+          }
+        }
+        if (m.anniversaryDate && m.spouseId) {
+          const spouse = members.find(s => s.id === m.spouseId);
+          if (spouse && m.id < spouse.id) {
+            const parts = m.anniversaryDate.split("/");
+            if (parts.length === 3) {
+              const aMon = parseInt(parts[0], 10) - 1;
+              const aDay = parseInt(parts[1], 10);
+              let evDate = new Date(2026, aMon, aDay);
+              if (evDate < mockToday) evDate = new Date(2027, aMon, aDay);
+              const diffDays = Math.ceil((evDate - mockToday) / (1000 * 60 * 60 * 24));
+              if (diffDays <= 30) {
+                notificationItems.push({
+                  text: `💍 ${m.name} & ${spouse.name}'s Anniversary is in ${diffDays} days!`,
+                  time: `${diffDays}d left`,
+                  panel: "book",
+                  prefill: { name: `${m.name} & ${spouse.name}`, type: "Anniversary" }
+                });
+                upcomingCount++;
+              }
+            }
+          }
+        }
+      });
+    }
+
+    if (members.length > 0) {
+      notificationItems.push({
+        text: `🌳 Family Tree: ${members.length} members loaded. Sync is active.`,
+        time: "Active",
+        panel: "family"
+      });
+    }
+
+    notificationItems.push({
+      text: "✨ Welcome to Happy Celebration! Plan your milestones with our premium theme designs.",
+      time: "1d ago",
+      panel: "about"
+    });
+
+    list.innerHTML = notificationItems.map((item, idx) => `
+      <div class="notification-item unread" data-index="${idx}" style="cursor: pointer;">
+        <div class="notification-dot"></div>
+        <div class="notification-content">
+          <p class="notification-text">${item.text}</p>
+          <span class="notification-time">${item.time}</span>
+        </div>
+      </div>
+    `).join("");
+
+    list.querySelectorAll(".notification-item").forEach(el => {
+      el.addEventListener("click", () => {
+        const item = notificationItems[parseInt(el.dataset.index, 10)];
+        if (item.panel) {
+          openPanel(item.panel);
+          if (item.prefill) {
+            setTimeout(() => {
+              const form = document.querySelector("#bookingForm");
+              if (form) {
+                const nameInput = form.querySelector("input[name='name']");
+                if (nameInput) nameInput.value = item.prefill.name;
+                const typeSelect = form.querySelector("#bookingEventType");
+                if (typeSelect) {
+                  typeSelect.value = item.prefill.type;
+                  typeSelect.dispatchEvent(new Event("change"));
+                }
+              }
+            }, 80);
+          }
+        }
+        notificationsDropdown.style.display = "none";
+      });
+    });
+
+    if (badge) {
+      const unreadCount = upcomingCount || notificationItems.length;
+      badge.textContent = unreadCount;
+      badge.style.display = unreadCount > 0 ? "flex" : "none";
+    }
+  }
+
+  populateNotifications();
 }
 
 // 6. Search Dialog Modal Logic

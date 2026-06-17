@@ -18,28 +18,23 @@
 
           <header class="dashboard-header">
             <button class="avatar-btn" id="avatarBtn" aria-label="User Profile" type="button">
-              <img class="avatar-img" src="../assets/hc-logo-mark.png" alt="Profile">
+              <span class="avatar-placeholder">👤</span>
             </button>
-            <div class="streak-capsule" id="streakCapsule" aria-label="Streak tracker">
-              <span class="streak-fire">🔥</span>
-              <span class="streak-text"><strong id="streakCount">0</strong> day streak</span>
-              <span class="streak-emoji">👾</span>
+            
+            <div class="header-right-actions">
+              <!-- Theme Settings Toggle -->
+              <button class="theme-settings-btn" id="themeSettingsBtn" aria-label="Change color theme" type="button">
+                <span class="theme-picker-icon"></span>
+              </button>
+              
+              <!-- Notification Bell Button -->
+              <button class="notification-btn" id="notificationBtn" aria-label="Notifications" type="button">
+                <span class="bell-icon">🔔</span>
+                <span class="notification-badge">3</span>
+              </button>
             </div>
-            <button class="notification-btn" id="notificationBtn" aria-label="Notifications" type="button">
-              <span class="bell-icon">🔔</span>
-              <span class="notification-badge">3</span>
-            </button>
-          </header>
 
-          <!-- Small Brand Bar -->
-          <div class="brand-bar">
-            <div class="brand-content">
-              <img class="brand-logo-small" src="../assets/hc-logo-mark.png" alt="Happy Celebration">
-              <span class="brand-text-small">HAPPY CELEBRATION</span>
-            </div>
-            <button class="theme-settings-btn" id="themeSettingsBtn" aria-label="Change color theme" type="button">
-              <span class="theme-picker-icon"></span>
-            </button>
+            <!-- Theme Dropdown -->
             <div class="theme-dropdown" id="themeDropdown" style="display: none;">
               <span class="theme-dropdown-title">Choose Color</span>
               <div class="theme-options">
@@ -50,47 +45,83 @@
                 <button class="theme-opt luxury" data-theme="luxury" title="Black & Gold" type="button"></button>
               </div>
             </div>
+          </header>
+
+          <!-- Notifications Dropdown -->
+          <div class="notifications-dropdown" id="notificationsDropdown" style="display: none;">
+            <div class="notifications-header">
+              <span>Notifications</span>
+              <button class="clear-notifications-btn" id="clearNotificationsBtn" type="button">Clear All</button>
+            </div>
+            <div class="notifications-list" id="notificationsList">
+              <div class="notification-item unread">
+                <div class="notification-dot"></div>
+                <div class="notification-content">
+                  <p class="notification-text">Welcome to Happy Celebration! Plan your next milestone event.</p>
+                  <span class="notification-time">Just now</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <section class="home-view active" id="homeView" aria-label="Main menu">
-            <!-- Quick Action Grid (4 columns) -->
-            <div class="quick-actions-bar">
-              <button class="quick-action-card glow-blue" type="button" data-panel="register">
-                <div class="quick-action-icon-wrapper">
-                  <span class="quick-action-icon icon-signin">🔑</span>
-                </div>
-                <span class="quick-action-label">Sign In/Up</span>
-              </button>
-              <button class="quick-action-card glow-pink" type="button" data-panel="gallery">
-                <div class="quick-action-icon-wrapper">
-                  <span class="quick-action-icon icon-gallery">🖼️</span>
-                </div>
-                <span class="quick-action-label">Gallery</span>
-              </button>
-              <button class="quick-action-card glow-gold" type="button" data-panel="contact">
-                <div class="quick-action-icon-wrapper">
-                  <span class="quick-action-icon icon-contact">📞</span>
-                </div>
-                <span class="quick-action-label">Contact Us</span>
-              </button>
-              <button class="quick-action-card glow-red" type="button" data-panel="family">
-                <div class="quick-action-icon-wrapper">
-                  <span class="quick-action-icon icon-family">🌳</span>
-                </div>
-                <span class="quick-action-label">Family Tree</span>
-              </button>
+            <!-- Center Monogram Logo Hero -->
+            <div class="logo-hero-container">
+              <img class="main-monogram-logo" src="../assets/hc-logo-mark.png" alt="Happy Celebration">
+              <h1 class="logo-hero-title">HAPPY CELEBRATION</h1>
+              <div class="logo-hero-sparkle">✦ ✦ ✦</div>
             </div>
 
-            <!-- Activity Tracker Card -->
-            <div class="activity-tracker-card" data-panel="book" type="button">
-              <div class="activity-left">
-                <span class="activity-thunder">⚡</span>
-                <div class="activity-text">
-                  <span class="activity-count" id="activityCount">0/3</span>
-                  <span class="activity-label">Events Booked This Month</span>
+            <!-- Cultfit Style Grid (4 columns, 2 rows) -->
+            <div class="cultfit-grid">
+              <button class="cultfit-tab-btn" type="button" data-panel="family">
+                <div class="cultfit-icon-circle bg-emerald">
+                  <span class="cultfit-icon">🌳</span>
                 </div>
-              </div>
-              <button class="activity-btn" type="button">BOOK</button>
+                <span class="cultfit-label">Family Tree</span>
+              </button>
+              <button class="cultfit-tab-btn" type="button" data-panel="book">
+                <div class="cultfit-icon-circle bg-wine">
+                  <span class="cultfit-icon">📅</span>
+                </div>
+                <span class="cultfit-label">Book Event</span>
+              </button>
+              <button class="cultfit-tab-btn" type="button" data-panel="about">
+                <div class="cultfit-icon-circle bg-violet">
+                  <span class="cultfit-icon">ℹ️</span>
+                </div>
+                <span class="cultfit-label">About Us</span>
+              </button>
+              <button class="cultfit-tab-btn" type="button" data-panel="packages">
+                <div class="cultfit-icon-circle bg-luxury">
+                  <span class="cultfit-icon">📦</span>
+                </div>
+                <span class="cultfit-label">Packages</span>
+              </button>
+              <button class="cultfit-tab-btn" type="button" data-panel="upcoming">
+                <div class="cultfit-icon-circle bg-amber">
+                  <span class="cultfit-icon">⚡</span>
+                </div>
+                <span class="cultfit-label">Upcoming</span>
+              </button>
+              <button class="cultfit-tab-btn" type="button" data-panel="contact">
+                <div class="cultfit-icon-circle bg-sapphire">
+                  <span class="cultfit-icon">📞</span>
+                </div>
+                <span class="cultfit-label">Contact Us</span>
+              </button>
+              <button class="cultfit-tab-btn" type="button" data-panel="gallery">
+                <div class="cultfit-icon-circle bg-pink">
+                  <span class="cultfit-icon">🖼️</span>
+                </div>
+                <span class="cultfit-label">Gallery</span>
+              </button>
+              <button class="cultfit-tab-btn" type="button" data-panel="register">
+                <div class="cultfit-icon-circle bg-cyan">
+                  <span class="cultfit-icon">🔑</span>
+                </div>
+                <span class="cultfit-label">Register</span>
+              </button>
             </div>
           </section>
 
@@ -105,34 +136,9 @@
             <div class="panel-content" id="panelContent"></div>
           </section>
 
-          <a class="whatsapp-fab" href="https://wa.me/918850228282" aria-label="Contact on WhatsApp" style="bottom: 85px;">
+          <a class="whatsapp-fab" href="https://wa.me/918850228282" aria-label="Contact on WhatsApp">
             <span></span>
           </a>
-
-          <!-- Bottom Navigation Bar -->
-          <nav class="bottom-nav-bar" aria-label="Bottom Navigation">
-            <button class="nav-tab active" data-tab="home" type="button">
-              <span class="nav-icon">🏠</span>
-              <span class="nav-label">Home</span>
-            </button>
-            <button class="nav-tab" data-tab="book" type="button">
-              <span class="nav-icon">📅</span>
-              <span class="nav-label">Book</span>
-            </button>
-            <button class="nav-tab search-tab" data-tab="search" type="button">
-              <div class="search-circle">
-                <span class="nav-icon search-icon">🔍</span>
-              </div>
-            </button>
-            <button class="nav-tab" data-tab="family" type="button">
-              <span class="nav-icon">🌳</span>
-              <span class="nav-label">Family</span>
-            </button>
-            <button class="nav-tab" data-tab="about" type="button">
-              <span class="nav-icon">ℹ️</span>
-              <span class="nav-label">About</span>
-            </button>
-          </nav>
         </div>
       </section>
     </main>
@@ -685,6 +691,85 @@
           <span class="contact-icon whatsapp-icon"></span>
           <span><strong>WhatsApp</strong>Quick message</span>
         </a>
+      </div>
+    </template>
+
+    <template id="packagesTemplate">
+      <div class="packages-workspace" style="display: flex; flex-direction: column; gap: 16px; overflow-y: auto; padding: 4px; font-family: 'Outfit', sans-serif;">
+        <p class="packages-intro" style="color: var(--soft); font-size: 13px; line-height: 1.5; margin: 0 4px;">
+          Choose from our curated celebration packages. We handle everything from themed décor, gourmet spreads, and custom cakes to music and photo setups.
+        </p>
+        
+        <!-- Gold Package -->
+        <div class="package-card" style="background: rgba(130, 4, 33, 0.3); border: 1.5px solid rgba(245, 199, 110, 0.3); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 6px 16px rgba(0,0,0,0.3); transition: transform 0.2s ease;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="color: var(--gold-300); margin: 0; font-size: 18px; font-weight: 700; letter-spacing: 0.5px;">🌟 Gold Package</h3>
+            <span style="color: #fff; font-weight: 800; font-size: 16px;">₹15,000</span>
+          </div>
+          <p style="color: rgba(255,255,255,0.8); font-size: 13px; line-height: 1.4; margin: 0;">
+            Perfect for intimate gatherings and elegant family functions.
+          </p>
+          <ul style="color: rgba(255,255,255,0.7); font-size: 12px; margin: 0; padding-left: 20px; line-height: 1.6;">
+            <li>Standard Theme Balloon & Flower Decor</li>
+            <li>Premium 1kg Custom Cake</li>
+            <li>Catering Spread for up to 30 Guests</li>
+            <li>High-Quality Audio & Playlist Setup</li>
+          </ul>
+          <button class="primary-action book-pkg-btn" data-package="Gold" type="button" style="width: 100%; margin-top: 6px;">Select & Book Gold</button>
+        </div>
+
+        <!-- Diamond Package -->
+        <div class="package-card" style="background: rgba(130, 4, 33, 0.3); border: 1.5px solid rgba(245, 199, 110, 0.5); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 6px 16px rgba(0,0,0,0.3); position: relative; overflow: hidden;">
+          <div style="position: absolute; top: 12px; right: -30px; background: var(--gold-300); color: #000; font-size: 9px; font-weight: 800; padding: 4px 30px; transform: rotate(45deg); text-transform: uppercase; letter-spacing: 0.5px;">Popular</div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="color: var(--gold-300); margin: 0; font-size: 18px; font-weight: 700; letter-spacing: 0.5px;">💎 Diamond Package</h3>
+            <span style="color: #fff; font-weight: 800; font-size: 16px;">₹35,000</span>
+          </div>
+          <p style="color: rgba(255,255,255,0.8); font-size: 13px; line-height: 1.4; margin: 0;">
+            Our most popular tier, delivering a beautiful grand experience.
+          </p>
+          <ul style="color: rgba(255,255,255,0.7); font-size: 12px; margin: 0; padding-left: 20px; line-height: 1.6;">
+            <li>Thematic Backdrop with Fairy Lights & Stage Decor</li>
+            <li>Gourmet 2-Tier Designer Cake (2kg)</li>
+            <li>Premium Buffet Catering for up to 60 Guests</li>
+            <li>Professional Host / MC with Interactive Games</li>
+            <li>DSLR Photography (3 Hours Coverage)</li>
+          </ul>
+          <button class="primary-action book-pkg-btn" data-package="Diamond" type="button" style="width: 100%; margin-top: 6px;">Select & Book Diamond</button>
+        </div>
+
+        <!-- Platinum Package -->
+        <div class="package-card" style="background: rgba(130, 4, 33, 0.3); border: 1.5px solid rgba(245, 199, 110, 0.7); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 6px 16px rgba(0,0,0,0.3);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="color: var(--gold-300); margin: 0; font-size: 18px; font-weight: 700; letter-spacing: 0.5px;">👑 Platinum Package</h3>
+            <span style="color: #fff; font-weight: 800; font-size: 16px;">₹75,000</span>
+          </div>
+          <p style="color: rgba(255,255,255,0.8); font-size: 13px; line-height: 1.4; margin: 0;">
+            A luxury all-inclusive package for truly unforgettable milestones.
+          </p>
+          <ul style="color: rgba(255,255,255,0.7); font-size: 12px; margin: 0; padding-left: 20px; line-height: 1.6;">
+            <li>Custom 3D Theme Stage Setup & Grand Floral Entry Arch</li>
+            <li>Premium Multilayer Tier Cake (4kg)</li>
+            <li>Live Food Stations & Gourmet Buffet Catering</li>
+            <li>Professional Sound, DJ System, & LED Screen</li>
+            <li>Complete Photo & Cinematic Video Coverage</li>
+          </ul>
+          <button class="primary-action book-pkg-btn" data-package="Platinum" type="button" style="width: 100%; margin-top: 6px;">Select & Book Platinum</button>
+        </div>
+      </div>
+    </template>
+
+    <template id="upcomingTemplate">
+      <div class="upcoming-workspace" style="display: flex; flex-direction: column; gap: 14px; overflow-y: auto; padding: 4px; font-family: 'Outfit', sans-serif;">
+        <p class="upcoming-intro" style="color: var(--soft); font-size: 13px; line-height: 1.5; margin: 0 4px;">
+          Timeline of upcoming birthdays and anniversaries from your family tree. Plan a custom booking directly!
+        </p>
+        <div id="upcomingEventsContainer" style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- Dynamically filled list -->
+          <div class="empty-state" style="text-align: center; padding: 40px 20px; color: var(--soft); font-size: 14px;">
+            🌳 No family members found. Add members to your family tree to track their upcoming events.
+          </div>
+        </div>
       </div>
     </template>
 
