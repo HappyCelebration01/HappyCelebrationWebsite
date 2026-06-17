@@ -1207,11 +1207,13 @@ select {
   }
 
   .home-view {
-    height: auto !important;
-    overflow-y: visible !important;
+    display: flex !important;
+    flex-direction: column;
+    height: calc(100vh - 64px) !important;
+    overflow-y: hidden !important;
     padding-left: 22px !important;
     padding-right: 22px !important;
-    padding-bottom: 125px !important;
+    padding-bottom: 24px !important;
     scrollbar-width: none !important;
   }
 
@@ -4324,8 +4326,14 @@ body.theme-luxury .dashboard-card { border-color: rgba(201, 130, 45, 0.2); }
 
 /* Adjust paddings so scrolled content isn't covered by bottom nav */
 .home-view {
-  height: calc(100% - 90px);
-  padding: 0 20px 85px !important;
+  height: calc(100% - 64px);
+  padding: 0 20px 0 !important;
+  box-sizing: border-box;
+}
+
+.home-view.active {
+  display: flex;
+  flex-direction: column;
 }
 
 .panel-view {
@@ -4517,8 +4525,8 @@ body.theme-luxury .dashboard-card { border-color: rgba(201, 130, 45, 0.2); }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 18px 12px;
-  padding: 10px 4px;
-  margin-top: 24px;
+  padding: 10px 4px 28px 4px;
+  margin-top: auto; /* Push grid to the bottom of home-view */
 }
 
 .cultfit-tab-btn {
