@@ -4522,11 +4522,16 @@ body.theme-luxury .dashboard-card { border-color: rgba(201, 130, 45, 0.2); }
 
 /* Cultfit Grid */
 .cultfit-grid {
+  position: absolute;
+  bottom: 24px;
+  left: 20px;
+  right: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 18px 12px;
-  padding: 10px 4px 28px 4px;
-  margin-top: auto; /* Push grid to the bottom of home-view */
+  padding: 0;
+  margin: 0;
+  z-index: 10;
 }
 
 .cultfit-tab-btn {
