@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=93">
+    <link rel="stylesheet" href="styles.css?v=101">
     <style>
       /* Staggered Twinkling Star Animations (Slow 8s cycle) */
       .sparkle-star {
@@ -67,47 +67,137 @@
           <!-- Settings Drawer -->
           <div class="settings-drawer" id="settingsDrawer">
             <div class="drawer-header">
-              <span class="drawer-title">Settings & Sync</span>
+              <span class="drawer-title">Navigation Menu</span>
               <button class="drawer-close-btn" id="drawerCloseBtn" type="button" aria-label="Close Settings Drawer">&times;</button>
             </div>
+            
+            <!-- Drawer Tabs Navigation -->
+            <div class="drawer-tabs-nav">
+              <button class="drawer-tab-btn active" data-drawer-tab="theme-plan" type="button">Theme Plan</button>
+              <button class="drawer-tab-btn" data-drawer-tab="data-sync" type="button">Sync & Settings</button>
+            </div>
+
             <div class="drawer-content">
-              <!-- Google Sheets Sync Settings -->
-              <div class="sync-card" style="border: 1px solid rgba(245, 199, 110, 0.2); background: rgba(255, 255, 255, 0.02); padding: 14px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px;">
-                <h3 style="font-size: 13px; font-weight: 700; color: #fff; margin: 0 0 4px 0;">Google Sheets Sync</h3>
-                <p style="font-size: 10.5px; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.35;">Automatically save and backup your family tree to a Google Sheet.</p>
-                
-                <label class="lux-label" style="display: block; margin-top: 6px;">
-                  <span style="display: block; margin-bottom: 4px; font-size: 10.5px; font-weight: 600; color: var(--gold-300);">Google Apps Script Web App URL</span>
-                  <input type="url" id="drawerGoogleSheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" style="width: 100%; min-height: 36px; padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(245, 199, 110, 0.3); background: rgba(30, 4, 12, 0.85); color: #fff; font-size: 11px;">
-                </label>
-                
-                <div class="sync-actions" style="margin-top: 6px; display: flex; flex-direction: column; gap: 8px;">
-                  <div style="display: flex; gap: 6px; width: 100%;">
-                    <button class="primary-action" id="drawerPullFromSheetsBtn" type="button" style="flex: 1; min-height: 32px; font-size: 11px; padding: 4px 8px;">Pull</button>
-                    <button class="primary-action" id="drawerPushToSheetsBtn" type="button" style="flex: 1; min-height: 32px; font-size: 11px; padding: 4px 8px;">Push</button>
-                  </div>
-                  <button class="secondary-action" id="drawerSaveSyncConfigBtn" type="button" style="width: 100%; min-height: 32px; font-size: 11px; padding: 4px 8px;">Save Webapp URL</button>
+              <!-- Tab 1: Theme Plan -->
+              <div class="drawer-tab-panel active" data-panel-id="theme-plan">
+                <!-- Large Hero Card -->
+                <div class="airtel-hero-card" id="airtelHeroCard" style="margin-top: 0; width: 100%; box-sizing: border-box;">
+                  <div class="airtel-hero-icon" id="airtelHeroIcon">🎉</div>
+                  <div class="airtel-hero-tag" id="airtelHeroTag">Active Theme</div>
+                  <h3 class="airtel-hero-title" id="airtelHeroTitle">Default Theme</h3>
+                  <p class="airtel-hero-desc" id="airtelHeroDesc">Choose a date or event to preview beautiful customized celebration themes.</p>
+                  <button class="airtel-hero-btn" id="airtelHeroBtn" type="button">Preview Details</button>
                 </div>
-                
-                <div id="drawerSyncStatusMessage" style="margin-top: 6px; font-size: 11px; color: var(--gold-300); font-weight: 500; text-align: center;"></div>
-                
-                <div class="instructions-box" style="margin-top: 10px; padding: 10px; border: 1px dashed rgba(245, 199, 110, 0.2); border-radius: 6px; font-size: 10px; color: #ccc; background: rgba(30, 4, 12, 0.25);">
-                  <h4 style="color: var(--gold-100); margin: 0 0 6px 0; font-size: 10.5px;">Setup Instructions:</h4>
-                  <ol style="margin: 0; padding-left: 14px; display: flex; flex-direction: column; gap: 4px;">
-                    <li>Create a Google Sheet.</li>
-                    <li>Open Extensions &gt; Apps Script.</li>
-                    <li>Paste the Apps Script code.</li>
-                    <li>Deploy &gt; New deployment. Choose Web app, Access: "Anyone".</li>
-                    <li>Copy Web App URL.</li>
-                  </ol>
-                  <button type="button" class="secondary-action" id="drawerCopyAppsScriptBtn" style="margin-top: 8px; width: 100%; min-height: 28px; font-size: 10px; padding: 2px 6px;">Copy Script Code</button>
+
+                <!-- Mini Card 1: Theme Planner (Mock Date Picker) -->
+                <div class="airtel-mini-card" style="min-height: auto; width: 100%; box-sizing: border-box;">
+                  <div>
+                    <div class="airtel-mini-tag">Mock Planner</div>
+                    <h4 class="airtel-mini-title">Mock Today's Date</h4>
+                    <p class="airtel-mini-desc" style="margin-bottom: 6px;">Test dynamic themes instantly.</p>
+                    <div class="mock-date-picker">
+                      <select id="mockMonth" aria-label="Mock Month">
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5" selected>June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                      </select>
+                      <select id="mockDay" aria-label="Mock Day">
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                        <option value="6" selected>6th</option>
+                        <option value="7">7th</option>
+                        <option value="8">8th</option>
+                        <option value="9">9th</option>
+                        <option value="10">10th</option>
+                        <option value="11">11th</option>
+                        <option value="12">12th</option>
+                        <option value="13">13th</option>
+                        <option value="14">14th</option>
+                        <option value="15">15th</option>
+                        <option value="16">16th</option>
+                        <option value="17">17th</option>
+                        <option value="18">18th</option>
+                        <option value="19">19th</option>
+                        <option value="20">20th</option>
+                        <option value="21">21st</option>
+                        <option value="22">22nd</option>
+                        <option value="23">23rd</option>
+                        <option value="24">24th</option>
+                        <option value="25">25th</option>
+                        <option value="26">26th</option>
+                        <option value="27">27th</option>
+                        <option value="28">28th</option>
+                        <option value="29">29th</option>
+                        <option value="30">30th</option>
+                        <option value="31">31st</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Mini Card 2: Upcoming Theme Event / Quick Switch -->
+                <div class="airtel-mini-card" id="airtelMiniCardRight" style="min-height: auto; width: 100%; box-sizing: border-box;">
+                  <div>
+                    <div class="airtel-mini-tag" id="airtelMiniRightTag">Next Event</div>
+                    <h4 class="airtel-mini-title" id="airtelMiniRightTitle">No upcoming events</h4>
+                    <p class="airtel-mini-desc" id="airtelMiniRightDesc">Add your family members' birthdays and anniversaries in the Family Tree tab.</p>
+                  </div>
+                  <button class="airtel-mini-btn" id="airtelMiniRightBtn" type="button">View Tree</button>
                 </div>
               </div>
 
-              <!-- Local Data Settings Section -->
-              <div class="sync-card" style="border: 1px solid rgba(245, 199, 110, 0.2); background: rgba(255, 255, 255, 0.02); padding: 14px; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
-                <h3 style="font-size: 13px; font-weight: 700; color: #fff; margin: 0 0 4px 0;">Local Data Settings</h3>
-                <button class="danger-action" id="drawerClearTreeBtn" type="button" style="width: 100%; min-height: 36px; font-size: 11.5px; border-radius: 6px; margin: 0;">Reset All Family Data</button>
+              <!-- Tab 2: Sync & Settings -->
+              <div class="drawer-tab-panel" data-panel-id="data-sync">
+                <!-- Google Sheets Sync Settings -->
+                <div class="sync-card" style="border: 1px solid rgba(245, 199, 110, 0.2); background: rgba(255, 255, 255, 0.02); padding: 14px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px;">
+                  <h3 style="font-size: 13px; font-weight: 700; color: #fff; margin: 0 0 4px 0;">Google Sheets Sync</h3>
+                  <p style="font-size: 10.5px; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.35;">Automatically save and backup your family tree to a Google Sheet.</p>
+                  
+                  <label class="lux-label" style="display: block; margin-top: 6px;">
+                    <span style="display: block; margin-bottom: 4px; font-size: 10.5px; font-weight: 600; color: var(--gold-300);">Google Apps Script Web App URL</span>
+                    <input type="url" id="drawerGoogleSheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" style="width: 100%; min-height: 36px; padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(245, 199, 110, 0.3); background: rgba(30, 4, 12, 0.85); color: #fff; font-size: 11px;">
+                  </label>
+                  
+                  <div class="sync-actions" style="margin-top: 6px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; gap: 6px; width: 100%;">
+                      <button class="primary-action" id="drawerPullFromSheetsBtn" type="button" style="flex: 1; min-height: 32px; font-size: 11px; padding: 4px 8px;">Pull</button>
+                      <button class="primary-action" id="drawerPushToSheetsBtn" type="button" style="flex: 1; min-height: 32px; font-size: 11px; padding: 4px 8px;">Push</button>
+                    </div>
+                    <button class="secondary-action" id="drawerSaveSyncConfigBtn" type="button" style="width: 100%; min-height: 32px; font-size: 11px; padding: 4px 8px;">Save Webapp URL</button>
+                  </div>
+                  
+                  <div id="drawerSyncStatusMessage" style="margin-top: 6px; font-size: 11px; color: var(--gold-300); font-weight: 500; text-align: center;"></div>
+                  
+                  <div class="instructions-box" style="margin-top: 10px; padding: 10px; border: 1px dashed rgba(245, 199, 110, 0.2); border-radius: 6px; font-size: 10px; color: #ccc; background: rgba(30, 4, 12, 0.25);">
+                    <h4 style="color: var(--gold-100); margin: 0 0 6px 0; font-size: 10.5px;">Setup Instructions:</h4>
+                    <ol style="margin: 0; padding-left: 14px; display: flex; flex-direction: column; gap: 4px;">
+                      <li>Create a Google Sheet.</li>
+                      <li>Open Extensions &gt; Apps Script.</li>
+                      <li>Paste the Apps Script code.</li>
+                      <li>Deploy &gt; New deployment. Choose Web app, Access: "Anyone".</li>
+                      <li>Copy Web App URL.</li>
+                    </ol>
+                    <button type="button" class="secondary-action" id="drawerCopyAppsScriptBtn" style="margin-top: 8px; width: 100%; min-height: 28px; font-size: 10px; padding: 2px 6px;">Copy Script Code</button>
+                  </div>
+                </div>
+
+                <!-- Local Data Settings Section -->
+                <div class="sync-card" style="border: 1px solid rgba(245, 199, 110, 0.2); background: rgba(255, 255, 255, 0.02); padding: 14px; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
+                  <h3 style="font-size: 13px; font-weight: 700; color: #fff; margin: 0 0 4px 0;">Local Data Settings</h3>
+                  <button class="danger-action" id="drawerClearTreeBtn" type="button" style="width: 100%; min-height: 36px; font-size: 11.5px; border-radius: 6px; margin: 0;">Reset All Family Data</button>
+                </div>
               </div>
             </div>
           </div>
@@ -175,91 +265,8 @@
               </div>
             </div>
             
-            <!-- Airtel-Style Cards Section -->
-            <div class="airtel-card-section">
-              <!-- Large Hero Card -->
-              <div class="airtel-hero-card" id="airtelHeroCard">
-                <div class="airtel-hero-icon" id="airtelHeroIcon">🎉</div>
-                <div class="airtel-hero-tag" id="airtelHeroTag">Active Theme</div>
-                <h3 class="airtel-hero-title" id="airtelHeroTitle">Default Theme</h3>
-                <p class="airtel-hero-desc" id="airtelHeroDesc">Choose a date or event to preview beautiful customized celebration themes.</p>
-                <button class="airtel-hero-btn" id="airtelHeroBtn" type="button">Preview Details</button>
-              </div>
-
-              <!-- Grid of 2 Mini Cards -->
-              <div class="airtel-card-grid">
-                <!-- Mini Card 1: Theme Planner (Mock Date Picker) -->
-                <div class="airtel-mini-card">
-                  <div>
-                    <div class="airtel-mini-tag">Mock Planner</div>
-                    <h4 class="airtel-mini-title">Mock Today's Date</h4>
-                    <p class="airtel-mini-desc" style="margin-bottom: 6px;">Test dynamic themes instantly.</p>
-                    <div class="mock-date-picker">
-                      <select id="mockMonth" aria-label="Mock Month">
-                        <option value="0">January</option>
-                        <option value="1">February</option>
-                        <option value="2">March</option>
-                        <option value="3">April</option>
-                        <option value="4">May</option>
-                        <option value="5" selected>June</option>
-                        <option value="6">July</option>
-                        <option value="7">August</option>
-                        <option value="8">September</option>
-                        <option value="9">October</option>
-                        <option value="10">November</option>
-                        <option value="11">December</option>
-                      </select>
-                      <select id="mockDay" aria-label="Mock Day">
-                        <option value="1">1st</option>
-                        <option value="2">2nd</option>
-                        <option value="3">3rd</option>
-                        <option value="4">4th</option>
-                        <option value="5">5th</option>
-                        <option value="6" selected>6th</option>
-                        <option value="7">7th</option>
-                        <option value="8">8th</option>
-                        <option value="9">9th</option>
-                        <option value="10">10th</option>
-                        <option value="11">11th</option>
-                        <option value="12">12th</option>
-                        <option value="13">13th</option>
-                        <option value="14">14th</option>
-                        <option value="15">15th</option>
-                        <option value="16">16th</option>
-                        <option value="17">17th</option>
-                        <option value="18">18th</option>
-                        <option value="19">19th</option>
-                        <option value="20">20th</option>
-                        <option value="21">21st</option>
-                        <option value="22">22nd</option>
-                        <option value="23">23rd</option>
-                        <option value="24">24th</option>
-                        <option value="25">25th</option>
-                        <option value="26">26th</option>
-                        <option value="27">27th</option>
-                        <option value="28">28th</option>
-                        <option value="29">29th</option>
-                        <option value="30">30th</option>
-                        <option value="31">31st</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Mini Card 2: Upcoming Theme Event / Quick Switch -->
-                <div class="airtel-mini-card" id="airtelMiniCardRight">
-                  <div>
-                    <div class="airtel-mini-tag" id="airtelMiniRightTag">Next Event</div>
-                    <h4 class="airtel-mini-title" id="airtelMiniRightTitle">No upcoming events</h4>
-                    <p class="airtel-mini-desc" id="airtelMiniRightDesc">Add your family members' birthdays and anniversaries in the Family Tree tab.</p>
-                  </div>
-                  <button class="airtel-mini-btn" id="airtelMiniRightBtn" type="button">View Tree</button>
-                </div>
-              </div>
-            </div>
 
             <!-- Cultfit Style Grid (4 columns, 2 rows) -->
-            <div class="cultfit-grid">
               <button class="cultfit-tab-btn" type="button" data-panel="family">
                 <div class="cultfit-icon-circle bg-emerald">
                   <span class="cultfit-icon">🌳</span>
@@ -957,6 +964,6 @@
       </div>
     </template>
 
-    <script src="script.js?v=90"></script>
+    <script src="script.js?v=101"></script>
   </body>
 </html>

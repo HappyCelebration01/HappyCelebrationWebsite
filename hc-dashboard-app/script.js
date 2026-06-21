@@ -4100,7 +4100,6 @@ function initDashboardFeatures() {
   const settingsDrawer = document.getElementById("settingsDrawer");
   const drawerOverlay = document.getElementById("drawerOverlay");
   const drawerCloseBtn = document.getElementById("drawerCloseBtn");
-
   if (menuToggleBtn && settingsDrawer && drawerOverlay && drawerCloseBtn) {
     const openDrawer = () => {
       settingsDrawer.classList.add("open");
@@ -4115,6 +4114,21 @@ function initDashboardFeatures() {
     drawerCloseBtn.addEventListener("click", closeDrawer);
     drawerOverlay.addEventListener("click", closeDrawer);
   }
+
+  // Side Drawer Tabs Switch
+  const drawerTabBtns = document.querySelectorAll(".drawer-tab-btn");
+  const drawerTabPanels = document.querySelectorAll(".drawer-tab-panel");
+
+  drawerTabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetTab = btn.dataset.drawerTab;
+      drawerTabBtns.forEach(b => b.classList.toggle("active", b === btn));
+      drawerTabPanels.forEach(panel => {
+        const isTarget = panel.dataset.panelId === targetTab;
+        panel.classList.toggle("active", isTarget);
+      });
+    });
+  });
 
   // Google Sheets Sync inside Settings Drawer
   const drawerGoogleSheetUrlInput = document.getElementById("drawerGoogleSheetUrlInput");
