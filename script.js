@@ -3454,212 +3454,213 @@ document.addEventListener("DOMContentLoaded", () => {
 // DYNAMIC CELEBRATION THEMES PLANNER ENGINE
 // ==========================================================================
 
-const CELEBRATION_THEMES = {
-  "baby-boy": {
-    label: "🎂 Baby Boy Birthday",
-    styles: [
-      {
-        id: "boy-superhero",
-        name: "Superhero Theme 🦸‍♂️",
-        balloons: ["#ef4444", "#3b82f6", "#eab308"],
-        desc: "Active Theme: Superhero. Bold Red, Blue, and Yellow balloons.",
-        decor: "Superhero skyline backdrops, action bubble signs, and comic-style table spreads.",
-        lighting: "Bright cool white spotlights with vibrant red/blue uplighting.",
-        themeClass: "theme-wine"
-      },
-      {
-        id: "boy-safari",
-        name: "Safari Theme 🦁",
-        balloons: ["#22c55e", "#78350f", "#f97316"],
-        desc: "Active Theme: Safari. Natural Green, Brown, and Orange balloons.",
-        decor: "Jungle foliage vines, inflatable wild animal figures, and wooden rustic signs.",
-        lighting: "Soft warm amber wash with green accent uplights.",
-        themeClass: "theme-emerald"
-      },
-      {
-        id: "boy-cars",
-        name: "Cars & Trucks Theme 🏎️",
-        balloons: ["#09090b", "#ef4444", "#cbd5e1"],
-        desc: "Active Theme: Cars/Trucks. Sleek Black, Red, and Silver balloons.",
-        decor: "Checkered racing flags, miniature traffic cones, and racetrack floor runners.",
-        lighting: "Cool white floodlights with high-contrast red neon accents.",
-        themeClass: "theme-luxury"
-      }
-    ]
+const ALL_THEME_STYLES = [
+  {
+    id: "boy-superhero",
+    category: "Baby Boy Birthday",
+    name: "Superhero Theme 🦸‍♂️",
+    balloons: ["#ef4444", "#3b82f6", "#eab308"],
+    desc: "Active Theme: Superhero. Bold Red, Blue, and Yellow balloons.",
+    decor: "Superhero skyline backdrops, action bubble signs, and comic-style table spreads.",
+    lighting: "Bright cool white spotlights with vibrant red/blue uplighting.",
+    themeClass: "theme-wine",
+    icon: "🎂"
   },
-  "baby-girl": {
-    label: "🎀 Baby Girl Birthday",
-    styles: [
-      {
-        id: "girl-princess",
-        name: "Princess Theme 👑",
-        balloons: ["#f472b6", "#eab308", "#ffffff"],
-        desc: "Active Theme: Princess. Royal Pink, Gold, and White balloons.",
-        decor: "Sparkling tiaras, satin table skirts, and a grand castle photo gate.",
-        lighting: "Soft pink wash with warm golden fairy light backdrop.",
-        themeClass: "theme-birthday-female"
-      },
-      {
-        id: "girl-fairy",
-        name: "Fairy Garden Theme 🧚‍♀️",
-        balloons: ["#fbcfe8", "#c084fc", "#86efac"],
-        desc: "Active Theme: Fairy Garden. Whimsical Pastel Pink, Lavender, and Mint Green balloons.",
-        decor: "Enchanted flower vines, glowing mushroom props, and fairy wing chair covers.",
-        lighting: "Ethereal lavender glow with twinkling firefly lights.",
-        themeClass: "theme-violet"
-      },
-      {
-        id: "girl-unicorn",
-        name: "Unicorn Theme 🦄",
-        balloons: ["#fbcfe8", "#c084fc", "#93c5fd", "#fef08a"],
-        desc: "Active Theme: Unicorn. Magical Rainbow Pastel balloons.",
-        decor: "Golden unicorn horn centerpieces, fluffy cloud setups, and pastel rainbow backdrops.",
-        lighting: "Dreamy pastel color-cycle washes with glittering star-projectors.",
-        themeClass: "theme-birthday-female"
-      }
-    ]
+  {
+    id: "boy-safari",
+    category: "Baby Boy Birthday",
+    name: "Safari Theme 🦁",
+    balloons: ["#22c55e", "#78350f", "#f97316"],
+    desc: "Active Theme: Safari. Natural Green, Brown, and Orange balloons.",
+    decor: "Jungle foliage vines, inflatable wild animal figures, and wooden rustic signs.",
+    lighting: "Soft warm amber wash with green accent uplights.",
+    themeClass: "theme-emerald",
+    icon: "🎂"
   },
-  "newly-married": {
-    label: "💍 Newly Married Couple",
-    styles: [
-      {
-        id: "newly-romantic",
-        name: "Romantic Elegance 🌹",
-        balloons: ["#dc2626", "#ffffff", "#fda4af"],
-        desc: "Active Theme: Romantic Elegance. Passionate Red, White, and Rose-Gold balloons.",
-        decor: "Fresh red rose petals, glass candle holders, and love letter backdrops.",
-        lighting: "Intimate dim warm white candle-glow with soft rose uplighting.",
-        themeClass: "theme-wine"
-      },
-      {
-        id: "newly-travel",
-        name: "Travel Adventure ✈️",
-        balloons: ["#3b82f6", "#14b8a6", "#fef08a"],
-        desc: "Active Theme: Travel Adventure. Scenic Blue, Teal, and Sandy Beige balloons.",
-        decor: "Vintage suitcases, globe centerpieces, and wanderlust map backdrops.",
-        lighting: "Bright daylight white with cool teal ambient washes.",
-        themeClass: "theme-sapphire"
-      },
-      {
-        id: "newly-glam",
-        name: "Modern Glam ✨",
-        balloons: ["#cbd5e1", "#eab308", "#09090b"],
-        desc: "Active Theme: Modern Glam. Sophisticated Silver, Gold, and Black balloons.",
-        decor: "Metallic sequined walls, geometric metal frames, and champagne towers.",
-        lighting: "High-contrast white pinspots and golden sparkle projections.",
-        themeClass: "theme-luxury"
-      }
-    ]
+  {
+    id: "boy-cars",
+    category: "Baby Boy Birthday",
+    name: "Cars & Trucks Theme 🏎️",
+    balloons: ["#09090b", "#ef4444", "#cbd5e1"],
+    desc: "Active Theme: Cars/Trucks. Sleek Black, Red, and Silver balloons.",
+    decor: "Checkered racing flags, miniature traffic cones, and racetrack floor runners.",
+    lighting: "Cool white floodlights with high-contrast red neon accents.",
+    themeClass: "theme-luxury",
+    icon: "🎂"
   },
-  "older-married": {
-    label: "💖 Older Married Couple",
-    styles: [
-      {
-        id: "older-jubilee",
-        name: "Golden Jubilee 🏆",
-        balloons: ["#eab308", "#fffbeb", "#fef9c3"],
-        desc: "Active Theme: Golden Jubilee. Majestic Gold, Ivory, and Champagne balloons.",
-        decor: "Golden frame photo gallery, velvet drapery, and vintage anniversary banners.",
-        lighting: "Warm amber candle-style chandeliers and golden uplights.",
-        themeClass: "theme-luxury"
-      },
-      {
-        id: "older-memory",
-        name: "Memory Lane 📸",
-        balloons: ["#ffffff", "#78350f", "#fef08a"],
-        desc: "Active Theme: Memory Lane. Retro White, Sepia Brown, and Soft Pastel balloons.",
-        decor: "Overhead hanging polaroid cards, retro record players, and lace table overlays.",
-        lighting: "Dim nostalgic incandescent edison bulb strings.",
-        themeClass: "theme-wine"
-      },
-      {
-        id: "older-classic",
-        name: "Classic Elegance 🖤",
-        balloons: ["#09090b", "#ffffff", "#cbd5e1"],
-        desc: "Active Theme: Classic Elegance. Formal Black, White, and Silver balloons.",
-        decor: "Monochromatic floral setups, crystal candelabras, and silver sequin runners.",
-        lighting: "Crisp cool white wash with subtle silver shimmers.",
-        themeClass: "theme-luxury"
-      }
-    ]
+  {
+    id: "girl-princess",
+    category: "Baby Girl Birthday",
+    name: "Princess Theme 👑",
+    balloons: ["#f472b6", "#eab308", "#ffffff"],
+    desc: "Active Theme: Princess. Royal Pink, Gold, and White balloons.",
+    decor: "Sparkling tiaras, satin table skirts, and a grand castle photo gate.",
+    lighting: "Soft pink wash with warm golden fairy light backdrop.",
+    themeClass: "theme-birthday-female",
+    icon: "🎀"
   },
-  "festival": {
-    label: "🎉 Festival Themes",
-    styles: [
-      {
-        id: "festival-diwali-style",
-        name: "Diwali Theme 🪔",
-        balloons: ["#f97316", "#eab308", "#ef4444"],
-        desc: "Active Theme: Diwali. Festival of Lights featuring Orange, Yellow, and Red balloons.",
-        decor: "Clay diyas, fresh marigold flower garlands, and colorful sand rangolis.",
-        lighting: "Twinkling warm fairy lights, lanterns, and bright oil lamp clusters.",
-        themeClass: "theme-festival-diwali"
-      },
-      {
-        id: "festival-christmas-style",
-        name: "Christmas Theme 🎄",
-        balloons: ["#ef4444", "#22c55e", "#ffffff"],
-        desc: "Active Theme: Christmas. Holiday cheer with Red, Green, and White balloons.",
-        decor: "Pine wreaths, holly leaves, hanging socks, and mistletoe.",
-        lighting: "Red and green accent spots with warm white fairy lights on tree branch clusters.",
-        themeClass: "theme-festival-christmas"
-      },
-      {
-        id: "festival-holi-style",
-        name: "Holi Theme 🎨",
-        balloons: ["#ec4899", "#3b82f6", "#eab308", "#22c55e"],
-        desc: "Active Theme: Holi. Organic Holi Splash featuring vibrant Multicolor balloons.",
-        decor: "Organic herbal colors (gulal), water guns (pichkaris), and rustic organic drapes.",
-        lighting: "Bright daylight white floodlights and multi-color laser projections.",
-        themeClass: "theme-festival-holi"
-      },
-      {
-        id: "festival-eid-style",
-        name: "Eid Theme 🌙",
-        balloons: ["#22c55e", "#eab308", "#cbd5e1"],
-        desc: "Active Theme: Eid. Blessed Eid vibes with Green, Gold, and Silver balloons.",
-        decor: "Crescent moon backdrops, moroccan lantern centerpieces, and calligraphy hangings.",
-        lighting: "Emerald green uplighting with warm gold lantern glows.",
-        themeClass: "theme-festival-eid"
-      }
-    ]
+  {
+    id: "girl-fairy",
+    category: "Baby Girl Birthday",
+    name: "Fairy Garden Theme 🧚‍♀️",
+    balloons: ["#fbcfe8", "#c084fc", "#86efac"],
+    desc: "Active Theme: Fairy Garden. Whimsical Pastel Pink, Lavender, and Mint Green balloons.",
+    decor: "Enchanted flower vines, glowing mushroom props, and fairy wing chair covers.",
+    lighting: "Ethereal lavender glow with twinkling firefly lights.",
+    themeClass: "theme-violet",
+    icon: "🎀"
+  },
+  {
+    id: "girl-unicorn",
+    category: "Baby Girl Birthday",
+    name: "Unicorn Theme 🦄",
+    balloons: ["#fbcfe8", "#c084fc", "#93c5fd", "#fef08a"],
+    desc: "Active Theme: Unicorn. Magical Rainbow Pastel balloons.",
+    decor: "Golden unicorn horn centerpieces, fluffy cloud setups, and pastel rainbow backdrops.",
+    lighting: "Dreamy pastel color-cycle washes with glittering star-projectors.",
+    themeClass: "theme-birthday-female",
+    icon: "🎀"
+  },
+  {
+    id: "newly-romantic",
+    category: "Newly Married Couple",
+    name: "Romantic Elegance 🌹",
+    balloons: ["#dc2626", "#ffffff", "#fda4af"],
+    desc: "Active Theme: Romantic Elegance. Passionate Red, White, and Rose-Gold balloons.",
+    decor: "Fresh red rose petals, glass candle holders, and love letter backdrops.",
+    lighting: "Intimate dim warm white candle-glow with soft rose uplighting.",
+    themeClass: "theme-wine",
+    icon: "💍"
+  },
+  {
+    id: "newly-travel",
+    category: "Newly Married Couple",
+    name: "Travel Adventure ✈️",
+    balloons: ["#3b82f6", "#14b8a6", "#fef08a"],
+    desc: "Active Theme: Travel Adventure. Scenic Blue, Teal, and Sandy Beige balloons.",
+    decor: "Vintage suitcases, globe centerpieces, and wanderlust map backdrops.",
+    lighting: "Bright daylight white with cool teal ambient washes.",
+    themeClass: "theme-sapphire",
+    icon: "💍"
+  },
+  {
+    id: "newly-glam",
+    category: "Newly Married Couple",
+    name: "Modern Glam ✨",
+    balloons: ["#cbd5e1", "#eab308", "#09090b"],
+    desc: "Active Theme: Modern Glam. Sophisticated Silver, Gold, and Black balloons.",
+    decor: "Metallic sequined walls, geometric metal frames, and champagne towers.",
+    lighting: "High-contrast white pinspots and golden sparkle projections.",
+    themeClass: "theme-luxury",
+    icon: "💍"
+  },
+  {
+    id: "older-jubilee",
+    category: "Older Married Couple",
+    name: "Golden Jubilee 🏆",
+    balloons: ["#eab308", "#fffbeb", "#fef9c3"],
+    desc: "Active Theme: Golden Jubilee. Majestic Gold, Ivory, and Champagne balloons.",
+    decor: "Golden frame photo gallery, velvet drapery, and vintage anniversary banners.",
+    lighting: "Warm amber candle-style chandeliers and golden uplights.",
+    themeClass: "theme-luxury",
+    icon: "💖"
+  },
+  {
+    id: "older-memory",
+    category: "Older Married Couple",
+    name: "Memory Lane 📸",
+    balloons: ["#ffffff", "#78350f", "#fef08a"],
+    desc: "Active Theme: Memory Lane. Retro White, Sepia Brown, and Soft Pastel balloons.",
+    decor: "Overhead hanging polaroid cards, retro record players, and lace table overlays.",
+    lighting: "Dim nostalgic incandescent edison bulb strings.",
+    themeClass: "theme-wine",
+    icon: "💖"
+  },
+  {
+    id: "older-classic",
+    category: "Older Married Couple",
+    name: "Classic Elegance 🖤",
+    balloons: ["#09090b", "#ffffff", "#cbd5e1"],
+    desc: "Active Theme: Classic Elegance. Formal Black, White, and Silver balloons.",
+    decor: "Monochromatic floral setups, crystal candelabras, and silver sequin runners.",
+    lighting: "Crisp cool white wash with subtle silver shimmers.",
+    themeClass: "theme-luxury",
+    icon: "💖"
+  },
+  {
+    id: "festival-diwali-style",
+    category: "Festival Themes",
+    name: "Diwali Theme 🪔",
+    balloons: ["#f97316", "#eab308", "#ef4444"],
+    desc: "Active Theme: Diwali. Festival of Lights featuring Orange, Yellow, and Red balloons.",
+    decor: "Clay diyas, fresh marigold flower garlands, and colorful sand rangolis.",
+    lighting: "Twinkling warm fairy lights, lanterns, and bright oil lamp clusters.",
+    themeClass: "theme-festival-diwali",
+    icon: "🪔"
+  },
+  {
+    id: "festival-christmas-style",
+    category: "Festival Themes",
+    name: "Christmas Theme 🎄",
+    balloons: ["#ef4444", "#22c55e", "#ffffff"],
+    desc: "Active Theme: Christmas. Holiday cheer with Red, Green, and White balloons.",
+    decor: "Pine wreaths, holly leaves, hanging socks, and mistletoe.",
+    lighting: "Red and green accent spots with warm white fairy lights on tree branch clusters.",
+    themeClass: "theme-festival-christmas",
+    icon: "🎄"
+  },
+  {
+    id: "festival-holi-style",
+    category: "Festival Themes",
+    name: "Holi Theme 🎨",
+    balloons: ["#ec4899", "#3b82f6", "#eab308", "#22c55e"],
+    desc: "Active Theme: Holi. Organic Holi Splash featuring vibrant Multicolor balloons.",
+    decor: "Organic herbal colors (gulal), water guns (pichkaris), and rustic organic drapes.",
+    lighting: "Bright daylight white floodlights and multi-color laser projections.",
+    themeClass: "theme-festival-holi",
+    icon: "🎨"
+  },
+  {
+    id: "festival-eid-style",
+    category: "Festival Themes",
+    name: "Eid Theme 🌙",
+    balloons: ["#22c55e", "#eab308", "#cbd5e1"],
+    desc: "Active Theme: Eid. Blessed Eid vibes with Green, Gold, and Silver balloons.",
+    decor: "Crescent moon backdrops, moroccan lantern centerpieces, and calligraphy hangings.",
+    lighting: "Emerald green uplighting with warm gold lantern glows.",
+    themeClass: "theme-festival-eid",
+    icon: "🌙"
   }
-};
+];
 
 function mapAutoCelebrationToStyle(celebration) {
-  let mapped = celebration;
+  let matched = null;
   if (celebration.id === "festival-diwali") {
-    const s = CELEBRATION_THEMES["festival"].styles[0];
-    mapped = { ...celebration, balloons: s.balloons, decor: s.decor, lighting: s.lighting, desc: s.desc };
+    matched = ALL_THEME_STYLES.find(t => t.id === "festival-diwali-style");
   } else if (celebration.id === "festival-christmas") {
-    const s = CELEBRATION_THEMES["festival"].styles[1];
-    mapped = { ...celebration, balloons: s.balloons, decor: s.decor, lighting: s.lighting, desc: s.desc };
+    matched = ALL_THEME_STYLES.find(t => t.id === "festival-christmas-style");
   } else if (celebration.id === "festival-holi") {
-    const s = CELEBRATION_THEMES["festival"].styles[2];
-    mapped = { ...celebration, balloons: s.balloons, decor: s.decor, lighting: s.lighting, desc: s.desc };
+    matched = ALL_THEME_STYLES.find(t => t.id === "festival-holi-style");
   } else if (celebration.id === "festival-eid") {
-    const s = CELEBRATION_THEMES["festival"].styles[3];
-    mapped = { ...celebration, balloons: s.balloons, decor: s.decor, lighting: s.lighting, desc: s.desc };
+    matched = ALL_THEME_STYLES.find(t => t.id === "festival-eid-style");
   } else if (celebration.id.startsWith("birthday")) {
     const isMale = celebration.themeClass === "theme-birthday-male";
-    if (isMale) {
-      const s = CELEBRATION_THEMES["baby-boy"].styles[0];
-      mapped = { ...celebration, balloons: s.balloons, decor: s.decor, lighting: s.lighting, desc: s.desc };
-    } else {
-      const s = CELEBRATION_THEMES["baby-girl"].styles[0];
-      mapped = { ...celebration, balloons: s.balloons, decor: s.decor, lighting: s.lighting, desc: s.desc };
-    }
+    matched = ALL_THEME_STYLES.find(t => t.id === (isMale ? "boy-superhero" : "girl-princess"));
   } else if (celebration.id.startsWith("anniversary")) {
     const isOld = celebration.themeClass === "theme-anniversary-old";
-    if (isOld) {
-      const s = CELEBRATION_THEMES["older-married"].styles[0];
-      mapped = { ...celebration, balloons: s.balloons, decor: s.decor, lighting: s.lighting, desc: s.desc };
-    } else {
-      const s = CELEBRATION_THEMES["newly-married"].styles[0];
-      mapped = { ...celebration, balloons: s.balloons, decor: s.decor, lighting: s.lighting, desc: s.desc };
-    }
+    matched = ALL_THEME_STYLES.find(t => t.id === (isOld ? "older-jubilee" : "newly-romantic"));
   }
-  return mapped;
+  
+  if (matched) {
+    return {
+      ...celebration,
+      balloons: matched.balloons,
+      decor: matched.decor,
+      lighting: matched.lighting,
+      desc: matched.desc
+    };
+  }
+  return celebration;
 }
 
 function getCelebrationThemeForDate(date) {
@@ -3810,9 +3811,11 @@ function getCelebrationThemeForDate(date) {
   return null;
 }
 
+window.currentThemeStyleIndex = -1; // -1 means auto-detect from date
+
 function updateActiveTheme() {
-  const categorySelect = document.getElementById("themeCategorySelect");
-  const styleSelect = document.getElementById("themeStyleSelect");
+  const activeStyleNameEl = document.getElementById("activeThemeStyleName");
+  const activeStyleCategoryEl = document.getElementById("activeThemeStyleCategory");
 
   let celebration = null;
   let activeDate = new Date();
@@ -3824,41 +3827,31 @@ function updateActiveTheme() {
     activeDate = new Date(activeDate.getFullYear(), mm, dd);
   }
 
-  // 1. Check if user selected a manual category override
-  if (categorySelect && categorySelect.value !== "auto") {
-    const catKey = categorySelect.value;
-    const styleKey = styleSelect ? styleSelect.value : "";
-    const catObj = CELEBRATION_THEMES[catKey];
-    if (catObj) {
-      // Find the selected theme style
-      const themeStyle = catObj.styles.find(s => s.id === styleKey) || catObj.styles[0];
-      if (themeStyle) {
-        let themeIcon = "🎉";
-        if (catKey === "baby-boy") themeIcon = "🎂";
-        else if (catKey === "baby-girl") themeIcon = "🎀";
-        else if (catKey === "newly-married") themeIcon = "💍";
-        else if (catKey === "older-married") themeIcon = "💖";
-        else if (catKey === "festival") {
-          if (themeStyle.id.includes("diwali")) themeIcon = "🪔";
-          else if (themeStyle.id.includes("christmas")) themeIcon = "🎄";
-          else if (themeStyle.id.includes("holi")) themeIcon = "🎨";
-          else if (themeStyle.id.includes("eid")) themeIcon = "🌙";
-        }
-        celebration = {
-          id: themeStyle.id,
-          name: themeStyle.name,
-          themeClass: themeStyle.themeClass,
-          icon: themeIcon,
-          desc: themeStyle.desc,
-          decor: themeStyle.decor,
-          lighting: themeStyle.lighting,
-          balloons: themeStyle.balloons,
-          tag: catObj.label.toUpperCase()
-        };
-      }
+  // 1. Check if user selected a manual category override index
+  if (typeof window.currentThemeStyleIndex === "number" && window.currentThemeStyleIndex >= 0 && window.currentThemeStyleIndex < ALL_THEME_STYLES.length) {
+    const themeStyle = ALL_THEME_STYLES[window.currentThemeStyleIndex];
+    if (themeStyle) {
+      if (activeStyleNameEl) activeStyleNameEl.textContent = themeStyle.name;
+      if (activeStyleCategoryEl) activeStyleCategoryEl.textContent = themeStyle.category;
+      
+      celebration = {
+        id: themeStyle.id,
+        name: themeStyle.name,
+        themeClass: themeStyle.themeClass,
+        icon: themeStyle.icon,
+        desc: themeStyle.desc,
+        decor: themeStyle.decor,
+        lighting: themeStyle.lighting,
+        balloons: themeStyle.balloons,
+        tag: themeStyle.category.toUpperCase()
+      };
     }
   } else {
     // 2. Default automatic date detection
+    window.currentThemeStyleIndex = -1;
+    if (activeStyleNameEl) activeStyleNameEl.textContent = "Auto-detect from Date";
+    if (activeStyleCategoryEl) activeStyleCategoryEl.textContent = "Using calendar dates to set theme.";
+
     celebration = getCelebrationThemeForDate(activeDate);
     // If auto detected a theme, let's map it to one of our special theme styles!
     if (celebration) {
@@ -4896,36 +4889,27 @@ function doGet(e) {
   // Theme Planner Mock Date Picker & Style Selector Events
   const mockMonth = document.getElementById("mockMonth");
   const mockDay = document.getElementById("mockDay");
-  const categorySelect = document.getElementById("themeCategorySelect");
-  const styleSelect = document.getElementById("themeStyleSelect");
+  const prevThemeBtn = document.getElementById("prevThemeBtn");
+  const nextThemeBtn = document.getElementById("nextThemeBtn");
 
-  if (categorySelect && styleSelect) {
-    const updateStyleOptions = () => {
-      const catKey = categorySelect.value;
-      if (catKey === "auto") {
-        styleSelect.style.display = "none";
-      } else {
-        styleSelect.style.display = "block";
-        const catObj = CELEBRATION_THEMES[catKey];
-        if (catObj) {
-          styleSelect.innerHTML = catObj.styles.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
-        }
+  if (prevThemeBtn && nextThemeBtn) {
+    prevThemeBtn.addEventListener("click", () => {
+      window.currentThemeStyleIndex--;
+      if (window.currentThemeStyleIndex < -1) {
+        window.currentThemeStyleIndex = ALL_THEME_STYLES.length - 1;
       }
-    };
-
-    categorySelect.addEventListener("change", () => {
-      updateStyleOptions();
       updateActiveTheme();
       updateAirtelThemePlanningCards();
     });
 
-    styleSelect.addEventListener("change", () => {
+    nextThemeBtn.addEventListener("click", () => {
+      window.currentThemeStyleIndex++;
+      if (window.currentThemeStyleIndex >= ALL_THEME_STYLES.length) {
+        window.currentThemeStyleIndex = -1;
+      }
       updateActiveTheme();
       updateAirtelThemePlanningCards();
     });
-
-    // Run initial population
-    updateStyleOptions();
   }
 
   if (mockMonth && mockDay) {
