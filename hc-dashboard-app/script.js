@@ -3518,12 +3518,14 @@ function initFloatingCelebration() {
   setInterval(() => spawnBubble(false), 2400);
 }
 
-// Run immediately if DOM is already ready, or wait for DOMContentLoaded
+// Run immediately if DOM is already ready, or wait for DOMContentLoaded (disabled to remove floating images)
+/*
 if (document.readyState === "interactive" || document.readyState === "complete") {
   initFloatingCelebration();
 } else {
   document.addEventListener("DOMContentLoaded", initFloatingCelebration);
 }
+*/
 
 // ==========================================================================
 // CULT.FIT STYLE DASHBOARD RUNTIME INITIALIZATION

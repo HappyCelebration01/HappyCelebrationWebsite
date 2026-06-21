@@ -3052,6 +3052,7 @@ body.fullscreen-mode .members-list-list {
 
 /* Floating Celebration Container */
 .floating-celebration-container {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
