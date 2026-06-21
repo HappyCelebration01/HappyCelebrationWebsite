@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=104">
+    <link rel="stylesheet" href="styles.css?v=105">
     <style>
       /* Staggered Twinkling Star Animations (Slow 8s cycle) */
       .sparkle-star {
@@ -74,7 +74,7 @@
             <!-- Drawer Tabs Navigation -->
             <div class="drawer-tabs-nav">
               <button class="drawer-tab-btn active" data-drawer-tab="theme-plan" type="button">Theme Plan</button>
-              <button class="drawer-tab-btn" data-drawer-tab="data-sync" type="button">Sync & Settings</button>
+              <button class="drawer-tab-btn" data-drawer-tab="upcoming-celebrations" type="button">Upcoming Celebration</button>
             </div>
 
             <div class="drawer-content">
@@ -158,45 +158,18 @@
                 </div>
               </div>
 
-              <!-- Tab 2: Sync & Settings -->
-              <div class="drawer-tab-panel" data-panel-id="data-sync">
-                <!-- Google Sheets Sync Settings -->
-                <div class="sync-card" style="border: 1px solid rgba(245, 199, 110, 0.2); background: rgba(255, 255, 255, 0.02); padding: 14px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px;">
-                  <h3 style="font-size: 13px; font-weight: 700; color: #fff; margin: 0 0 4px 0;">Google Sheets Sync</h3>
-                  <p style="font-size: 10.5px; color: rgba(255, 255, 255, 0.6); margin: 0; line-height: 1.35;">Automatically save and backup your family tree to a Google Sheet.</p>
-                  
-                  <label class="lux-label" style="display: block; margin-top: 6px;">
-                    <span style="display: block; margin-bottom: 4px; font-size: 10.5px; font-weight: 600; color: var(--gold-300);">Google Apps Script Web App URL</span>
-                    <input type="url" id="drawerGoogleSheetUrlInput" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" style="width: 100%; min-height: 36px; padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(245, 199, 110, 0.3); background: rgba(30, 4, 12, 0.85); color: #fff; font-size: 11px;">
-                  </label>
-                  
-                  <div class="sync-actions" style="margin-top: 6px; display: flex; flex-direction: column; gap: 8px;">
-                    <div style="display: flex; gap: 6px; width: 100%;">
-                      <button class="primary-action" id="drawerPullFromSheetsBtn" type="button" style="flex: 1; min-height: 32px; font-size: 11px; padding: 4px 8px;">Pull</button>
-                      <button class="primary-action" id="drawerPushToSheetsBtn" type="button" style="flex: 1; min-height: 32px; font-size: 11px; padding: 4px 8px;">Push</button>
+              <!-- Tab 2: Upcoming Celebration -->
+              <div class="drawer-tab-panel" data-panel-id="upcoming-celebrations">
+                <div class="upcoming-workspace" style="display: flex; flex-direction: column; gap: 14px; padding: 4px; font-family: 'Outfit', sans-serif;">
+                  <p class="upcoming-intro" style="color: var(--soft); font-size: 13px; line-height: 1.5; margin: 0 4px;">
+                    Timeline of upcoming birthdays and anniversaries from your family tree. Plan a custom booking directly!
+                  </p>
+                  <div id="drawerUpcomingEventsContainer" style="display: flex; flex-direction: column; gap: 12px;">
+                    <!-- Dynamically filled list -->
+                    <div class="empty-state" style="text-align: center; padding: 40px 20px; color: var(--soft); font-size: 14px;">
+                      🌳 No family members found. Add members to your family tree to track their upcoming events.
                     </div>
-                    <button class="secondary-action" id="drawerSaveSyncConfigBtn" type="button" style="width: 100%; min-height: 32px; font-size: 11px; padding: 4px 8px;">Save Webapp URL</button>
                   </div>
-                  
-                  <div id="drawerSyncStatusMessage" style="margin-top: 6px; font-size: 11px; color: var(--gold-300); font-weight: 500; text-align: center;"></div>
-                  
-                  <div class="instructions-box" style="margin-top: 10px; padding: 10px; border: 1px dashed rgba(245, 199, 110, 0.2); border-radius: 6px; font-size: 10px; color: #ccc; background: rgba(30, 4, 12, 0.25);">
-                    <h4 style="color: var(--gold-100); margin: 0 0 6px 0; font-size: 10.5px;">Setup Instructions:</h4>
-                    <ol style="margin: 0; padding-left: 14px; display: flex; flex-direction: column; gap: 4px;">
-                      <li>Create a Google Sheet.</li>
-                      <li>Open Extensions &gt; Apps Script.</li>
-                      <li>Paste the Apps Script code.</li>
-                      <li>Deploy &gt; New deployment. Choose Web app, Access: "Anyone".</li>
-                      <li>Copy Web App URL.</li>
-                    </ol>
-                    <button type="button" class="secondary-action" id="drawerCopyAppsScriptBtn" style="margin-top: 8px; width: 100%; min-height: 28px; font-size: 10px; padding: 2px 6px;">Copy Script Code</button>
-                  </div>
-                </div>
-
-                <!-- Local Data Settings Section -->
-                <div class="sync-card" style="border: 1px solid rgba(245, 199, 110, 0.2); background: rgba(255, 255, 255, 0.02); padding: 14px; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
-                  <h3 style="font-size: 13px; font-weight: 700; color: #fff; margin: 0 0 4px 0;">Local Data Settings</h3>
-                  <button class="danger-action" id="drawerClearTreeBtn" type="button" style="width: 100%; min-height: 36px; font-size: 11.5px; border-radius: 6px; margin: 0;">Reset All Family Data</button>
                 </div>
               </div>
             </div>
@@ -967,6 +940,6 @@
       </div>
     </template>
 
-    <script src="script.js?v=104"></script>
+    <script src="script.js?v=105"></script>
   </body>
 </html>

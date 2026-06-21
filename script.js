@@ -4095,6 +4095,129 @@ function initDashboardFeatures() {
 
   populateNotifications();
 
+  // Dynamically populate upcoming celebrations tab in Settings side drawer
+  window.updateDrawerUpcomingEvents = function() {
+    const container = document.getElementById("drawerUpcomingEventsContainer");
+    if (!container) return;
+
+    let members = [];
+    try {
+      const raw = localStorage.getItem("happyCelebrationFamily");
+      members = raw ? JSON.parse(raw) : [];
+    } catch (e) {}
+
+    if (!Array.isArray(members) || members.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state" style="text-align: center; padding: 40px 20px; color: var(--soft); font-size: 14px;">
+          🌳 No family members found. Add members to your family tree to track their upcoming events.
+        </div>
+      `;
+      return;
+    }
+
+    const mockToday = new Date(2026, 5, 6);
+    const list = [];
+
+    members.forEach(m => {
+      if (m.birthDate) {
+        const parts = m.birthDate.split("/");
+        if (parts.length === 3) {
+          const bMon = parseInt(parts[0], 10) - 1;
+          const bDay = parseInt(parts[1], 10);
+          list.push({
+            name: m.name,
+            eventTitle: `${m.name}'s Birthday`,
+            type: "Birthday",
+            month: bMon,
+            day: bDay,
+            originalDate: m.birthDate
+          });
+        }
+      }
+      if (m.anniversaryDate && m.spouseId) {
+        const spouse = members.find(s => s.id === m.spouseId);
+        if (spouse && m.id < spouse.id) {
+          const parts = m.anniversaryDate.split("/");
+          if (parts.length === 3) {
+            const aMon = parseInt(parts[0], 10) - 1;
+            const aDay = parseInt(parts[1], 10);
+            list.push({
+              name: `${m.name} & ${spouse.name}`,
+              eventTitle: `${m.name} & ${spouse.name}'s Anniversary`,
+              type: "Anniversary",
+              month: aMon,
+              day: aDay,
+              originalDate: m.anniversaryDate
+            });
+          }
+        }
+      }
+    });
+
+    const eventsWithDays = list.map(ev => {
+      let evDate = new Date(2026, ev.month, ev.day);
+      if (evDate < mockToday) {
+        evDate = new Date(2027, ev.month, ev.day);
+      }
+      const diffTime = evDate - mockToday;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return { ...ev, daysLeft: diffDays, targetYear: evDate.getFullYear() };
+    });
+
+    eventsWithDays.sort((a, b) => a.daysLeft - b.daysLeft);
+
+    if (eventsWithDays.length > 0) {
+      container.innerHTML = "";
+      eventsWithDays.forEach(ev => {
+        const card = document.createElement("div");
+        card.className = "upcoming-event-card";
+        
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const formattedDate = `${monthNames[ev.month]} ${ev.day}, ${ev.targetYear}`;
+
+        card.innerHTML = `
+          <div class="event-details">
+            <span class="event-name">${ev.eventTitle}</span>
+            <span class="event-date">📅 ${formattedDate} (${ev.type})</span>
+          </div>
+          <button class="event-countdown-badge" type="button">
+            <span>⚡ ${ev.daysLeft}d left</span>
+          </button>
+        `;
+
+        card.querySelector(".event-countdown-badge").addEventListener("click", () => {
+          // Close drawer
+          const settingsDrawer = document.getElementById("settingsDrawer");
+          const drawerOverlay = document.getElementById("drawerOverlay");
+          if (settingsDrawer) settingsDrawer.classList.remove("open");
+          if (drawerOverlay) drawerOverlay.classList.remove("open");
+
+          openPanel("book");
+          setTimeout(() => {
+            const form = document.querySelector("#bookingForm");
+            if (form) {
+              const nameInput = form.querySelector("input[name='name']");
+              if (nameInput) nameInput.value = ev.name;
+              const typeSelect = form.querySelector("#bookingEventType");
+              if (typeSelect) {
+                typeSelect.value = ev.type === "Anniversary" ? "Anniversary" : "Birthday";
+                typeSelect.dispatchEvent(new Event("change"));
+              }
+            }
+          }, 80);
+        });
+
+        container.appendChild(card);
+      });
+    } else {
+      container.innerHTML = `
+        <div class="empty-state" style="text-align: center; padding: 40px 20px; color: var(--soft); font-size: 14px;">
+          🌳 No family members found. Add members to your family tree to track their upcoming events.
+        </div>
+      `;
+    }
+  };
+
   // Initialize Settings Drawer toggle
   const menuToggleBtn = document.getElementById("menuToggleBtn");
   const settingsDrawer = document.getElementById("settingsDrawer");
@@ -4104,6 +4227,9 @@ function initDashboardFeatures() {
     const openDrawer = () => {
       settingsDrawer.classList.add("open");
       drawerOverlay.classList.add("open");
+      if (typeof window.updateDrawerUpcomingEvents === "function") {
+        window.updateDrawerUpcomingEvents();
+      }
     };
     const closeDrawer = () => {
       settingsDrawer.classList.remove("open");
@@ -4127,6 +4253,9 @@ function initDashboardFeatures() {
         const isTarget = panel.dataset.panelId === targetTab;
         panel.classList.toggle("active", isTarget);
       });
+      if (targetTab === "upcoming-celebrations" && typeof window.updateDrawerUpcomingEvents === "function") {
+        window.updateDrawerUpcomingEvents();
+      }
     });
   });
 
