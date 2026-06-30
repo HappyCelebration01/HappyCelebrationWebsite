@@ -5375,3 +5375,171 @@ body.theme-festival-holi {
 #staticThemesList::-webkit-scrollbar-thumb:hover {
   background: rgba(245, 199, 110, 0.5);
 }
+
+/* ==========================================
+   LAPTOP / DESKTOP RESPONSIVE DASHBOARD LAYOUT
+   ========================================== */
+@media (min-width: 769px) {
+  .app-shell {
+    padding: 30px;
+    background: radial-gradient(circle at 50% 50%, #17050d, #050204);
+  }
+
+  .phone-frame {
+    width: 92%;
+    max-width: 1180px;
+    height: 85vh;
+    min-height: 640px;
+    padding: 8px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), inset 0 0 0 1.5px rgba(255, 255, 255, 0.15);
+    border: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .screen {
+    height: 100%;
+    border-radius: 18px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  /* Widescreen Home View layout */
+  .home-view {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 90px) !important;
+    padding: 40px 60px !important;
+    overflow-y: auto;
+  }
+
+  .home-view.active {
+    display: flex !important;
+  }
+
+  .logo-hero-container {
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .main-monogram-logo {
+    width: 86px !important;
+    height: 86px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .logo-hero-title {
+    font-size: 24px !important;
+    letter-spacing: 3px !important;
+  }
+
+  /* Cultfit grid expanded for laptop layout */
+  .cultfit-grid {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100%;
+    max-width: 860px;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 24px 20px !important;
+    margin: 0 auto !important;
+  }
+
+  .cultfit-icon-circle {
+    width: 72px !important;
+    height: 72px !important;
+  }
+
+  .cultfit-icon {
+    font-size: 30px !important;
+  }
+
+  .cultfit-label {
+    font-size: 13px !important;
+  }
+
+  /* Panel layout centering and width limits */
+  .panel-view {
+    height: calc(100% - 90px) !important;
+    padding: 0 40px 40px !important;
+    overflow-y: auto;
+  }
+
+  .panel-content {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* Packages display side-by-side */
+  .packages-workspace {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px !important;
+  }
+
+  .packages-workspace .package-card {
+    flex: 1 1 290px;
+    max-width: 300px;
+    margin: 0 !important;
+  }
+
+  /* Photo Grid display in columns */
+  .photo-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  /* Contact List display side-by-side */
+  .contact-list {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 20px !important;
+    overflow: visible !important;
+  }
+
+  .contact-list a {
+    border-bottom: none !important;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(245, 199, 110, 0.15);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .contact-list a:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-300);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Booking Form Grid */
+  .book-form {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 24px !important;
+  }
+
+  .book-form label {
+    grid-column: span 1;
+  }
+
+  .book-form #liveQuoteCard {
+    grid-column: span 2;
+  }
+
+  .book-form button[type="submit"] {
+    grid-column: span 2;
+  }
+
+  /* Base Prices Grid */
+  #basePricesView {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+    max-height: none !important;
+  }
+}

@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=107">
+    <link rel="stylesheet" href="styles.css?v=110">
     <style>
       /* Staggered Twinkling Star Animations (Slow 8s cycle) */
       .sparkle-star {
@@ -171,7 +171,7 @@
                     <h4 class="airtel-mini-title" id="airtelMiniRightTitle">No upcoming events</h4>
                     <p class="airtel-mini-desc" id="airtelMiniRightDesc">Add your family members' birthdays and anniversaries in the Family Tree tab.</p>
                   </div>
-                  <button class="airtel-mini-btn" id="airtelMiniRightBtn" type="button">View Tree</button>
+                  <a class="airtel-mini-btn" id="airtelMiniRightBtn" href="?panel=family&fullscreen=true" target="_blank" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">View Tree</a>
                 </div>
               </div>
 
@@ -260,12 +260,12 @@
 
             <!-- Cultfit Style Grid (4 columns, 2 rows) -->
             <div class="cultfit-grid">
-              <button class="cultfit-tab-btn" type="button" data-panel="family">
+              <a class="cultfit-tab-btn" href="?panel=family&fullscreen=true" target="_blank" data-panel="family" style="text-decoration: none;">
                 <div class="cultfit-icon-circle bg-emerald">
                   <span class="cultfit-icon">🌳</span>
                 </div>
                 <span class="cultfit-label">Family Tree</span>
-              </button>
+              </a>
               <button class="cultfit-tab-btn" type="button" data-panel="book">
                 <div class="cultfit-icon-circle bg-wine">
                   <span class="cultfit-icon">📅</span>
@@ -957,6 +957,6 @@
       </div>
     </template>
 
-    <script src="script.js?v=107"></script>
+    <script src="script.js?v=110"></script>
   </body>
 </html>

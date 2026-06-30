@@ -225,18 +225,13 @@ function renderCountdownBanner() {
         <span class="countdown-text" style="font-size: 11px; color: var(--soft);">
           Configure birthdays & anniversaries to see countdowns.
         </span>
-      </div>
-      <button class="countdown-btn" type="button" id="countdownAddBtn" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25); box-shadow: none;">Add Dates</button>
+      <a class="countdown-btn" id="countdownAddBtn" href="?panel=family&fullscreen=true" target="_blank" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25); box-shadow: none; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; height: 26px; padding: 0 10px; border-radius: 4px; font-size: 11px; font-weight: 600;">Add Dates</a>
     `;
 
     const trigger = document.querySelector("#greetingBanner") || document.querySelector(".sparkle");
     if (trigger) {
       trigger.after(banner);
     }
-
-    banner.querySelector("#countdownAddBtn").addEventListener("click", () => {
-      openPanel("family");
-    });
   }
 }
 
@@ -3350,7 +3345,14 @@ function closePanel() {
 }
 
 document.querySelectorAll("[data-panel]").forEach((button) => {
-  button.addEventListener("click", () => openPanel(button.dataset.panel));
+  button.addEventListener("click", (e) => {
+    const panel = button.dataset.panel;
+    if (panel === "family") {
+      // Let the native <a> link navigation handle it
+      return;
+    }
+    openPanel(panel);
+  });
   
   button.addEventListener("mousemove", (e) => {
     const rect = button.getBoundingClientRect();
@@ -4059,7 +4061,7 @@ function updateAirtelThemePlanningCards() {
     if (rightDesc) rightDesc.textContent = "Go to the Family Tree tab to add family members and see their upcoming celebrations.";
     if (rightBtn) {
       rightBtn.textContent = "Add Member";
-      rightBtn.onclick = () => { openPanel("family"); };
+      rightBtn.onclick = null;
     }
     return;
   }
@@ -4137,7 +4139,7 @@ function updateAirtelThemePlanningCards() {
     }
     if (rightBtn) {
       rightBtn.textContent = "View Family";
-      rightBtn.onclick = () => { openPanel("family"); };
+      rightBtn.onclick = null;
     }
   } else {
     if (rightTag) rightTag.textContent = "Next Event";
@@ -4145,7 +4147,7 @@ function updateAirtelThemePlanningCards() {
     if (rightDesc) rightDesc.textContent = "Add birth dates and anniversaries to get countdowns here.";
     if (rightBtn) {
       rightBtn.textContent = "View Family";
-      rightBtn.onclick = () => { openPanel("family"); };
+      rightBtn.onclick = null;
     }
   }
 }
@@ -4357,7 +4359,7 @@ function initDashboardFeatures() {
       } else if (tabName === "book") {
         openPanel("book");
       } else if (tabName === "family") {
-        openPanel("family");
+        window.open("?panel=family&fullscreen=true", "_blank");
       } else if (tabName === "about") {
         openPanel("about");
       } else if (tabName === "search") {
@@ -4369,8 +4371,12 @@ function initDashboardFeatures() {
   // 2. Setup Cultfit Grid Tab Button Click Listeners
   const cultfitBtns = document.querySelectorAll(".cultfit-tab-btn");
   cultfitBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
       const panel = btn.dataset.panel;
+      if (panel === "family") {
+        // Let the native <a> link navigation handle it
+        return;
+      }
       if (panel) openPanel(panel);
     });
   });
