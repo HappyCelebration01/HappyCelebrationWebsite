@@ -4392,13 +4392,24 @@ function initDashboardFeatures() {
     });
   });
 
-  // 2b. Setup Desktop Navigation Link Click Listeners
+  // 2b. Setup Desktop Navigation Link Click Listeners (Widescreen Single-Page Scrolling)
   const desktopNavBtns = document.querySelectorAll(".desktop-nav .nav-link-btn");
   desktopNavBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       const panel = btn.dataset.navPanel;
       if (panel === "home") {
         closePanel();
+        const home = document.getElementById("homeView");
+        if (home) home.scrollTo({ top: 0, behavior: "smooth" });
+      } else if (panel === "packages" || panel === "gallery" || panel === "about" || panel === "contact") {
+        closePanel();
+        const targetId = panel + "Section";
+        const section = document.getElementById(targetId);
+        if (section) {
+          setTimeout(() => {
+            section.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 80);
+        }
       } else if (panel) {
         openPanel(panel);
       }
@@ -4410,8 +4421,59 @@ function initDashboardFeatures() {
   if (brandBtn) {
     brandBtn.addEventListener("click", () => {
       closePanel();
+      const home = document.getElementById("homeView");
+      if (home) home.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
+
+  // 2d. Setup Hero Call-to-Action buttons
+  const heroBookBtn = document.getElementById("heroBookBtn");
+  const heroExploreBtn = document.getElementById("heroExploreBtn");
+  if (heroBookBtn) {
+    heroBookBtn.addEventListener("click", () => {
+      openPanel("book");
+    });
+  }
+  if (heroExploreBtn) {
+    heroExploreBtn.addEventListener("click", () => {
+      const section = document.getElementById("packagesSection");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+
+  // 2e. Setup Landing Page Package Select buttons
+  const landingPkgBtns = document.querySelectorAll("[data-package-select]");
+  landingPkgBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const pkgName = btn.dataset.packageSelect;
+      openPanel("book");
+      
+      setTimeout(() => {
+        const form = document.querySelector("#bookingForm");
+        if (form) {
+          const eventTypeSelect = form.querySelector("#bookingEventType");
+          if (eventTypeSelect) {
+            eventTypeSelect.value = "Birthday";
+            eventTypeSelect.dispatchEvent(new Event("change"));
+          }
+          const guestsInput = form.querySelector("#bookingGuests");
+          if (guestsInput) {
+            if (pkgName === "Gold") guestsInput.value = 30;
+            else if (pkgName === "Diamond") guestsInput.value = 60;
+            else if (pkgName === "Platinum") guestsInput.value = 100;
+            guestsInput.dispatchEvent(new Event("input"));
+          }
+          const note = form.querySelector("#bookingNote");
+          if (note) {
+            note.textContent = `Pre-filled ${pkgName} package settings. Customize as needed!`;
+            note.style.color = "var(--gold-300)";
+          }
+        }
+      }, 100);
+    });
+  });
 
   // 3. Notification Bell Click Toggle
   const notificationBtn = document.getElementById("notificationBtn");

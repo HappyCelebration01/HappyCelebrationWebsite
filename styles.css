@@ -5457,19 +5457,60 @@ body.theme-festival-holi {
     display: none;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: calc(100% - 90px) !important;
-    padding: 40px 60px !important;
+    padding: 0 0 60px !important;
     overflow-y: auto;
+    scroll-behavior: smooth;
   }
 
   .home-view.active {
     display: flex !important;
   }
 
+  /* Full-width homepage sections */
+  .home-section {
+    width: 100%;
+    max-width: 1000px;
+    padding: 60px 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border-bottom: 1px dashed rgba(245, 199, 110, 0.15);
+  }
+
+  .home-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .section-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 26px;
+    color: var(--gold-300);
+    text-align: center;
+    margin: 0 0 10px 0;
+    letter-spacing: 1px;
+    text-shadow: 0 0 12px rgba(245, 199, 110, 0.25);
+  }
+
+  /* Hero Section takes full browser height on desktop */
+  .hero-section {
+    min-height: calc(100vh - 90px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px dashed rgba(245, 199, 110, 0.15);
+    width: 100%;
+    max-width: 1000px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    gap: 30px;
+  }
+
   .logo-hero-container {
     margin-top: 0;
-    margin-bottom: 30px;
+    margin-bottom: 0;
     text-align: center;
   }
 
@@ -5508,6 +5549,44 @@ body.theme-festival-holi {
 
   .cultfit-label {
     font-size: 13px !important;
+  }
+
+  /* Stats Section grid layout */
+  .stats-section {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 20px !important;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(5px);
+    border-radius: 16px;
+    border: 1.5px solid rgba(245, 199, 110, 0.15);
+    max-width: 920px;
+    margin: 40px auto;
+    padding: 24px 30px !important;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .stat-number {
+    font-family: 'Outfit', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--gold-300);
+    line-height: 1;
+    text-shadow: 0 0 10px rgba(245, 199, 110, 0.3);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   /* Panel layout centering and width limits */
