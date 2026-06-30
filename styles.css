@@ -5525,30 +5525,9 @@ body.theme-festival-holi {
     letter-spacing: 4px !important;
   }
 
-  /* Cultfit grid expanded for laptop layout */
+  /* Hide mobile app icon grid on desktop viewports for clean website appearance */
   .cultfit-grid {
-    position: relative !important;
-    bottom: auto !important;
-    left: auto !important;
-    right: auto !important;
-    width: 100%;
-    max-width: 860px;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 24px 20px !important;
-    margin: 0 auto !important;
-  }
-
-  .cultfit-icon-circle {
-    width: 72px !important;
-    height: 72px !important;
-  }
-
-  .cultfit-icon {
-    font-size: 30px !important;
-  }
-
-  .cultfit-label {
-    font-size: 13px !important;
+    display: none !important;
   }
 
   /* Stats Section grid layout */
