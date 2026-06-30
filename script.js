@@ -4344,6 +4344,17 @@ function updateBottomNavActive(tabName) {
       tab.classList.remove("active");
     }
   });
+
+  // Update desktop nav
+  const desktopBtns = document.querySelectorAll(".desktop-nav .nav-link-btn");
+  desktopBtns.forEach(btn => {
+    const btnPanel = btn.dataset.navPanel;
+    if (btnPanel === tabName) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
 }
 
 function initDashboardFeatures() {
@@ -4380,6 +4391,27 @@ function initDashboardFeatures() {
       if (panel) openPanel(panel);
     });
   });
+
+  // 2b. Setup Desktop Navigation Link Click Listeners
+  const desktopNavBtns = document.querySelectorAll(".desktop-nav .nav-link-btn");
+  desktopNavBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const panel = btn.dataset.navPanel;
+      if (panel === "home") {
+        closePanel();
+      } else if (panel) {
+        openPanel(panel);
+      }
+    });
+  });
+
+  // 2c. Setup Brand Logo click listener
+  const brandBtn = document.getElementById("headerBrandBtn");
+  if (brandBtn) {
+    brandBtn.addEventListener("click", () => {
+      closePanel();
+    });
+  }
 
   // 3. Notification Bell Click Toggle
   const notificationBtn = document.getElementById("notificationBtn");

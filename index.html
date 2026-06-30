@@ -193,9 +193,25 @@
           </div>
 
           <header class="dashboard-header">
-            <button class="menu-toggle-btn" id="menuToggleBtn" aria-label="Open settings drawer" type="button">
-              ☰
-            </button>
+            <div class="header-left" style="display: flex; align-items: center; gap: 12px;">
+              <button class="menu-toggle-btn" id="menuToggleBtn" aria-label="Open settings drawer" type="button">
+                ☰
+              </button>
+              <div class="header-brand" id="headerBrandBtn" style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                <img class="header-logo" src="assets/hc-logo-mark.png" alt="Happy Celebration Logo" style="width: 32px; height: 32px; object-fit: contain;">
+                <span class="header-brand-name" style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.5px; color: var(--gold-300);">HAPPY CELEBRATION</span>
+              </div>
+            </div>
+            
+            <nav class="desktop-nav" aria-label="Desktop navigation">
+              <button class="nav-link-btn active" data-nav-panel="home" type="button">Home</button>
+              <a class="nav-link-btn" href="?panel=family&fullscreen=true" target="_blank" style="text-decoration: none;">Family Tree</a>
+              <button class="nav-link-btn" data-nav-panel="book" type="button">Book Event</button>
+              <button class="nav-link-btn" data-nav-panel="packages" type="button">Packages</button>
+              <button class="nav-link-btn" data-nav-panel="gallery" type="button">Gallery</button>
+              <button class="nav-link-btn" data-nav-panel="about" type="button">About Us</button>
+              <button class="nav-link-btn" data-nav-panel="contact" type="button">Contact Us</button>
+            </nav>
             
             <div class="header-right-actions">
               <!-- Theme Settings Toggle -->
