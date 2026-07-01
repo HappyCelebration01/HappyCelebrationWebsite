@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=112">
+    <link rel="stylesheet" href="styles.css?v=113">
     <style>
       /* Staggered Twinkling Star Animations (Slow 8s cycle) */
       .sparkle-star {
@@ -267,69 +267,43 @@
           <section class="home-view active" id="homeView" aria-label="Main menu">
             <!-- Hero Wrapper Section -->
             <div class="hero-section" id="heroSection">
-              <div class="hero-split-container">
-                <!-- Left: Text & CTA Content -->
-                <div class="hero-text-content">
-                  <div class="logo-hero-container">
-                    <img class="main-monogram-logo" src="assets/hc-logo-mark.png" alt="Happy Celebration">
-                    <h1 class="logo-hero-title">HAPPY CELEBRATION</h1>
-                    <div class="logo-hero-sparkle">
-                      <span class="sparkle-star">✦</span>
-                      <span class="sparkle-star">✦</span>
-                      <span class="sparkle-star">✦</span>
-                    </div>
-                  </div>
-                  <p class="hero-subtitle">
-                    America's most trusted family celebration & event planning platform. Track anniversaries, map your family tree, and book themed decor packages instantly.
-                  </p>
-                  <div class="hero-cta-btns">
-                    <button class="primary-action" id="heroBookBtn" type="button">Book Event Now</button>
-                    <button class="secondary-action" id="heroExploreBtn" type="button">Explore Tiers</button>
-                  </div>
+              <!-- Full Screen Looping Confetti Video Background -->
+              <div class="hero-video-bg-container" aria-hidden="true">
+                <div class="hero-video-overlay"></div>
+                <video class="hero-loop-video" autoplay loop muted playsinline poster="assets/event-lights.webp">
+                  <source src="https://assets.mixkit.co/videos/preview/mixkit-confetti-falling-on-a-black-background-31745-large.mp4" type="video/mp4">
+                  <!-- Fallback image -->
+                  <img src="assets/event-lights.webp" alt="Celebration event lights">
+                </video>
+              </div>
+
+              <!-- Center Text Content aligned over the full-screen video -->
+              <div class="logo-hero-container">
+                <img class="main-monogram-logo" src="assets/hc-logo-mark.png" alt="Happy Celebration">
+                <h1 class="logo-hero-title">HAPPY CELEBRATION</h1>
+                
+                <div class="logo-hero-sparkle">
+                  <span class="sparkle-star">✦</span>
+                  <span class="sparkle-star">✦</span>
+                  <span class="sparkle-star">✦</span>
                 </div>
                 
-                <!-- Right: Visual Media Showcase (Looping celebration view & Play trigger) -->
-                <div class="hero-media-showcase">
-                  <div class="media-card-wrapper">
-                    <!-- Ambient back-glow -->
-                    <div class="media-glow-overlay"></div>
-                    
-                    <!-- Loop celebration video -->
-                    <video class="hero-loop-video" autoplay loop muted playsinline poster="assets/event-lights.webp">
-                      <source src="https://assets.mixkit.co/videos/preview/mixkit-confetti-falling-on-a-black-background-31745-large.mp4" type="video/mp4">
-                      <!-- Fallback image -->
-                      <img src="assets/event-lights.webp" alt="Celebration event lights">
-                    </video>
-                    
-                    <!-- Frosted glass details overlay -->
-                    <div class="media-overlay-details">
-                      <span class="media-badge">✨ Video Tour</span>
-                      <button class="media-play-btn" id="heroPlayVideoBtn" aria-label="Play Event Video" type="button">
-                        <span class="play-icon">▶</span>
-                      </button>
-                      <div class="media-caption">
-                        <h4>A Taste of Celebration</h4>
-                        <p>Beautiful themed decor and catering setups in action</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <!-- Floating widgets for micro-interactions -->
-                  <div class="floating-badge-widget rating-widget">
-                    <span class="widget-icon">⭐</span>
-                    <div class="widget-text">
-                      <strong>4.9 Rating</strong>
-                      <span>250+ events</span>
-                    </div>
-                  </div>
-                  
-                  <div class="floating-badge-widget active-widget">
-                    <span class="widget-icon">🎉</span>
-                    <div class="widget-text">
-                      <strong>16+ Themes</strong>
-                      <span>Customizable</span>
-                    </div>
-                  </div>
+                <p class="hero-subtitle">
+                  America's most trusted family celebration & event planning platform. Track anniversaries, map your family tree, and book themed decor packages instantly.
+                </p>
+                
+                <!-- Micro-interactive rating badges -->
+                <div class="hero-stats-row">
+                  <span class="hero-stat-badge">⭐ 4.9 Rating (250+ Events)</span>
+                  <span class="hero-stat-badge">🎉 16+ Custom Themes</span>
+                </div>
+
+                <div class="hero-cta-btns">
+                  <button class="primary-action" id="heroBookBtn" type="button">Book Event Now</button>
+                  <button class="secondary-action" id="heroExploreBtn" type="button">Explore Tiers</button>
+                  <button class="secondary-action video-btn" id="heroPlayVideoBtn" type="button" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                    <span class="play-icon">▶</span> Watch Video Tour
+                  </button>
                 </div>
               </div>
             </div>
@@ -1210,6 +1184,6 @@
       </div>
     </div>
 
-    <script src="script.js?v=112"></script>
+    <script src="script.js?v=113"></script>
   </body>
 </html>
