@@ -3444,6 +3444,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Looping Celebration Video Background Playlist (Birthday -> Anniversary -> Corporate -> Party)
+  const heroVideo = document.querySelector(".hero-loop-video");
+  if (heroVideo) {
+    const playlist = [
+      "assets/hero-birthday.mp4",
+      "assets/hero-party-loop.mp4",
+      "assets/hero-party-loop-3.mp4",
+      "assets/hero-party-loop-2.mp4",
+      "assets/hero-party-loop-4.mp4"
+    ];
+    let currentIdx = 0;
+    
+    heroVideo.addEventListener("ended", () => {
+      currentIdx = (currentIdx + 1) % playlist.length;
+      heroVideo.src = playlist[currentIdx];
+      heroVideo.load();
+      heroVideo.play().catch(err => console.log("Video auto-play delayed:", err));
+    });
+  }
+
   const userProfileBtn = document.getElementById("userProfileBtn") || document.getElementById("avatarBtn");
   if (userProfileBtn) {
     userProfileBtn.addEventListener("click", () => {
