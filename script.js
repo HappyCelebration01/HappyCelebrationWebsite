@@ -3459,6 +3459,7 @@ document.addEventListener("DOMContentLoaded", () => {
     heroVideo.addEventListener("ended", () => {
       currentIdx = (currentIdx + 1) % playlist.length;
       heroVideo.src = playlist[currentIdx];
+      heroVideo.muted = true;
       heroVideo.load();
       heroVideo.play().catch(err => console.log("Video auto-play delayed:", err));
     });
