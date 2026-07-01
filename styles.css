@@ -6279,3 +6279,58 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
   background: #ff4a5a;
   border-color: #ff4a5a;
 }
+
+/* Infinite Carousel Slider */
+.hero-image-slider {
+  width: 100%;
+  max-width: 900px;
+  overflow: hidden;
+  margin: 32px 0 12px;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+}
+
+.slider-track {
+  display: flex;
+  width: calc(260px * 14); /* 260px (240px card + 20px gap) * 14 slides */
+  gap: 20px;
+  animation: scrollInfinite 35s linear infinite;
+}
+
+.hero-image-slider:hover .slider-track {
+  animation-play-state: paused;
+}
+
+.slide {
+  width: 240px;
+  height: 150px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  background: var(--glass-bg);
+}
+
+.slide:hover {
+  transform: scale(1.03);
+  border-color: var(--gold-300);
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@keyframes scrollInfinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-260px * 7)); /* Scroll exactly half the track length */
+  }
+}
