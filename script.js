@@ -3444,27 +3444,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Looping Celebration Video Background Playlist (Birthday -> Anniversary -> Corporate -> Party)
-  const heroVideo = document.querySelector(".hero-loop-video");
-  if (heroVideo) {
-    const playlist = [
-      "assets/hero-birthday.mp4",
-      "assets/hero-party-loop.mp4",
-      "assets/hero-party-loop-3.mp4",
-      "assets/hero-party-loop-2.mp4",
-      "assets/hero-party-loop-4.mp4"
-    ];
-    let currentIdx = 0;
-    
-    heroVideo.addEventListener("ended", () => {
-      currentIdx = (currentIdx + 1) % playlist.length;
-      heroVideo.src = playlist[currentIdx];
-      heroVideo.muted = true;
-      heroVideo.load();
-      heroVideo.play().catch(err => console.log("Video auto-play delayed:", err));
-    });
-  }
-
   const userProfileBtn = document.getElementById("userProfileBtn") || document.getElementById("avatarBtn");
   if (userProfileBtn) {
     userProfileBtn.addEventListener("click", () => {
@@ -5151,34 +5130,6 @@ function doGet(e) {
   updateActiveTheme();
   updateAirtelThemePlanningCards();
 
-  // Lightbox Video Modal Logic
-  const heroPlayVideoBtn = document.getElementById("heroPlayVideoBtn");
-  const videoLightbox = document.getElementById("videoLightbox");
-  const lightboxOverlay = document.getElementById("lightboxOverlay");
-  const lightboxCloseBtn = document.getElementById("lightboxCloseBtn");
-  const lightboxIframe = document.getElementById("lightboxIframe");
-
-  if (heroPlayVideoBtn && videoLightbox && lightboxIframe) {
-    heroPlayVideoBtn.addEventListener("click", () => {
-      lightboxIframe.src = "https://player.vimeo.com/video/336812686?autoplay=1";
-      videoLightbox.style.display = "flex";
-    });
-
-    const closeLightbox = () => {
-      videoLightbox.style.display = "none";
-      lightboxIframe.src = "";
-    };
-
-    if (lightboxCloseBtn) lightboxCloseBtn.addEventListener("click", closeLightbox);
-    if (lightboxOverlay) lightboxOverlay.addEventListener("click", closeLightbox);
-    
-    // Close lightbox on Escape key
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && videoLightbox.style.display === "flex") {
-        closeLightbox();
-      }
-    });
-  }
 }
 
 // 6. Search Dialog Modal Logic
