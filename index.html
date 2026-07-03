@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=125">
+    <link rel="stylesheet" href="styles.css?v=126">
     <style>
       /* Staggered Twinkling Star Animations (Slow 8s cycle) */
       .sparkle-star {
@@ -53,9 +53,17 @@
         }
       }
 
-      /* Force Slider Track Animation to be extremely slow (240s) */
+      /* Force Slider Layout and speed overrides to bypass browser cache */
+      .hero-image-slider {
+        height: clamp(180px, 25vh, 260px) !important;
+      }
       .slider-track {
-        animation: scrollInfinite 240s linear infinite !important;
+        width: calc(33.333% * 14) !important;
+        animation: scrollInfinite 480s linear infinite !important;
+      }
+      .hero-slide {
+        width: calc(100% / 14) !important;
+        border-right: 6px solid var(--screen-bg) !important;
       }
     </style>
   </head>
