@@ -6219,7 +6219,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
   margin: 0;
   position: relative;
   z-index: 5;
-  height: clamp(200px, 35vh, 380px);
+  height: clamp(350px, 60vh, 550px); /* Tall, full-bleed height matching original background dimensions */
 }
 
 .slider-track {
@@ -6227,7 +6227,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
   width: 1400%; /* 100% * 14 slides */
   gap: 0;
   height: 100%;
-  animation: scrollInfinite 60s linear infinite; /* Slowed down for smooth background transitions */
+  animation: scrollInfinite 120s linear infinite; /* Significantly slowed down to 120s as requested */
 }
 
 .hero-image-slider:hover .slider-track {
