@@ -6227,7 +6227,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
   width: 1400%; /* 100% * 14 slides */
   gap: 0;
   height: 100%;
-  animation: scrollInfinite 120s linear infinite; /* Significantly slowed down to 120s as requested */
+  animation: scrollInfinite 240s linear infinite; /* Extremely slow (4 minutes) for a gentle background drift */
 }
 
 .hero-image-slider:hover .slider-track {
