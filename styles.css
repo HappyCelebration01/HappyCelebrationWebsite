@@ -6224,7 +6224,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 
 .slider-track {
   display: flex;
-  width: calc(33.333% * 14); /* 14 slides, each 33.33% container width */
+  width: calc((100vw / 3) * 14); /* 14 slides, each 33.33vw width */
   gap: 0;
   height: 100%;
   animation: scrollInfiniteBackground 180s linear infinite; /* Safe slow duration (3 minutes) background drift */
@@ -6235,7 +6235,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 }
 
 .hero-slide {
-  width: calc(100% / 14); /* Exactly 33.33% of container width */
+  width: calc(100vw / 3); /* Exactly 33.33vw of viewport width */
   height: 100%;
   flex-shrink: 0;
   border-radius: 0;
@@ -6257,7 +6257,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%); /* Scroll exactly half the track length */
+    transform: translateX(calc((-100vw / 3) * 7)); /* Scroll exactly half the track length */
   }
 }
 
