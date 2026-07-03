@@ -6214,10 +6214,11 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 /* Infinite Carousel Slider */
 .hero-image-slider {
   width: 100%;
-  max-width: 900px;
+  max-width: 100%;
   overflow: hidden;
-  margin: 32px 0 12px;
+  margin: 0;
   position: relative;
+  z-index: 5;
 }
 
 .slider-track {
