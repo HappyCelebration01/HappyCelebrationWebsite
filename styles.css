@@ -6219,15 +6219,15 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
   margin: 0;
   position: relative;
   z-index: 5;
-  height: clamp(300px, 45vh, 450px);
+  height: clamp(200px, 35vh, 380px);
 }
 
 .slider-track {
   display: flex;
-  width: calc(100vw * 14);
+  width: 1400%; /* 100% * 14 slides */
   gap: 0;
   height: 100%;
-  animation: scrollInfinite 45s linear infinite;
+  animation: scrollInfinite 60s linear infinite; /* Slowed down for smooth background transitions */
 }
 
 .hero-image-slider:hover .slider-track {
@@ -6235,7 +6235,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 }
 
 .hero-slide {
-  width: 100vw;
+  width: calc(100% / 14); /* Exactly 100% of container width */
   height: 100%;
   flex-shrink: 0;
   border-radius: 0;
@@ -6256,7 +6256,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-100vw * 7)); /* Scroll exactly half the track length */
+    transform: translateX(-50%); /* Scroll exactly half the track length */
   }
 }
 
