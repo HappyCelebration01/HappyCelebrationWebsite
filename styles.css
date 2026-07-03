@@ -6100,15 +6100,15 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
   justify-content: center !important;
   align-items: center !important;
   box-sizing: border-box !important;
-  padding: 80px 20px 48px !important;
+  padding: 0 !important;
   border-bottom: 1.5px solid rgba(245, 199, 110, 0.15) !important;
   background: transparent !important;
-  overflow: visible !important;
+  overflow: hidden !important;
 }
 
 @media (min-width: 769px) {
   .hero-section {
-    padding: 120px 24px 60px !important;
+    padding: 0 !important;
   }
 }
 
@@ -6211,7 +6211,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 
 
 
-/* Infinite Carousel Slider */
+/* Infinite Carousel Slider (Full-Bleed Background Style) */
 .hero-image-slider {
   width: 100%;
   max-width: 100%;
@@ -6219,34 +6219,29 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
   margin: 0;
   position: relative;
   z-index: 5;
+  height: clamp(300px, 45vh, 450px);
 }
 
 .slider-track {
   display: flex;
-  width: calc(260px * 14); /* 260px (240px card + 20px gap) * 14 slides */
-  gap: 20px;
-  animation: scrollInfinite 35s linear infinite;
+  width: calc(100vw * 14);
+  gap: 0;
+  height: 100%;
+  animation: scrollInfinite 45s linear infinite;
 }
 
 .hero-image-slider:hover .slider-track {
-  animation-play-state: paused;
+  animation-play-state: running !important;
 }
 
 .hero-slide {
-  width: 240px;
-  height: 150px;
+  width: 100vw;
+  height: 100%;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease, border-color 0.3s ease;
-  background: var(--glass-bg);
-}
-
-.hero-slide:hover {
-  transform: scale(1.03);
-  border-color: var(--gold-300);
+  border: none;
+  box-shadow: none;
 }
 
 .hero-slide img {
@@ -6261,7 +6256,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-260px * 7)); /* Scroll exactly half the track length */
+    transform: translateX(calc(-100vw * 7)); /* Scroll exactly half the track length */
   }
 }
 
