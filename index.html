@@ -58,11 +58,11 @@
         height: clamp(180px, 25vh, 260px) !important;
       }
       .slider-track {
-        width: calc((100vw / 3) * 14) !important;
-        animation: scrollInfiniteBackground 180s linear infinite !important;
+        width: calc((100vw / 2) * 14) !important;
+        animation: scrollInfiniteBackground 300s linear infinite !important; /* Half speed (300s) */
       }
       .hero-slide {
-        width: calc(100vw / 3) !important;
+        width: calc(100vw / 2) !important;
         border-right: 6px solid var(--screen-bg) !important;
       }
 
@@ -71,7 +71,7 @@
           transform: translateX(0);
         }
         100% {
-          transform: translateX(calc((-100vw / 3) * 7));
+          transform: translateX(calc((-100vw / 2) * 7));
         }
       }
     </style>
