@@ -85,7 +85,7 @@
         width: calc((var(--slide-width) + 16px) * 32) !important; /* 32 slides total */
         gap: 16px !important; /* 16px gap matching mockup */
         height: 100% !important;
-        animation: scrollInfiniteBackground 960s linear infinite !important; /* 960s total (60s per slide) */
+        animation: scrollInfiniteBackground 160s linear infinite !important; /* 160s total (10s per slide) */
       }
       .hero-slide {
         width: var(--slide-width) !important;
@@ -1289,5 +1289,129 @@
     </template>
 
     <script src="script.js?v=121"></script>
+    <script>
+      // Inline Custom JS Carousel Slider with Ambient Drift (10s speed) & Arrow Shifting (0.3s transition)
+      (function() {
+        function initCarouselSlider() {
+          const slider = document.querySelector('.hero-image-slider');
+          const track = document.querySelector('.slider-track');
+          const prevBtn = document.querySelector('.slider-arrow.prev');
+          const nextBtn = document.querySelector('.slider-arrow.next');
+          
+          if (!slider || !track) return;
+          
+          let currentX = 0;
+          let isTransitioning = false;
+          let isPaused = false;
+          let animationFrameId = null;
+          let driftTimeout = null;
+          
+          // Disable CSS animation so JS can control the transform
+          track.style.animation = 'none';
+          
+          function getStep() {
+            const slide = track.querySelector('.hero-slide');
+            if (!slide) return 0;
+            return slide.getBoundingClientRect().width + 16; // width + gap
+          }
+          
+          function getHalfTrackWidth() {
+            // 16 unique slides
+            return getStep() * 16;
+          }
+          
+          function updateDrift() {
+            if (isTransitioning) return;
+            
+            if (!isPaused) {
+              // Drift speed: 1 slide in 10 seconds at 60fps = ~1.0 pixels per frame
+              const step = getStep();
+              const driftSpeed = step / (10 * 60); // slide width / (10s * 60fps)
+              currentX -= driftSpeed;
+              
+              // Wrap around for infinite loop
+              const halfWidth = getHalfTrackWidth();
+              if (currentX <= -halfWidth) {
+                currentX += halfWidth;
+              }
+              
+              track.style.transform = `translateX(${currentX}px)`;
+            }
+            
+            animationFrameId = requestAnimationFrame(updateDrift);
+          }
+          
+          function shiftSlide(direction) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            cancelAnimationFrame(animationFrameId);
+            if (driftTimeout) clearTimeout(driftTimeout);
+            
+            const step = getStep();
+            const halfWidth = getHalfTrackWidth();
+            
+            // Add transition class for fast shift animation (0.3s)
+            track.style.transition = 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
+            
+            if (direction === 'next') {
+              currentX -= step;
+            } else {
+              currentX += step;
+            }
+            
+            track.style.transform = `translateX(${currentX}px)`;
+            
+            // After transition ends, remove transition properties
+            setTimeout(() => {
+              track.style.transition = 'none';
+              
+              // Infinite loop wrap-around checks
+              if (currentX <= -halfWidth) {
+                currentX += halfWidth;
+                track.style.transform = `translateX(${currentX}px)`;
+              } else if (currentX > 0) {
+                currentX -= halfWidth;
+                track.style.transform = `translateX(${currentX}px)`;
+              }
+              
+              isTransitioning = false;
+              
+              // Wait for 5 seconds of pause before resuming the drift
+              driftTimeout = setTimeout(() => {
+                animationFrameId = requestAnimationFrame(updateDrift);
+              }, 5000);
+            }, 300); // match transition duration (0.3s)
+          }
+          
+          if (prevBtn) prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            shiftSlide('prev');
+          });
+          
+          if (nextBtn) nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            shiftSlide('next');
+          });
+          
+          // Pause on hover
+          slider.addEventListener('mouseenter', () => {
+            isPaused = true;
+          });
+          slider.addEventListener('mouseleave', () => {
+            isPaused = false;
+          });
+          
+          // Start the ambient drift loop
+          animationFrameId = requestAnimationFrame(updateDrift);
+        }
+
+        // Initialize slider on DOM ready
+        if (document.readyState === "interactive" || document.readyState === "complete") {
+          initCarouselSlider();
+        } else {
+          document.addEventListener("DOMContentLoaded", initCarouselSlider);
+        }
+      })();
+    </script>
   </body>
 </html>
