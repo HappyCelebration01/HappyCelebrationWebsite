@@ -6217,7 +6217,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 }
 @media (min-width: 769px) {
   :root {
-    --slide-width: 500px; /* 2 slides fit centered container width (1000px) */
+    --slide-width: 750px; /* Desktop: 750px width panels */
   }
 }
 
