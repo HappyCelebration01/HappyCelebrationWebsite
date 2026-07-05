@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=136">
+    <link rel="stylesheet" href="styles.css?v=137">
     <style>
       /* Staggered Twinkling Star Animations (Slow 8s cycle) */
       .sparkle-star {
@@ -82,10 +82,10 @@
 
       .slider-track {
         display: flex !important;
-        width: calc((var(--slide-width) + 16px) * 28) !important; /* 28 slides total */
+        width: calc((var(--slide-width) + 16px) * 32) !important; /* 32 slides total */
         gap: 16px !important; /* 16px gap matching mockup */
         height: 100% !important;
-        animation: scrollInfiniteBackground 140s linear infinite !important; /* 140s total (10s per slide) */
+        animation: scrollInfiniteBackground 960s linear infinite !important; /* 960s total (60s per slide) */
       }
       .hero-slide {
         width: var(--slide-width) !important;
@@ -108,7 +108,7 @@
           transform: translateX(0);
         }
         100% {
-          transform: translateX(calc((var(--slide-width) + 16px) * -14)); /* Scroll exactly half the track length (14 slides) */
+          transform: translateX(calc((var(--slide-width) + 16px) * -16)); /* Scroll exactly half the track length (16 slides) */
         }
       }
     </style>
@@ -348,6 +348,8 @@
                   <div class="hero-slide"><img src="assets/theme-young-baby-boy-birthday.png" alt="Young Baby Boy Birthday"></div>
                   <div class="hero-slide"><img src="assets/theme-boy-birthday.png" alt="General Boy Birthday Party"></div>
                   <div class="hero-slide"><img src="assets/theme-20-21-birthday.png" alt="Milestone 20-21 Boy Birthday"></div>
+                  <div class="hero-slide"><img src="assets/theme-independence-day.png" alt="Indian Independence Day Decoration"></div>
+                  <div class="hero-slide"><img src="assets/theme-republic-day.png" alt="Indian Republic Day Decoration"></div>
 
                   <!-- Duplicate set for infinite animation loop -->
                   <div class="hero-slide"><img src="assets/mockup-cake.png" alt="Designer Celebration Cake"></div>
@@ -365,6 +367,8 @@
                   <div class="hero-slide"><img src="assets/theme-young-baby-boy-birthday.png" alt="Young Baby Boy Birthday"></div>
                   <div class="hero-slide"><img src="assets/theme-boy-birthday.png" alt="General Boy Birthday Party"></div>
                   <div class="hero-slide"><img src="assets/theme-20-21-birthday.png" alt="Milestone 20-21 Boy Birthday"></div>
+                  <div class="hero-slide"><img src="assets/theme-independence-day.png" alt="Indian Independence Day Decoration"></div>
+                  <div class="hero-slide"><img src="assets/theme-republic-day.png" alt="Indian Republic Day Decoration"></div>
                 </div>
               </div>
             </div>
