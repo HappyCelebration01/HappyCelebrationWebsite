@@ -1401,6 +1401,21 @@
             isPaused = false;
           });
           
+          // Keyboard Arrow Keys Navigation
+          window.addEventListener('keydown', (e) => {
+            const active = document.activeElement;
+            if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable)) {
+              return;
+            }
+            if (e.key === 'ArrowLeft') {
+              e.preventDefault();
+              shiftSlide('prev');
+            } else if (e.key === 'ArrowRight') {
+              e.preventDefault();
+              shiftSlide('next');
+            }
+          });
+          
           // Start the ambient drift loop
           animationFrameId = requestAnimationFrame(updateDrift);
         }
