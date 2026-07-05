@@ -6233,7 +6233,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 
 .slider-track {
   display: flex;
-  width: calc(var(--slide-width) * 14);
+  width: calc(var(--slide-width) * 6);
   gap: 0;
   height: 100%;
   animation: scrollInfiniteBackground 120s linear infinite; /* Smooth background drift (120s) */
@@ -6266,7 +6266,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(var(--slide-width) * -7)); /* Scroll exactly half the track length */
+    transform: translateX(calc(var(--slide-width) * -3)); /* Scroll exactly half the track length */
   }
 }
 
