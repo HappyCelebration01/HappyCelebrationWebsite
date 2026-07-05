@@ -5305,8 +5305,8 @@ function initCarouselSlider() {
     const step = getStep();
     const halfWidth = getHalfTrackWidth();
     
-    // Add transition class for fast shift animation
-    track.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+    // Add transition class for a slower, more graceful shift animation (1.5s)
+    track.style.transition = 'transform 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
     
     if (direction === 'next') {
       currentX -= step;
@@ -5331,7 +5331,7 @@ function initCarouselSlider() {
       
       isTransitioning = false;
       animationFrameId = requestAnimationFrame(updateDrift);
-    }, 400); // match transition duration (0.4s)
+    }, 1500); // match transition duration (1.5s)
   }
   
   if (prevBtn) prevBtn.addEventListener('click', (e) => {
