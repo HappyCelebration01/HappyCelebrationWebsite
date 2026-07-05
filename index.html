@@ -85,7 +85,7 @@
         width: calc((var(--slide-width) + 16px) * 32) !important; /* 32 slides total */
         gap: 16px !important; /* 16px gap matching mockup */
         height: 100% !important;
-        animation: scrollInfiniteBackground 160s linear infinite !important; /* 160s total (10s per slide) */
+        animation: scrollInfiniteBackground 160s linear infinite; /* 160s total (10s per slide) */
       }
       .hero-slide {
         width: var(--slide-width) !important;
@@ -1307,7 +1307,7 @@
           let driftTimeout = null;
           
           // Disable CSS animation so JS can control the transform
-          track.style.animation = 'none';
+          track.style.setProperty('animation', 'none', 'important');
           
           function getStep() {
             const slide = track.querySelector('.hero-slide');
