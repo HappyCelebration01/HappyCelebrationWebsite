@@ -1376,10 +1376,8 @@
               
               isTransitioning = false;
               
-              // Wait for 5 seconds of pause before resuming the drift
-              driftTimeout = setTimeout(() => {
-                animationFrameId = requestAnimationFrame(updateDrift);
-              }, 5000);
+              // Resume the slow drift immediately without any delay
+              animationFrameId = requestAnimationFrame(updateDrift);
             }, 300); // match transition duration (0.3s)
           }
           
