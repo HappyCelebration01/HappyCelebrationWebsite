@@ -82,10 +82,10 @@
 
       .slider-track {
         display: flex !important;
-        width: calc((var(--slide-width) + 16px) * 30) !important; /* 30 slides total */
+        width: calc((var(--slide-width) + 16px) * 28) !important; /* 28 slides total */
         gap: 16px !important; /* 16px gap matching mockup */
         height: 100% !important;
-        animation: scrollInfiniteBackground 150s linear infinite !important; /* 150s total (10s per slide) */
+        animation: scrollInfiniteBackground 140s linear infinite !important; /* 140s total (10s per slide) */
       }
       .hero-slide {
         width: var(--slide-width) !important;
@@ -108,7 +108,7 @@
           transform: translateX(0);
         }
         100% {
-          transform: translateX(calc((var(--slide-width) + 16px) * -15)); /* Scroll exactly half the track length (15 slides) */
+          transform: translateX(calc((var(--slide-width) + 16px) * -14)); /* Scroll exactly half the track length (14 slides) */
         }
       }
     </style>
