@@ -6235,10 +6235,10 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 
 .slider-track {
   display: flex;
-  width: calc((var(--slide-width) + 16px) * 4);
+  width: calc((var(--slide-width) + 16px) * 30);
   gap: 16px;
   height: 100%;
-  animation: scrollInfiniteBackground 20s linear infinite; /* Smooth background drift (20s) */
+  animation: scrollInfiniteBackground 150s linear infinite; /* Smooth background drift (150s) */
 }
 
 .hero-image-slider:hover .slider-track {
@@ -6267,7 +6267,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc((var(--slide-width) + 16px) * -2)); /* Scroll exactly half the track length */
+    transform: translateX(calc((var(--slide-width) + 16px) * -15)); /* Scroll exactly half the track length */
   }
 }
 
