@@ -82,7 +82,7 @@
 
       .slider-track {
         display: flex !important;
-        width: calc((var(--slide-width) + 16px) * 6) !important; /* 6 slides total */
+        width: calc((var(--slide-width) + 16px) * 4) !important; /* 4 slides total */
         gap: 16px !important; /* 16px gap matching mockup */
         height: 100% !important;
         animation: scrollInfiniteBackground 120s linear infinite !important;
@@ -108,7 +108,7 @@
           transform: translateX(0);
         }
         100% {
-          transform: translateX(calc((var(--slide-width) + 16px) * -3)); /* Scroll exactly half the track length */
+          transform: translateX(calc((var(--slide-width) + 16px) * -2)); /* Scroll exactly half the track length (2 slides) */
         }
       }
     </style>
@@ -333,14 +333,12 @@
               <div class="hero-image-slider">
                 <div class="slider-track">
                   <!-- Duplicate slides for infinite scrolling loop -->
-                  <div class="hero-slide"><img src="assets/float-balloons.webp" alt="Event Balloon Arch"></div>
-                  <div class="hero-slide"><img src="assets/float-cake.jpg" alt="Designer Celebration Cake"></div>
-                  <div class="hero-slide"><img src="assets/event-lights.webp" alt="Elegant Outdoor Lights"></div>
+                  <div class="hero-slide"><img src="assets/mockup-cake.png" alt="Designer Celebration Cake"></div>
+                  <div class="hero-slide"><img src="assets/mockup-lanterns.png" alt="Elegant Outdoor Lights"></div>
                   
                   <!-- Duplicate set for infinite animation loop -->
-                  <div class="hero-slide"><img src="assets/float-balloons.webp" alt="Event Balloon Arch"></div>
-                  <div class="hero-slide"><img src="assets/float-cake.jpg" alt="Designer Celebration Cake"></div>
-                  <div class="hero-slide"><img src="assets/event-lights.webp" alt="Elegant Outdoor Lights"></div>
+                  <div class="hero-slide"><img src="assets/mockup-cake.png" alt="Designer Celebration Cake"></div>
+                  <div class="hero-slide"><img src="assets/mockup-lanterns.png" alt="Elegant Outdoor Lights"></div>
                 </div>
               </div>
             </div>
