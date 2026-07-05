@@ -5261,6 +5261,7 @@ function initCarouselSlider() {
   let isTransitioning = false;
   let isPaused = false;
   let animationFrameId = null;
+  let driftTimeout = null;
   
   // Disable CSS animation so JS can control the transform
   track.style.animation = 'none';
@@ -5301,12 +5302,13 @@ function initCarouselSlider() {
     if (isTransitioning) return;
     isTransitioning = true;
     cancelAnimationFrame(animationFrameId);
+    if (driftTimeout) clearTimeout(driftTimeout);
     
     const step = getStep();
     const halfWidth = getHalfTrackWidth();
     
-    // Add transition class for a slower, more graceful shift animation (1.5s)
-    track.style.transition = 'transform 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
+    // Add transition class for fast shift animation (0.3s)
+    track.style.transition = 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
     
     if (direction === 'next') {
       currentX -= step;
@@ -5316,7 +5318,7 @@ function initCarouselSlider() {
     
     track.style.transform = `translateX(${currentX}px)`;
     
-    // After transition ends, remove transition properties and resume slow drift
+    // After transition ends, remove transition properties
     setTimeout(() => {
       track.style.transition = 'none';
       
@@ -5330,8 +5332,12 @@ function initCarouselSlider() {
       }
       
       isTransitioning = false;
-      animationFrameId = requestAnimationFrame(updateDrift);
-    }, 1500); // match transition duration (1.5s)
+      
+      // Wait for 5 seconds of pause before resuming the slow drift
+      driftTimeout = setTimeout(() => {
+        animationFrameId = requestAnimationFrame(updateDrift);
+      }, 5000);
+    }, 300); // match transition duration (0.3s)
   }
   
   if (prevBtn) prevBtn.addEventListener('click', (e) => {
