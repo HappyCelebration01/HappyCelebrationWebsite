@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=133">
+    <link rel="stylesheet" href="styles.css?v=134">
     <style>
       /* Staggered Twinkling Star Animations (Slow 8s cycle) */
       .sparkle-star {
@@ -53,26 +53,37 @@
         }
       }
 
-      /* Force Slider Layout and speed overrides using CSS variables to resolve all caching and rendering bugs */
+      /* Force Slider Layout and speed overrides to match mockup exactly */
       :root {
-        --slide-width: 50vw; /* Default mobile: 2 slides fit screen width */
+        --slide-width: calc(50vw - 18px); /* 2 slides fit side-by-side with 16px gap on mobile */
+        --slide-height: 350px;
       }
       @media (min-width: 769px) {
         :root {
-          --slide-width: 750px; /* Desktop: 750px width panels */
+          --slide-width: 492px; /* Exactly half of 1000px container minus the 16px gap */
+          --slide-height: 500px;
         }
       }
 
       .hero-image-slider {
-        height: clamp(180px, 25vh, 260px) !important;
+        height: var(--slide-height) !important;
         width: 100% !important;
         max-width: 1000px !important;
         margin: 0 auto !important;
+        overflow: hidden !important;
+        position: relative !important;
+        padding: 0 10px !important;
       }
+      @media (min-width: 769px) {
+        .hero-image-slider {
+          padding: 0 !important;
+        }
+      }
+
       .slider-track {
         display: flex !important;
-        width: calc(var(--slide-width) * 6) !important;
-        gap: 0 !important;
+        width: calc((var(--slide-width) + 16px) * 6) !important; /* 6 slides total */
+        gap: 16px !important; /* 16px gap matching mockup */
         height: 100% !important;
         animation: scrollInfiniteBackground 120s linear infinite !important;
       }
@@ -80,7 +91,16 @@
         width: var(--slide-width) !important;
         height: 100% !important;
         flex-shrink: 0 !important;
-        border-right: 6px solid var(--screen-bg) !important;
+        border-radius: 16px !important; /* Rounded corners matching mockup */
+        overflow: hidden !important;
+        border: none !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+      }
+      .hero-slide img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
       }
 
       @keyframes scrollInfiniteBackground {
@@ -88,7 +108,7 @@
           transform: translateX(0);
         }
         100% {
-          transform: translateX(calc(var(--slide-width) * -3));
+          transform: translateX(calc((var(--slide-width) + 16px) * -3)); /* Scroll exactly half the track length */
         }
       }
     </style>

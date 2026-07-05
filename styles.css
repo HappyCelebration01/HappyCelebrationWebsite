@@ -6213,11 +6213,13 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 
 /* Infinite Carousel Slider (Full-Bleed Background Style) */
 :root {
-  --slide-width: 50vw;
+  --slide-width: calc(50vw - 18px);
+  --slide-height: 350px;
 }
 @media (min-width: 769px) {
   :root {
-    --slide-width: 750px; /* Desktop: 750px width panels */
+    --slide-width: 492px; /* Exactly half of 1000px container minus 16px gap */
+    --slide-height: 500px;
   }
 }
 
@@ -6228,13 +6230,13 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
   overflow: hidden;
   position: relative;
   z-index: 5;
-  height: clamp(180px, 25vh, 260px); /* Reduced height to remove vertical excess */
+  height: var(--slide-height);
 }
 
 .slider-track {
   display: flex;
-  width: calc(var(--slide-width) * 6);
-  gap: 0;
+  width: calc((var(--slide-width) + 16px) * 6);
+  gap: 16px;
   height: 100%;
   animation: scrollInfiniteBackground 120s linear infinite; /* Smooth background drift (120s) */
 }
@@ -6247,11 +6249,10 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
   width: var(--slide-width);
   height: 100%;
   flex-shrink: 0;
-  border-radius: 0;
+  border-radius: 16px;
   overflow: hidden;
   border: none;
-  border-right: 6px solid var(--screen-bg); /* Clean separation line between images */
-  box-shadow: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
 .hero-slide img {
@@ -6266,7 +6267,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(var(--slide-width) * -3)); /* Scroll exactly half the track length */
+    transform: translateX(calc((var(--slide-width) + 16px) * -3)); /* Scroll exactly half the track length */
   }
 }
 
