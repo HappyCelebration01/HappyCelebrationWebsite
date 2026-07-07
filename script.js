@@ -3326,6 +3326,7 @@ function openPanel(name) {
   panelContent.replaceChildren(template.content.cloneNode(true));
   panel.setup?.(panelContent);
   homeView.classList.remove("active");
+  homeView.style.setProperty("display", "none", "important"); // Force hide home view inline to prevent overlap
   panelView.classList.add("active");
   
   if (typeof updateBottomNavActive === "function") {
@@ -3336,6 +3337,7 @@ function openPanel(name) {
 function closePanel() {
   panelView.classList.remove("active");
   homeView.classList.add("active");
+  homeView.style.display = ""; // Restore default display
 
   // Show floating celebration container again when returning to home view
   const container = document.getElementById("floatingCelebrationContainer");
