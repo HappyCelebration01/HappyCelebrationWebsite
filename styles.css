@@ -4389,13 +4389,17 @@ body.theme-luxury .dashboard-card { border-color: rgba(201, 130, 45, 0.2); }
 }
 
 /* Hide Dashboard Header, Brand Bar, and Home View when Panel is open */
-.screen:has(#panelView.active) .dashboard-header {
-  display: none;
+.screen:has(#panelView.active) .dashboard-header,
+body.panel-open .dashboard-header {
+  display: none !important;
 }
-.screen:has(#panelView.active) .brand-bar {
-  display: none;
+.screen:has(#panelView.active) .brand-bar,
+body.panel-open .brand-bar {
+  display: none !important;
 }
-.screen:has(#panelView.active) #homeView {
+.screen:has(#panelView.active) #homeView,
+body.panel-open #homeView,
+body.panel-open .home-view {
   display: none !important;
 }
 
