@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=137">
+    <link rel="stylesheet" href="styles.css?v=146">
     <style>
       /* Staggered Twinkling Star Animations (Slow 8s cycle) */
       .sparkle-star {
@@ -60,34 +60,38 @@
       }
       @media (min-width: 769px) {
         :root {
-          --slide-width: 492px; /* Exactly half of 1000px container minus the 16px gap */
-          --slide-height: 500px;
+          --slide-width: 389px; /* 3 slides fit side-by-side in 1200px container with 16px gaps */
+          --slide-height: 480px;
         }
       }
 
       .hero-image-slider {
-        height: var(--slide-height) !important;
+        display: block !important;
         width: 100% !important;
-        max-width: 1000px !important;
-        margin: 0 auto !important;
+        max-width: 1200px !important;
+        height: 350px !important; /* Explicit default height */
+        height: var(--slide-height) !important;
+        margin: 20px auto 0 !important; /* Shifted lower on mobile */
         overflow: hidden !important;
         position: relative !important;
         padding: 0 10px !important;
       }
       @media (min-width: 769px) {
         .hero-image-slider {
+          height: 480px !important; /* Explicit desktop height */
+          margin: 40px auto 0 !important; /* Shifted lower on desktop */
           padding: 0 !important;
         }
       }
 
       .slider-track {
         display: flex !important;
-        width: calc((var(--slide-width) + 16px) * 32) !important; /* 32 slides total */
+        width: calc((var(--slide-width) + 16px) * 34) !important; /* 34 slides total */
         gap: 16px !important; /* 16px gap matching mockup */
         height: 100% !important;
-
       }
       .hero-slide {
+        width: calc(50vw - 18px) !important; /* Explicit default width */
         width: var(--slide-width) !important;
         height: 100% !important;
         flex-shrink: 0 !important;
@@ -95,6 +99,11 @@
         overflow: hidden !important;
         border: none !important;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+      }
+      @media (min-width: 769px) {
+        .hero-slide {
+          width: 389px !important; /* Explicit desktop width */
+        }
       }
       .hero-slide img {
         width: 100% !important;
@@ -464,8 +473,8 @@
                 </div>
                 <div class="occasion-card" data-panel-trigger="book">
                   <div class="occasion-icon">💍</div>
-                  <h4 class="occasion-name">Weddings</h4>
-                  <p class="occasion-desc">Grand backdrop arches, luxury stages, and elegant styling.</p>
+                  <h4 class="occasion-name">Wedding Anniversary</h4>
+                  <p class="occasion-desc">Romantic stage setups, backdrop arches, custom lighting, and elegant anniversary styling.</p>
                 </div>
                 <div class="occasion-card" data-panel-trigger="book">
                   <div class="occasion-icon">❤️</div>
@@ -476,6 +485,26 @@
                   <div class="occasion-icon">🍼</div>
                   <h4 class="occasion-name">Baby Showers</h4>
                   <p class="occasion-desc">Pastel themes, cute props, and soft balloon arch colors.</p>
+                </div>
+                <div class="occasion-card" data-panel-trigger="book">
+                  <div class="occasion-icon">🌅</div>
+                  <h4 class="occasion-name">Retirement Party</h4>
+                  <p class="occasion-desc">Elegant retirement stage setups, custom floral styling, and farewell celebrations.</p>
+                </div>
+                <div class="occasion-card" data-panel-trigger="book">
+                  <div class="occasion-icon">🎉</div>
+                  <h4 class="occasion-name">Theme Party</h4>
+                  <p class="occasion-desc">Creative birthday parties, corporate events, and custom theme celebrations.</p>
+                </div>
+                <div class="occasion-card" data-panel-trigger="book">
+                  <div class="occasion-icon">🍼</div>
+                  <h4 class="occasion-name">Welcoming Newborn Baby</h4>
+                  <p class="occasion-desc">Pastel balloon designs, sweet baby cradle decorations, and cute photo backdrops.</p>
+                </div>
+                <div class="occasion-card" data-panel-trigger="book">
+                  <div class="occasion-icon">🪔</div>
+                  <h4 class="occasion-name">Festivals</h4>
+                  <p class="occasion-desc">Traditional festival backdrops, holiday themes, LED lights, and custom setups.</p>
                 </div>
                 <div class="occasion-card" data-panel-trigger="book">
                   <div class="occasion-icon">🎓</div>
@@ -680,8 +709,12 @@
               <span>Event Type</span>
               <select name="eventType" id="bookingEventType" required>
                 <option value="Birthday">Birthday</option>
-                <option value="Wedding">Wedding</option>
+                <option value="Wedding Anniversary">Wedding Anniversary</option>
                 <option value="Anniversary">Anniversary</option>
+                <option value="Retirement Party">Retirement Party</option>
+                <option value="Theme Party">Theme Party</option>
+                <option value="Welcoming Newborn Baby">Welcoming Newborn Baby</option>
+                <option value="Festivals">Festivals</option>
                 <option value="Corporate Celebration">Corporate Celebration</option>
               </select>
             </label>
@@ -1288,7 +1321,7 @@
       </div>
     </template>
 
-    <script src="script.js?v=121"></script>
+    <script src="script.js?v=124"></script>
     <script>
       // Inline Custom JS Carousel Slider with Ambient Drift (10s speed) & Arrow Shifting (0.3s transition)
       (function() {
@@ -1316,8 +1349,8 @@
           }
           
           function getHalfTrackWidth() {
-            // 16 unique slides
-            return getStep() * 16;
+            // 17 unique slides
+            return getStep() * 17;
           }
           
           function updateDrift() {
@@ -1418,11 +1451,11 @@
           animationFrameId = requestAnimationFrame(updateDrift);
         }
 
-        // Initialize slider on DOM ready
-        if (document.readyState === "interactive" || document.readyState === "complete") {
+        // Initialize slider on window load to guarantee all layouts, images, and styles are computed
+        if (document.readyState === "complete") {
           initCarouselSlider();
         } else {
-          document.addEventListener("DOMContentLoaded", initCarouselSlider);
+          window.addEventListener("load", initCarouselSlider);
         }
       })();
     </script>

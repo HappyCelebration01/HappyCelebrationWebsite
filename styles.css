@@ -1232,7 +1232,7 @@ select {
     overflow: visible !important;
   }
 
-  .home-view {
+  .home-view.active {
     display: flex !important;
     flex-direction: column;
     height: calc(100vh - 64px) !important;
@@ -4384,12 +4384,15 @@ body.theme-luxury .dashboard-card { border-color: rgba(201, 130, 45, 0.2); }
   color: #fff;
 }
 
-/* Hide Dashboard Header and Brand Bar when Panel is open */
+/* Hide Dashboard Header, Brand Bar, and Home View when Panel is open */
 .screen:has(#panelView.active) .dashboard-header {
   display: none;
 }
 .screen:has(#panelView.active) .brand-bar {
   display: none;
+}
+.screen:has(#panelView.active) #homeView {
+  display: none !important;
 }
 
 /* Adjust paddings so scrolled content isn't covered by bottom nav */
@@ -5547,14 +5550,15 @@ body.theme-festival-holi {
     display: flex !important;
   }
 
-  /* Full-width homepage sections */
   .home-section {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px;
+    margin: 0 auto !important; /* Center the section wrapper */
     padding: 60px 40px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    align-items: center; /* Center all elements inside this section */
     gap: 30px;
     border-bottom: 1px dashed rgba(245, 199, 110, 0.15);
   }
@@ -6043,7 +6047,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 24px !important;
-    max-width: 1000px;
+    max-width: 1200px;
     width: 100%;
     margin: 0 auto !important;
   }
@@ -6225,7 +6229,7 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 
 .hero-image-slider {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
@@ -6346,12 +6350,19 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 /* Occasions Section Grid */
 .occasions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr); /* 2 in a row on mobile */
+  gap: 16px;
   width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto !important; /* Center the grid container */
+  justify-content: center; /* Center items inside the grid */
   box-sizing: border-box;
+}
+
+@media (min-width: 769px) {
+  .occasions-grid {
+    grid-template-columns: repeat(5, 1fr); /* Exactly 5 in a row on desktop (2 rows total for 10 cards) */
+  }
 }
 
 .occasion-card {
@@ -6359,12 +6370,12 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 14px;
+  padding: 16px 12px; /* Smaller padding */
   text-align: center;
   transition: all 0.3s var(--ease-custom);
   cursor: pointer;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
 }
 
 .occasion-card:hover {
@@ -6374,8 +6385,8 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 }
 
 .occasion-icon {
-  font-size: 32px;
-  margin-bottom: 12px;
+  font-size: 26px; /* Slightly smaller icon */
+  margin-bottom: 8px;
 }
 
 .occasion-name {

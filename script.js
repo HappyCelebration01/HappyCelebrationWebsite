@@ -244,8 +244,12 @@ const panels = {
       // Base Prices Data
       const defaultBasePrices = {
         "Birthday": { baseSetup: 5000, perGuest: 500, description: "Includes basic theme decor, birthday cake, standard sound system, and party snacks." },
-        "Wedding": { baseSetup: 50000, perGuest: 1500, description: "Includes stage decoration, standard lighting, catering service, bride/groom seating setup, and welcoming flowers." },
+        "Wedding Anniversary": { baseSetup: 8000, perGuest: 600, description: "Includes romantic stage setup, photo display zone, anniversary cake, live music background, and fine dining buffet." },
         "Anniversary": { baseSetup: 8000, perGuest: 600, description: "Includes romantic stage setup, photo display zone, anniversary cake, live music background, and fine dining buffet." },
+        "Retirement Party": { baseSetup: 10000, perGuest: 700, description: "Includes elegant retirement stage setup, custom floral arrangements, audio system, and buffet catering." },
+        "Theme Party": { baseSetup: 12000, perGuest: 800, description: "Includes specialized custom-themed decorations, customized sound & DJ lights, interactive props, and curated party snacks." },
+        "Welcoming Newborn Baby": { baseSetup: 7000, perGuest: 500, description: "Includes pastel balloon arch designs, sweet baby cradle decorations, newborn theme photo backdrops, and child-friendly snacks." },
+        "Festivals": { baseSetup: 15000, perGuest: 900, description: "Includes traditional festival backdrops, holiday themes, specialized LED light styling, and traditional buffet catering." },
         "Corporate Celebration": { baseSetup: 15000, perGuest: 1000, description: "Includes stage branding, projector & AV system, mocktail bar, host/emcee, and corporate dinner buffet." }
       };
 
