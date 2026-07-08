@@ -556,9 +556,9 @@ const panels = {
 
       try {
         // Tab elements
-        const editorTabBtn = root.querySelector("#editorTabBtn");
-        const previewTabBtn = root.querySelector("#previewTabBtn");
-        const syncTabBtn = root.querySelector("#syncTabBtn");
+        const editorTabBtn = root.querySelector("#editorTabBtn") || document.querySelector("#editorTabBtn");
+        const previewTabBtn = root.querySelector("#previewTabBtn") || document.querySelector("#previewTabBtn");
+        const syncTabBtn = root.querySelector("#syncTabBtn") || document.querySelector("#syncTabBtn");
 
         const familyEditorView = root.querySelector("#familyEditorView");
         const familyPreviewView = root.querySelector("#familyPreviewView");
@@ -571,12 +571,16 @@ const panels = {
         const treeCanvas = root.querySelector("#treeCanvas");
         const treeCanvasWrapper = root.querySelector("#treeCanvasWrapper");
         const clearTreeBtn = root.querySelector("#clearTreeBtn");
-        const clearTreeZoomBtn = root.querySelector("#clearTreeZoomBtn");
+        const clearTreeZoomBtn = root.querySelector("#clearTreeZoomBtn") || document.querySelector("#clearTreeZoomBtn");
         const exportCsvBtn = root.querySelector("#exportCsvBtn");
-        const zoomLabel = root.querySelector("#zoomLabel");
-        const zoomInBtn = root.querySelector("#zoomInBtn");
-        const zoomOutBtn = root.querySelector("#zoomOutBtn");
-        const zoomFitBtn = root.querySelector("#zoomFitBtn");
+        const zoomLabel = root.querySelector("#zoomLabel") || document.querySelector("#zoomLabel");
+        const zoomInBtn = root.querySelector("#zoomInBtn") || document.querySelector("#zoomInBtn");
+        const zoomOutBtn = root.querySelector("#zoomOutBtn") || document.querySelector("#zoomOutBtn");
+        const zoomFitBtn = root.querySelector("#zoomFitBtn") || document.querySelector("#zoomFitBtn");
+        const treeZoomControls = document.querySelector("#panelView .tree-zoom-controls");
+        if (treeZoomControls) {
+          treeZoomControls.style.setProperty("display", "none", "important");
+        }
 
         // Modal elements
         const treeModal = root.querySelector("#treeModal");
@@ -911,6 +915,7 @@ const panels = {
           familyEditorView.style.display = "flex";
           familyPreviewView.style.display = "none";
           if (familySyncView) familySyncView.style.display = "none";
+          if (treeZoomControls) treeZoomControls.style.setProperty("display", "none", "important");
           renderMemberList();
         });
 
@@ -920,8 +925,9 @@ const panels = {
           if (syncTabBtn) syncTabBtn.classList.remove("active");
           
           familyEditorView.style.display = "none";
-          familyPreviewView.style.display = "block";
+          familyPreviewView.style.display = "flex";
           if (familySyncView) familySyncView.style.display = "none";
+          if (treeZoomControls) treeZoomControls.style.setProperty("display", "flex", "important");
           renderTree();
           setTimeout(fitToScreen, 50);
         });
@@ -935,6 +941,7 @@ const panels = {
             familyEditorView.style.display = "none";
             familyPreviewView.style.display = "none";
             familySyncView.style.display = "block";
+            if (treeZoomControls) treeZoomControls.style.setProperty("display", "none", "important");
             
             // Re-load stored Google Sheet config
             const syncConfig = localStorage.getItem("happyCelebrationSyncConfig");
@@ -959,8 +966,10 @@ const panels = {
           treeCanvas.style.marginRight = "";
           treeCanvas.style.marginBottom = "";
           treeCanvas.style.marginLeft = "";
+          treeCanvas.style.marginTop = "";
           
           const wrapperWidth = treeCanvasWrapper.clientWidth;
+          const wrapperHeight = treeCanvasWrapper.clientHeight;
           const canvasWidth = treeCanvas.scrollWidth || treeCanvas.offsetWidth;
           const canvasHeight = treeCanvas.scrollHeight || treeCanvas.offsetHeight;
           
@@ -985,6 +994,14 @@ const panels = {
             // Center the scaled canvas horizontally
             const leftOffset = Math.max(0, (wrapperWidth - zoomedWidth) / 2);
             treeCanvas.style.marginLeft = `${leftOffset}px`;
+          }
+
+          // Center the scaled canvas vertically
+          if (zoomedHeight < wrapperHeight && wrapperHeight > 0) {
+            const topOffset = Math.max(0, (wrapperHeight - zoomedHeight) / 2);
+            treeCanvas.style.marginTop = `${topOffset}px`;
+          } else {
+            treeCanvas.style.marginTop = "0px";
           }
           
           zoomLabel.textContent = `${Math.round(zoomLevel * 100)}%`;
@@ -3328,6 +3345,11 @@ function openPanel(name) {
   homeView.classList.remove("active");
   homeView.style.setProperty("display", "none", "important"); // Force hide home view inline to prevent overlap
   document.body.classList.add("panel-open"); // Add panel-open class to body
+  if (name === "family") {
+    document.body.classList.add("family-panel-open");
+  } else {
+    document.body.classList.remove("family-panel-open");
+  }
   panelView.classList.add("active");
   
   if (typeof updateBottomNavActive === "function") {
@@ -3338,6 +3360,15 @@ function openPanel(name) {
 function closePanel() {
   panelView.classList.remove("active");
   document.body.classList.remove("panel-open"); // Remove panel-open class from body
+  document.body.classList.remove("fullscreen-mode"); // Remove fullscreen-mode class
+  document.body.classList.remove("family-panel-open"); // Remove family-panel-open class
+  
+  // Clean up URL parameters so user returns to home view without fullscreen parameters
+  if (window.history.pushState) {
+    const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+    window.history.pushState({ path: newurl }, "", newurl);
+  }
+
   homeView.classList.add("active");
   homeView.style.display = ""; // Restore default display
 

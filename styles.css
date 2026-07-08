@@ -1608,9 +1608,12 @@ select {
   -webkit-backdrop-filter: blur(12px);
   border-radius: 8px;
   padding: 3px;
-  margin-bottom: 12px;
+  margin: 0 auto 12px;
   gap: 3px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 320px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .family-tab-nav-btn {
@@ -2104,7 +2107,7 @@ select {
   top: 80px;
   left: 50%;
   width: 1.5px;
-  height: 85px; /* reaches the children container horizontal line at y=165px */
+  height: 45px; /* reaches the children container horizontal line at y=125px */
   background: var(--gold-300);
   transform: translateX(-50%);
   z-index: 1;
@@ -2113,12 +2116,12 @@ select {
 /* If the parent card is a couple, height is also 80px */
 .tree-canvas-wrapper.circular-mode .tree-branch.has-children > .tree-node-card.circular.couple::after {
   top: 80px;
-  height: 85px;
+  height: 45px;
 }
 
 /* Padding and spacing for child branches in circular mode */
 .tree-canvas-wrapper.circular-mode .tree-children-container {
-  margin-top: 85px;
+  margin-top: 45px;
   gap: 32px;
 }
 
@@ -2950,7 +2953,7 @@ body.fullscreen-mode .app-shell {
 body.fullscreen-mode .phone-frame {
   width: 100%;
   min-height: 100vh;
-  height: auto;
+  height: 100vh !important;
   padding: 0;
   border-radius: 0;
   background: transparent;
@@ -2959,22 +2962,52 @@ body.fullscreen-mode .phone-frame {
 
 body.fullscreen-mode .screen {
   min-height: 100vh;
-  height: auto;
+  height: 100vh !important;
   border-radius: 0;
   box-shadow: none;
+  overflow: hidden !important;
 }
 
-body.fullscreen-mode .screen:has(#panelView.active .family-workspace) {
-  height: 100vh;
+/* Force hide all homepage elements when in fullscreen mode */
+body.fullscreen-mode #homeView,
+body.fullscreen-mode .home-view,
+body.fullscreen-mode .dashboard-header,
+body.fullscreen-mode .brand-bar {
+  display: none !important;
 }
 
-body.fullscreen-mode .screen:has(#panelView.active .family-workspace) .tree-canvas-wrapper {
-  height: calc(100vh - 215px) !important;
-  max-height: calc(100vh - 215px) !important;
+/* Force show the panel view when in fullscreen mode */
+body.fullscreen-mode #panelView {
+  display: block !important;
+}
+
+/* Family Tree Workspace rules under fullscreen-mode (bypasses browser :has() compatibility issues) */
+body.fullscreen-mode #panelView.active {
+  display: block !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  padding: 0 18px 0px !important;
+  box-sizing: border-box !important;
+}
+
+body.fullscreen-mode .family-workspace {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+body.fullscreen-mode .tree-canvas-wrapper {
+  height: calc(100vh - 62px) !important;
+  max-height: calc(100vh - 62px) !important;
+  width: 100% !important;
+  overflow: auto !important;
 }
 
 body.fullscreen-mode .members-list-list {
-  max-height: calc(100vh - 240px);
+  max-height: calc(100vh - 240px) !important;
 }
 
 /* Theme Settings Toggle Button */
@@ -4389,17 +4422,23 @@ body.theme-luxury .dashboard-card { border-color: rgba(201, 130, 45, 0.2); }
 }
 
 /* Hide Dashboard Header, Brand Bar, and Home View when Panel is open */
-.screen:has(#panelView.active) .dashboard-header,
-body.panel-open .dashboard-header {
+body.panel-open .dashboard-header,
+body.panel-open #homeView,
+body.panel-open .home-view {
   display: none !important;
 }
-.screen:has(#panelView.active) .brand-bar,
+
 body.panel-open .brand-bar {
   display: none !important;
 }
-.screen:has(#panelView.active) #homeView,
-body.panel-open #homeView,
-body.panel-open .home-view {
+
+.screen:has(#panelView.active) .dashboard-header {
+  display: none !important;
+}
+.screen:has(#panelView.active) .brand-bar {
+  display: none !important;
+}
+.screen:has(#panelView.active) #homeView {
   display: none !important;
 }
 
@@ -6451,4 +6490,145 @@ body.theme-luxury .dashboard-header { background: rgba(5, 5, 7, 0.4) !important;
 
 .slider-arrow.next {
   right: 16px;
+}
+
+/* Header tabs display configuration */
+.family-tabs-nav.header-tabs {
+  display: none !important;
+}
+
+body.family-panel-open .family-tabs-nav.header-tabs {
+  display: flex !important;
+}
+
+/* Widescreen panel header absolute tabs positioning */
+@media (min-width: 769px) {
+  .panel-top {
+    position: relative;
+  }
+  
+  body.family-panel-open .family-tabs-nav.header-tabs {
+    position: absolute;
+    top: 50%;
+    right: 0px;
+    left: auto;
+    transform: translateY(-50%);
+    margin: 0 !important;
+    z-index: 100;
+  }
+}
+
+/* Mobile responsive layout for header tabs */
+@media (max-width: 768px) {
+  .panel-top {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+  
+  .family-tabs-nav.header-tabs {
+    width: 100%;
+    order: 3;
+    margin: 4px auto 0 !important;
+  }
+}
+
+/* Position zoom controls in the bottom-right corner of preview panel */
+.family-preview-view {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+#panelView .tree-zoom-controls {
+  position: absolute !important;
+  bottom: 6px !important;
+  right: 6px !important;
+  left: auto !important;
+  margin: 0 !important;
+  z-index: 1000 !important;
+  flex-direction: column !important;
+  padding: 10px 6px !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 24px !important;
+  gap: 8px !important;
+}
+
+#panelView .tree-zoom-controls .zoom-btn {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+#panelView .tree-zoom-controls .zoom-label {
+  min-width: 0 !important;
+  font-size: 9px !important;
+  margin: 0 !important;
+}
+
+/* Compact header layout specifically for family tree view to maximize space */
+body.family-panel-open .panel-top {
+  padding: 4px 0 8px !important;
+}
+
+body.family-panel-open .panel-top p {
+  display: none !important;
+}
+
+body.family-panel-open .panel-top h2 {
+  font-size: 24px !important;
+}
+
+/* Allow Family Preview tab to stretch exactly to screen edges by removing panelView padding, but keep it on others */
+body.family-panel-open.fullscreen-mode #panelView.active {
+  padding: 0 !important;
+}
+
+body.family-panel-open.fullscreen-mode .panel-top {
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+}
+
+body.family-panel-open.fullscreen-mode #familyEditorView,
+body.family-panel-open.fullscreen-mode #familySyncView {
+  padding: 0 18px !important;
+  box-sizing: border-box !important;
+}
+
+/* Force family preview view to fill the workspace height using flex stretch */
+body.family-panel-open.fullscreen-mode .family-preview-view {
+  flex-direction: column !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 0 10px 0 !important; /* Set bottom distance to exactly 10px */
+  box-sizing: border-box !important;
+}
+
+body.fullscreen-mode .screen #panelView.active #panelContent .tree-canvas-wrapper {
+  flex: 1 !important;
+  height: auto !important;
+  max-height: none !important;
+  width: 100% !important;
+  overflow: auto !important;
+  padding: 10px 18px !important; /* Start from the top by reducing padding from 32px to 10px */
+}
+
+/* Minimize swipe helper text margins to sit tight against bottom screen edge */
+body.fullscreen-mode .screen #panelView.active #panelContent .swipe-hint {
+  margin-top: 4px !important;
+  margin-bottom: 2px !important;
+}
+
+/* Reduce inner scroll padding at bottom of canvas */
+body.fullscreen-mode .screen #panelView.active #panelContent .tree-canvas-wrapper.circular-mode .tree-canvas {
+  padding-bottom: 20px !important;
+}
+
+/* Let the panel content fill all remaining screen space under the header */
+body.fullscreen-mode .screen #panelView.active #panelContent {
+  height: calc(100vh - 58px) !important;
+}
+
+body.fullscreen-mode .screen #panelView.active #panelContent .family-workspace {
+  height: 100% !important;
 }

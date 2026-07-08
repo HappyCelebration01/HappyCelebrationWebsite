@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=148">
+    <link rel="stylesheet" href="styles.css?v=174">
     <style>
       /* Staggered Twinkling Star Animations (Slow 8s cycle) */
       .sparkle-star {
@@ -123,6 +123,20 @@
     </style>
   </head>
   <body>
+    <script>
+      (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("fullscreen") || urlParams.has("fullpage")) {
+          document.body.classList.add("fullscreen-mode");
+          if (urlParams.get("panel")) {
+            document.body.classList.add("panel-open");
+            if (urlParams.get("panel") === "family") {
+              document.body.classList.add("family-panel-open");
+            }
+          }
+        }
+      })();
+    </script>
     <!-- Ambient Background Glow Blobs -->
     <div class="ambient-glow-blob blob-1" aria-hidden="true"></div>
     <div class="ambient-glow-blob blob-2" aria-hidden="true"></div>
@@ -436,7 +450,6 @@
                   <span class="cultfit-label">Register</span>
                 </button>
               </div>
-            </div>
 
             <!-- Stats Bar Section -->
             <section class="home-section stats-section">
@@ -681,8 +694,24 @@
                 <p id="panelKicker">Happy Celebration</p>
                 <h2 id="panelTitle">Book Event</h2>
               </div>
+              
+              <!-- Family tabs centered in header -->
+              <div class="family-tabs-nav header-tabs">
+                <button type="button" class="family-tab-nav-btn active" id="editorTabBtn">Members</button>
+                <button type="button" class="family-tab-nav-btn" id="previewTabBtn">Preview</button>
+                <button type="button" class="family-tab-nav-btn" id="syncTabBtn">Sync</button>
+              </div>
             </div>
             <div class="panel-content" id="panelContent"></div>
+            
+            <!-- Global Zoom controls positioned relative to panelView / screen -->
+            <div class="tree-zoom-controls">
+              <button type="button" class="zoom-btn" id="zoomInBtn" aria-label="Zoom In">+</button>
+              <span class="zoom-label" id="zoomLabel">100%</span>
+              <button type="button" class="zoom-btn" id="zoomOutBtn" aria-label="Zoom Out">−</button>
+              <button type="button" class="zoom-btn" id="zoomFitBtn" style="font-size: 8px !important; font-weight: 800; text-transform: uppercase;">Fit</button>
+              <button type="button" class="zoom-btn" id="clearTreeZoomBtn" style="font-size: 8px !important; font-weight: 800; text-transform: uppercase; border-color: rgba(255, 74, 90, 0.4) !important; color: #ff9aa2 !important; background: rgba(255, 74, 90, 0.1) !important;">Rst</button>
+            </div>
           </section>
 
 
@@ -820,12 +849,6 @@
 
     <template id="familyTemplate">
       <div class="family-workspace">
-        <!-- Custom Tabs Navigation -->
-        <div class="family-tabs-nav">
-          <button type="button" class="family-tab-nav-btn active" id="editorTabBtn">Members</button>
-          <button type="button" class="family-tab-nav-btn" id="previewTabBtn">Preview</button>
-          <button type="button" class="family-tab-nav-btn" id="syncTabBtn">Sync</button>
-        </div>
 
         <!-- Editor Tab View -->
         <div class="family-editor-view active" id="familyEditorView">
@@ -841,15 +864,6 @@
 
         <!-- Preview Tab View -->
         <div class="family-preview-view" id="familyPreviewView" style="display: none;">
-
-          <div class="tree-zoom-controls">
-            <button type="button" class="zoom-btn" id="zoomOutBtn" aria-label="Zoom Out">−</button>
-            <span class="zoom-label" id="zoomLabel">100%</span>
-            <button type="button" class="zoom-btn" id="zoomInBtn" aria-label="Zoom In">+</button>
-            <button type="button" class="zoom-btn" id="zoomFitBtn">Auto Fit</button>
-            <button type="button" class="zoom-btn" id="clearTreeZoomBtn" style="width: auto; padding: 0 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; border-color: rgba(255, 74, 90, 0.4); color: #ff9aa2; background: rgba(255, 74, 90, 0.1); margin-left: 8px;">Reset</button>
-          </div>
-          
           <div class="tree-canvas-wrapper circular-mode" id="treeCanvasWrapper">
             <div id="treeCanvas" class="tree-canvas">
               <!-- Dynamically populated interactive tree -->
@@ -1321,7 +1335,7 @@
       </div>
     </template>
 
-    <script src="script.js?v=126"></script>
+    <script src="script.js?v=134"></script>
     <script>
       // Inline Custom JS Carousel Slider with Ambient Drift (10s speed) & Arrow Shifting (0.3s transition)
       (function() {
