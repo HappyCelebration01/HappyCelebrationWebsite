@@ -1345,7 +1345,10 @@
           const prevBtn = document.querySelector('.slider-arrow.prev');
           const nextBtn = document.querySelector('.slider-arrow.next');
           
-          if (!slider || !track) return;
+          if (!slider || !track) {
+            console.warn("Slider or track elements not found in DOM!");
+            return;
+          }
           
           let currentX = 0;
           let isTransitioning = false;
@@ -1465,11 +1468,11 @@
           animationFrameId = requestAnimationFrame(updateDrift);
         }
 
-        // Initialize slider on window load to guarantee all layouts, images, and styles are computed
-        if (document.readyState === "complete") {
+        // Initialize slider on DOMContentLoaded or complete state
+        if (document.readyState === "interactive" || document.readyState === "complete") {
           initCarouselSlider();
         } else {
-          window.addEventListener("load", initCarouselSlider);
+          document.addEventListener("DOMContentLoaded", initCarouselSlider);
         }
       })();
     </script>
