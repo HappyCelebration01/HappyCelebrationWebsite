@@ -3370,7 +3370,7 @@ function closePanel() {
   }
 
   homeView.classList.add("active");
-  homeView.style.display = ""; // Restore default display
+  homeView.style.removeProperty("display"); // Restore default display by removing inline !important none
 
   // Show floating celebration container again when returning to home view
   const container = document.getElementById("floatingCelebrationContainer");
