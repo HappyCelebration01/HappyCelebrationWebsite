@@ -3343,7 +3343,7 @@ function openPanel(name) {
   panelContent.replaceChildren(template.content.cloneNode(true));
   panel.setup?.(panelContent);
   homeView.classList.remove("active");
-  homeView.style.setProperty("display", "none", "important"); // Force hide home view inline to prevent overlap
+  homeView.style.display = "none";
   document.body.classList.add("panel-open"); // Add panel-open class to body
   if (name === "family") {
     document.body.classList.add("family-panel-open");
@@ -3370,7 +3370,7 @@ function closePanel() {
   }
 
   homeView.classList.add("active");
-  homeView.style.removeProperty("display"); // Restore default display by removing inline !important none
+  homeView.style.display = "block"; // Reset to default layout block safely
 
   // Show floating celebration container again when returning to home view
   const container = document.getElementById("floatingCelebrationContainer");
