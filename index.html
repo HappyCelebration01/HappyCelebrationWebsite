@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Happy Celebration — event planning, themes, and memorable moments. Book customized celebration packages and reminders.">
     <link rel="stylesheet" href="styles.css?v=174">
     <style>
       /* Staggered Twinkling Star Animations (Slow 8s cycle) */
@@ -167,7 +168,7 @@
               <!-- Tab 1: Theme Plan -->
               <div class="drawer-tab-panel active" data-panel-id="theme-plan">
                 <!-- Large Hero Card -->
-                <div class="airtel-hero-card" id="airtelHeroCard" style="margin-top: 0; width: 100%; box-sizing: border-box;">
+                <div class="airtel-hero-card airtel-hero-card--drawer" id="airtelHeroCard">
                   <div class="airtel-hero-icon" id="airtelHeroIcon">🎉</div>
                   <div class="airtel-hero-tag" id="airtelHeroTag">Active Theme</div>
                   <h3 class="airtel-hero-title" id="airtelHeroTitle">Default Theme</h3>
@@ -176,28 +177,28 @@
                 </div>
 
                 <!-- Theme Style Selector Mini Card -->
-                <div class="airtel-mini-card" style="min-height: auto; width: 100%; box-sizing: border-box; background: rgba(255,255,255,0.03); border: 1px solid rgba(245,199,110,0.15);">
+                <div class="airtel-mini-card airtel-mini-card--accent">
                   <div>
                     <div class="airtel-mini-tag">Celebration Themes Menu</div>
-                    <h4 class="airtel-mini-title" style="margin-bottom: 4px;">Occasions List</h4>
-                    <p class="airtel-mini-desc" style="margin-bottom: 12px;">Click any theme style below to preview its custom balloons immediately.</p>
+                    <h4 class="airtel-mini-title airtel-mini-title--compact">Occasions List</h4>
+                    <p class="airtel-mini-desc airtel-mini-desc--compact">Click any theme style below to preview its custom balloons immediately.</p>
                     
-                    <button class="secondary-action" id="resetAutoThemeBtn" type="button" style="width: 100%; min-height: 36px; font-size: 11px; padding: 4px 8px; margin: 0 0 16px 0; background: rgba(255,255,255,0.05); border: 1.5px solid rgba(245,199,110,0.3); color: #fff; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <button class="secondary-action reset-auto-theme-btn" id="resetAutoThemeBtn" type="button">
                       <span>🔄</span> Reset to Auto-detect Date
                     </button>
                     
-                    <div id="staticThemesList" style="display: flex; flex-direction: column; gap: 12px; max-height: 450px; overflow-y: auto; padding-right: 4px;">
+                    <div id="staticThemesList" class="theme-list-scroll">
                       <!-- Grouped list of all 16 theme styles will be dynamically generated in script.js -->
                     </div>
                   </div>
                 </div>
 
                 <!-- Mini Card 1: Theme Planner (Mock Date Picker) -->
-                <div class="airtel-mini-card" style="min-height: auto; width: 100%; box-sizing: border-box;">
+                <div class="airtel-mini-card airtel-mini-card--compact">
                   <div>
                     <div class="airtel-mini-tag">Mock Planner</div>
                     <h4 class="airtel-mini-title">Mock Today's Date</h4>
-                    <p class="airtel-mini-desc" style="margin-bottom: 6px;">Test dynamic themes instantly.</p>
+                    <p class="airtel-mini-desc airtel-mini-desc--compact">Test dynamic themes instantly.</p>
                     <div class="mock-date-picker">
                       <select id="mockMonth" aria-label="Mock Month">
                         <option value="0">January</option>
@@ -251,25 +252,25 @@
                 </div>
 
                 <!-- Mini Card 2: Upcoming Theme Event / Quick Switch -->
-                <div class="airtel-mini-card" id="airtelMiniCardRight" style="min-height: auto; width: 100%; box-sizing: border-box;">
+                <div class="airtel-mini-card airtel-mini-card--compact" id="airtelMiniCardRight">
                   <div>
                     <div class="airtel-mini-tag" id="airtelMiniRightTag">Next Event</div>
                     <h4 class="airtel-mini-title" id="airtelMiniRightTitle">No upcoming events</h4>
                     <p class="airtel-mini-desc" id="airtelMiniRightDesc">Add your family members' birthdays and anniversaries in the Family Tree tab.</p>
                   </div>
-                  <a class="airtel-mini-btn" id="airtelMiniRightBtn" href="?panel=family&fullscreen=true" target="_blank" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">View Tree</a>
+                  <a class="airtel-mini-btn airtel-mini-btn--drawer" id="airtelMiniRightBtn" href="?panel=family&fullscreen=true" target="_blank">View Tree</a>
                 </div>
               </div>
 
               <!-- Tab 2: Upcoming Celebration -->
               <div class="drawer-tab-panel" data-panel-id="upcoming-celebrations">
-                <div class="upcoming-workspace" style="display: flex; flex-direction: column; gap: 14px; padding: 4px; font-family: 'Outfit', sans-serif;">
-                  <p class="upcoming-intro" style="color: var(--soft); font-size: 13px; line-height: 1.5; margin: 0 4px;">
+                <div class="upcoming-workspace upcoming-workspace--drawer">
+                  <p class="upcoming-intro upcoming-intro--drawer">
                     Timeline of upcoming birthdays and anniversaries from your family tree. Plan a custom booking directly!
                   </p>
-                  <div id="drawerUpcomingEventsContainer" style="display: flex; flex-direction: column; gap: 12px;">
+                  <div id="drawerUpcomingEventsContainer" class="drawer-upcoming-events">
                     <!-- Dynamically filled list -->
-                    <div class="empty-state" style="text-align: center; padding: 40px 20px; color: var(--soft); font-size: 14px;">
+                    <div class="empty-state drawer-empty-state">
                       🌳 No family members found. Add members to your family tree to track their upcoming events.
                     </div>
                   </div>
@@ -279,13 +280,13 @@
           </div>
 
           <header class="dashboard-header">
-            <div class="header-left" style="display: flex; align-items: center; gap: 12px;">
+            <div class="header-left header-left--compact">
               <button class="menu-toggle-btn" id="menuToggleBtn" aria-label="Open settings drawer" type="button">
                 ☰
               </button>
-              <div class="header-brand" id="headerBrandBtn" style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                <img class="header-logo" src="assets/hc-logo-mark.png" alt="Happy Celebration Logo" style="width: 32px; height: 32px; object-fit: contain;">
-                <span class="header-brand-name" style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.5px; color: var(--gold-300);">HAPPY CELEBRATION</span>
+              <div class="header-brand header-brand--clickable" id="headerBrandBtn">
+                <img class="header-logo header-logo--compact" src="assets/hc-logo-mark.png" alt="Happy Celebration Logo">
+                <span class="header-brand-name header-brand-name--compact">HAPPY CELEBRATION</span>
               </div>
             </div>
             
@@ -351,51 +352,68 @@
             <div class="hero-section" id="heroSection">
 
 
-              <!-- Center Text Content aligned over a beautiful glowing background -->
+              <!-- Centered Hero Content -->
+              <div class="hero-content container">
+                <h1 class="hero-title">Make Every Celebration Memorable</h1>
+                <p class="hero-sub">Custom themes, hassle-free planning and thoughtful touches to make moments unforgettable.</p>
+                <div class="hero-ctas">
+                  <a href="?panel=book" class="btn primary">Book Now</a>
+                  <a href="#contactSection" class="btn">Get In Touch</a>
+                </div>
+              </div>
+
               <!-- Multiple sliding images slider (Hero showcase) -->
-              <div class="hero-image-slider">
-                <div class="slider-track">
-                  <!-- Duplicate slides for infinite scrolling loop -->
-                  <div class="hero-slide"><img src="assets/mockup-cake.png" alt="Designer Celebration Cake"></div>
-                  <div class="hero-slide"><img src="assets/mockup-lanterns.png" alt="Elegant Outdoor Lights"></div>
-                  <div class="hero-slide"><img src="assets/theme-marriage-anniversary.png" alt="Marriage Anniversary"></div>
-                  <div class="hero-slide"><img src="assets/theme-baby-birthday.png" alt="Baby Birthday Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-office-party.png" alt="Corporate Office Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-elder-birthday.png" alt="Elder Milestone Birthday"></div>
-                  <div class="hero-slide"><img src="assets/theme-surprise-party.png" alt="Surprise Birthday Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-new-car.png" alt="New Car Celebration"></div>
-                  <div class="hero-slide"><img src="assets/theme-retirement.png" alt="Retirement Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-newborn-baby.png" alt="Newborn Baby Born Celebration"></div>
-                  <div class="hero-slide"><img src="assets/theme-adult-boy-birthday.png" alt="Adult Boy Birthday Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-young-boy-birthday.png" alt="Young Boy Birthday Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-young-baby-boy-birthday.png" alt="Young Baby Boy Birthday"></div>
-                  <div class="hero-slide"><img src="assets/theme-boy-birthday.png" alt="General Boy Birthday Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-20-21-birthday.png" alt="Milestone 20-21 Boy Birthday"></div>
-                  <div class="hero-slide"><img src="assets/theme-independence-day.png" alt="Indian Independence Day Decoration"></div>
-                  <div class="hero-slide"><img src="assets/theme-republic-day.png" alt="Indian Republic Day Decoration"></div>
+              <div class="hero-image-slider" aria-roledescription="carousel">
+                <div class="slider-track" role="list">
+                  <!-- Duplicate slides for infinite scrolling loop (images lazy-loaded) -->
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/mockup-cake.png" alt="Designer cake showcase"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/mockup-lanterns.png" alt="Warm lantern lighting"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/float-wedding.webp" alt="Luxury wedding setup"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-baby-birthday.png" alt="Baby birthday celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-adult-boy-birthday.png" alt="Adult birthday celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-office-party.png" alt="Office celebration setup"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-surprise-party.png" alt="Surprise party decor"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-new-car.png" alt="New car celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-retirement.png" alt="Retirement celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-newborn-baby.png" alt="Newborn celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-eid-indoor.png" alt="Eid indoor celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-holi.png" alt="Holi celebration theme"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-independence-day.png" alt="Independence day celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-new-year.png" alt="New year celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-christmas-cozy.png" alt="Christmas celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-elder-birthday.png" alt="Elder birthday celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-wedding-vibrant.png" alt="Wedding vibrant celebration"></div>
 
                   <!-- Duplicate set for infinite animation loop -->
-                  <div class="hero-slide"><img src="assets/mockup-cake.png" alt="Designer Celebration Cake"></div>
-                  <div class="hero-slide"><img src="assets/mockup-lanterns.png" alt="Elegant Outdoor Lights"></div>
-                  <div class="hero-slide"><img src="assets/theme-marriage-anniversary.png" alt="Marriage Anniversary"></div>
-                  <div class="hero-slide"><img src="assets/theme-baby-birthday.png" alt="Baby Birthday Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-office-party.png" alt="Corporate Office Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-elder-birthday.png" alt="Elder Milestone Birthday"></div>
-                  <div class="hero-slide"><img src="assets/theme-surprise-party.png" alt="Surprise Birthday Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-new-car.png" alt="New Car Celebration"></div>
-                  <div class="hero-slide"><img src="assets/theme-retirement.png" alt="Retirement Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-newborn-baby.png" alt="Newborn Baby Born Celebration"></div>
-                  <div class="hero-slide"><img src="assets/theme-adult-boy-birthday.png" alt="Adult Boy Birthday Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-young-boy-birthday.png" alt="Young Boy Birthday Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-young-baby-boy-birthday.png" alt="Young Baby Boy Birthday"></div>
-                  <div class="hero-slide"><img src="assets/theme-boy-birthday.png" alt="General Boy Birthday Party"></div>
-                  <div class="hero-slide"><img src="assets/theme-20-21-birthday.png" alt="Milestone 20-21 Boy Birthday"></div>
-                  <div class="hero-slide"><img src="assets/theme-independence-day.png" alt="Indian Independence Day Decoration"></div>
-                  <div class="hero-slide"><img src="assets/theme-republic-day.png" alt="Indian Republic Day Decoration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/mockup-cake.png" alt="Designer cake showcase"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/mockup-lanterns.png" alt="Warm lantern lighting"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/float-wedding.webp" alt="Luxury wedding setup"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-baby-birthday.png" alt="Baby birthday celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-adult-boy-birthday.png" alt="Adult birthday celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-office-party.png" alt="Office celebration setup"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-surprise-party.png" alt="Surprise party decor"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-new-car.png" alt="New car celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-retirement.png" alt="Retirement celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-newborn-baby.png" alt="Newborn celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-eid-indoor.png" alt="Eid indoor celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-holi.png" alt="Holi celebration theme"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-independence-day.png" alt="Independence day celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-new-year.png" alt="New year celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-christmas-cozy.png" alt="Christmas celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-elder-birthday.png" alt="Elder birthday celebration"></div>
+                  <div class="hero-slide" role="listitem"><img loading="lazy" src="assets/theme-wedding-vibrant.png" alt="Wedding vibrant celebration"></div>
                 </div>
                 <!-- Navigation Arrows for Fast Shifting -->
                 <button class="slider-arrow prev" aria-label="Previous Slide">‹</button>
                 <button class="slider-arrow next" aria-label="Next Slide">›</button>
+              </div>
+              <div class="hero-content container" style="margin-top: 0;">
+                <div class="hero-eyebrow">✨ Premium celebration planning • Crafted for your family</div>
+                <div class="hero-badge-row" aria-label="Highlights">
+                  <span class="hero-pill">16+ custom themes</span>
+                  <span class="hero-pill">Birthday & anniversary reminders</span>
+                  <span class="hero-pill">Fast quote booking</span>
+                </div>
               </div>
             </div>
               
@@ -542,32 +560,40 @@
                 <!-- Card 1: Family Tree -->
                 <div class="service-card">
                   <div class="service-icon">🌳</div>
-                  <h3 class="service-card-title">Interactive Family Tree</h3>
-                  <p class="service-card-desc">Map your ancestry, search family members, and keep profile details updated. Links directly to your milestone timeline.</p>
+                  <div class="service-body">
+                    <h3 class="service-card-title">Interactive Family Tree</h3>
+                    <p class="service-card-desc">Map your ancestry, search family members, and keep profile details updated. Links directly to your milestone timeline.</p>
+                  </div>
                   <a class="primary-action service-link-btn" href="?panel=family&fullscreen=true" target="_blank" style="text-decoration: none;">Open Family Tree &rarr;</a>
                 </div>
 
                 <!-- Card 2: Book Event -->
                 <div class="service-card">
                   <div class="service-icon">📅</div>
-                  <h3 class="service-card-title">Mock Event Planner</h3>
-                  <p class="service-card-desc">Plan birthdays, anniversaries, and weddings. Customize guest counts, select catering tiers, and calculate instant quote estimates.</p>
+                  <div class="service-body">
+                    <h3 class="service-card-title">Mock Event Planner</h3>
+                    <p class="service-card-desc">Plan birthdays, anniversaries, and weddings. Customize guest counts, select catering tiers, and calculate instant quote estimates.</p>
+                  </div>
                   <button class="primary-action" data-panel-trigger="book" type="button">Calculate Quote &rarr;</button>
                 </div>
 
                 <!-- Card 3: Upcoming reminders -->
                 <div class="service-card">
                   <div class="service-icon">⚡</div>
-                  <h3 class="service-card-title">Upcoming Celebrations</h3>
-                  <p class="service-card-desc">Never miss a milestone. Track upcoming birthdays and anniversaries with dynamic countdown clocks and daily reminders.</p>
+                  <div class="service-body">
+                    <h3 class="service-card-title">Upcoming Celebrations</h3>
+                    <p class="service-card-desc">Never miss a milestone. Track upcoming birthdays and anniversaries with dynamic countdown clocks and daily reminders.</p>
+                  </div>
                   <button class="primary-action" data-panel-trigger="upcoming" type="button">View Countdown Calendar &rarr;</button>
                 </div>
 
                 <!-- Card 4: Register -->
                 <div class="service-card">
                   <div class="service-icon">🔑</div>
-                  <h3 class="service-card-title">Member Registration</h3>
-                  <p class="service-card-desc">Register family accounts, log in securely, and synchronize sheets with your profile to persist member nodes.</p>
+                  <div class="service-body">
+                    <h3 class="service-card-title">Member Registration</h3>
+                    <p class="service-card-desc">Register family accounts, log in securely, and synchronize sheets with your profile to persist member nodes.</p>
+                  </div>
                   <button class="primary-action" data-panel-trigger="register" type="button">Sign In / Sign Up &rarr;</button>
                 </div>
               </div>
@@ -577,58 +603,60 @@
             <section class="home-section" id="packagesSection">
               <h2 class="section-title">✦ Curated Packages ✦</h2>
               <div class="packages-workspace">
+                <!-- Silver Package -->
+                <div class="package-card silver-pkg">
+                  <img class="package-card-img" src="assets/theme-silver-decor.png" alt="Silver Package Birthday Decor">
+                  <div class="package-header">
+                    <h3 class="package-title">🥈 Silver Package</h3>
+                    <span class="package-price">₹3,999</span>
+                  </div>
+                  <p class="package-desc">Simple, elegant balloon and flower setup with capture options.</p>
+                  <ul class="package-features">
+                    <li>balloon/flower decor</li>
+                    <li>1kg cake</li>
+                    <li>1 hour special moments coverage</li>
+                    <li>social videos</li>
+                  </ul>
+                  <button class="primary-action book-pkg-btn" data-package-select="Silver" type="button">Select & Book Silver</button>
+                </div>
+                
                 <!-- Gold Package -->
-                <div class="package-card gold-pkg">
-                  <img class="package-card-img" src="assets/float-balloons.webp" alt="Gold Package Balloons & Decor">
+                <div class="package-card gold-pkg popular">
+                  <div class="package-badge">Popular</div>
+                  <img class="package-card-img" src="assets/theme-gold-decor.png" alt="Gold Package Special Decor">
                   <div class="package-header">
                     <h3 class="package-title">🌟 Gold Package</h3>
-                    <span class="package-price">₹15,000</span>
+                    <span class="package-price">₹4,999</span>
                   </div>
-                  <p class="package-desc">Perfect for intimate gatherings and elegant family functions.</p>
+                  <p class="package-desc">Perfect for warm gatherings with additional snack catering.</p>
                   <ul class="package-features">
-                    <li>Standard Theme Balloon & Flower Decor</li>
-                    <li>Premium 1kg Custom Cake</li>
-                    <li>Catering Spread for up to 30 Guests</li>
-                    <li>High-Quality Audio & Playlist Setup</li>
+                    <li>balloon/flower decor</li>
+                    <li>1.5 pound cake</li>
+                    <li>1 hour special moments coverage</li>
+                    <li>social videos</li>
+                    <li>additional snacks for 10 people</li>
                   </ul>
                   <button class="primary-action book-pkg-btn" data-package-select="Gold" type="button">Select & Book Gold</button>
                 </div>
-                
+
                 <!-- Diamond Package -->
-                <div class="package-card diamond-pkg popular">
-                  <div class="package-badge">Popular</div>
-                  <img class="package-card-img" src="assets/float-arch.webp" alt="Diamond Package Theme Arch">
+                <div class="package-card diamond-pkg">
+                  <img class="package-card-img" src="assets/theme-diamond-decor.png" alt="Diamond Package King Theme Decor">
                   <div class="package-header">
                     <h3 class="package-title">💎 Diamond Package</h3>
-                    <span class="package-price">₹35,000</span>
+                    <span class="package-price">₹7,999</span>
                   </div>
-                  <p class="package-desc">Our most popular tier, delivering a beautiful grand experience.</p>
+                  <p class="package-desc">Grand king theme experience with outfits, snacks, and music.</p>
                   <ul class="package-features">
-                    <li>Thematic Backdrop with Fairy Lights & Stage Decor</li>
-                    <li>Gourmet 2-Tier Designer Cake (2kg)</li>
-                    <li>Premium Buffet Catering for up to 60 Guests</li>
-                    <li>Professional Host / MC with Interactive Games</li>
-                    <li>DSLR Photography (3 Hours Coverage)</li>
+                    <li>balloon/flower decor</li>
+                    <li>2 pound cake</li>
+                    <li>1 hour special moments coverage</li>
+                    <li>social videos</li>
+                    <li>additional snacks for 10 people</li>
+                    <li>high bass music for dance + Karaoke system</li>
+                    <li>crown, stick, backside thor style apron like king and al</li>
                   </ul>
                   <button class="primary-action book-pkg-btn" data-package-select="Diamond" type="button">Select & Book Diamond</button>
-                </div>
-
-                <!-- Platinum Package -->
-                <div class="package-card platinum-pkg">
-                  <img class="package-card-img" src="assets/float-wedding.webp" alt="Platinum Package Luxury Wedding">
-                  <div class="package-header">
-                    <h3 class="package-title">👑 Platinum Package</h3>
-                    <span class="package-price">₹75,000</span>
-                  </div>
-                  <p class="package-desc">A luxury all-inclusive package for truly unforgettable milestones.</p>
-                  <ul class="package-features">
-                    <li>Custom 3D Theme Stage Setup & Grand Floral Entry Arch</li>
-                    <li>Premium Multilayer Tier Cake (4kg)</li>
-                    <li>Live Food Stations & Gourmet Buffet Catering</li>
-                    <li>Professional Sound, DJ System, & LED Screen</li>
-                    <li>Complete Photo & Cinematic Video Coverage</li>
-                  </ul>
-                  <button class="primary-action book-pkg-btn" data-package-select="Platinum" type="button">Select & Book Platinum</button>
                 </div>
               </div>
             </section>
@@ -638,16 +666,16 @@
               <h2 class="section-title">✦ Photo Gallery ✦</h2>
               <div class="photo-grid">
                 <figure>
-                  <img src="assets/event-lights.webp" alt="Elegant outdoor event lights">
-                  <figcaption>Evening Decor</figcaption>
+                  <img src="assets/theme-new-year.png" alt="New Year celebration mood">
+                  <figcaption>Seasonal Party</figcaption>
                 </figure>
                 <figure>
-                  <img src="assets/celebration-bg.webp" alt="Colorful celebration confetti">
-                  <figcaption>Celebration Mood</figcaption>
+                  <img src="assets/theme-christmas-cozy.png" alt="Christmas celebration mood">
+                  <figcaption>Festive Cheer</figcaption>
                 </figure>
                 <figure>
-                  <img src="assets/family-tree.png" alt="Family tree artwork">
-                  <figcaption>Family Moments</figcaption>
+                  <img src="assets/theme-wedding-vibrant.png" alt="Wedding celebration moments">
+                  <figcaption>Wedding Joy</figcaption>
                 </figure>
               </div>
             </section>
@@ -656,7 +684,7 @@
             <section class="home-section" id="aboutSection">
               <h2 class="section-title">✦ Our Story ✦</h2>
               <article class="story-card" style="padding: 10px 20px 20px;">
-                <img src="assets/event-lights.webp" alt="Warm celebration venue" style="border-radius: 12px; margin-bottom: 16px; width: 100%; object-fit: cover;">
+                <img src="assets/theme-elder-birthday.png" alt="Warm celebration venue" style="border-radius: 12px; margin-bottom: 16px; width: 100%; object-fit: cover;">
                 <h3 style="margin-top: 10px; font-size: 19px; line-height: 1.45; color: var(--gold-100); text-align: center;">Never miss the chance to make memories with your family, friends and special ones.</h3>
                 <p style="margin-top: 14px; line-height: 1.6; color: rgba(255,255,255,0.8);">At Happy Celebration, we believe that every special moment deserves to be remembered and cherished. Our mission is simple: to bring joy, convenience, and thoughtful planning to your family’s most important occasions.</p>
                 <p style="margin-top: 10px; line-height: 1.6; color: rgba(255,255,255,0.8);">We collect and organize birthdays, anniversaries, and milestones, then proactively remind you before each event. With just a few taps, you can book complete celebration packages — from décor, cakes, flowers, snacks, and delicious food spreads — delivered right to your home or chosen venue.</p>
@@ -682,6 +710,14 @@
                 <a class="whatsapp-contact" href="https://wa.me/918850228282">
                   <span class="contact-icon whatsapp-icon"></span>
                   <span><strong>WhatsApp</strong>Quick message</span>
+                </a>
+                <a class="instagram-contact" href="https://www.instagram.com/happycelebration2" target="_blank" rel="noopener noreferrer">
+                  <span class="contact-icon instagram-icon"></span>
+                  <span><strong>Instagram</strong>@happycelebration2</span>
+                </a>
+                <a class="facebook-contact" href="https://www.facebook.com/happycelebration2" target="_blank" rel="noopener noreferrer">
+                  <span class="contact-icon facebook-icon"></span>
+                  <span><strong>Facebook</strong>Happy Celebration</span>
                 </a>
               </div>
             </section>
@@ -815,23 +851,23 @@
     <template id="galleryTemplate">
       <div class="photo-grid">
         <figure>
-          <img src="assets/event-lights.webp" alt="Elegant outdoor event lights">
-          <figcaption>Evening Decor</figcaption>
+          <img src="assets/theme-new-year.png" alt="New Year celebration scene">
+          <figcaption>Seasonal Party</figcaption>
         </figure>
         <figure>
-          <img src="assets/celebration-bg.webp" alt="Colorful celebration confetti">
-          <figcaption>Celebration Mood</figcaption>
+          <img src="assets/theme-christmas-cozy.png" alt="Christmas celebration scene">
+          <figcaption>Festive Cheer</figcaption>
         </figure>
         <figure>
-          <img src="assets/family-tree.png" alt="Family tree artwork">
-          <figcaption>Family Moments</figcaption>
+          <img src="assets/theme-wedding-vibrant.png" alt="Wedding celebration scene">
+          <figcaption>Wedding Joy</figcaption>
         </figure>
       </div>
     </template>
 
     <template id="aboutTemplate">
       <article class="story-card" style="max-height: 480px; overflow-y: auto; padding-bottom: 24px;">
-        <img src="assets/event-lights.webp" alt="Warm celebration venue">
+        <img src="assets/theme-elder-birthday.png" alt="Warm celebration venue">
         <h3 style="margin-top: 20px; font-size: 19px; line-height: 1.45; color: var(--gold-100);">Never miss the chance to make memories with your family, friends and special ones.</h3>
         <p>At Happy Celebration, we believe that every special moment deserves to be remembered and cherished. Our mission is simple: to bring joy, convenience, and thoughtful planning to your family’s most important occasions.</p>
         <p>We collect and organize birthdays, anniversaries, and milestones, then proactively remind you before each event. With just a few taps, you can book complete celebration packages — from décor, cakes, flowers, snacks, and delicious food spreads — delivered right to your home or chosen venue.</p>
@@ -1256,6 +1292,14 @@
           <span class="contact-icon whatsapp-icon"></span>
           <span><strong>WhatsApp</strong>Quick message</span>
         </a>
+        <a class="instagram-contact" href="https://www.instagram.com/happycelebration2" target="_blank" rel="noopener noreferrer">
+          <span class="contact-icon instagram-icon"></span>
+          <span><strong>Instagram</strong>@happycelebration2</span>
+        </a>
+        <a class="facebook-contact" href="https://www.facebook.com/happycelebration2" target="_blank" rel="noopener noreferrer">
+          <span class="contact-icon facebook-icon"></span>
+          <span><strong>Facebook</strong>Happy Celebration</span>
+        </a>
       </div>
     </template>
 
@@ -1265,58 +1309,60 @@
           Choose from our curated celebration packages. We handle everything from themed décor, gourmet spreads, and custom cakes to music and photo setups.
         </p>
         
+        <!-- Silver Package -->
+        <div class="package-card silver-pkg">
+          <img class="package-card-img" src="assets/theme-silver-decor.png" alt="Silver Package Birthday Decor">
+          <div class="package-header">
+            <h3 class="package-title">🥈 Silver Package</h3>
+            <span class="package-price">₹3,999</span>
+          </div>
+          <p class="package-desc">Simple, elegant balloon and flower setup with capture options.</p>
+          <ul class="package-features">
+            <li>balloon/flower decor</li>
+            <li>1kg cake</li>
+            <li>1 hour special moments coverage</li>
+            <li>social videos</li>
+          </ul>
+          <button class="primary-action book-pkg-btn" data-package="Silver" type="button">Select & Book Silver</button>
+        </div>
+
         <!-- Gold Package -->
-        <div class="package-card gold-pkg">
-          <img class="package-card-img" src="assets/float-balloons.webp" alt="Gold Package Balloons & Decor">
+        <div class="package-card gold-pkg popular">
+          <div class="package-badge">Popular</div>
+          <img class="package-card-img" src="assets/theme-gold-decor.png" alt="Gold Package Special Decor">
           <div class="package-header">
             <h3 class="package-title">🌟 Gold Package</h3>
-            <span class="package-price">₹15,000</span>
+            <span class="package-price">₹4,999</span>
           </div>
-          <p class="package-desc">Perfect for intimate gatherings and elegant family functions.</p>
+          <p class="package-desc">Perfect for warm gatherings with additional snack catering.</p>
           <ul class="package-features">
-            <li>Standard Theme Balloon & Flower Decor</li>
-            <li>Premium 1kg Custom Cake</li>
-            <li>Catering Spread for up to 30 Guests</li>
-            <li>High-Quality Audio & Playlist Setup</li>
+            <li>balloon/flower decor</li>
+            <li>1.5 pound cake</li>
+            <li>1 hour special moments coverage</li>
+            <li>social videos</li>
+            <li>additional snacks for 10 people</li>
           </ul>
           <button class="primary-action book-pkg-btn" data-package="Gold" type="button">Select & Book Gold</button>
         </div>
 
         <!-- Diamond Package -->
-        <div class="package-card diamond-pkg popular">
-          <div class="package-badge">Popular</div>
-          <img class="package-card-img" src="assets/float-arch.webp" alt="Diamond Package Theme Arch">
+        <div class="package-card diamond-pkg">
+          <img class="package-card-img" src="assets/theme-diamond-decor.png" alt="Diamond Package King Theme Decor">
           <div class="package-header">
             <h3 class="package-title">💎 Diamond Package</h3>
-            <span class="package-price">₹35,000</span>
+            <span class="package-price">₹7,999</span>
           </div>
-          <p class="package-desc">Our most popular tier, delivering a beautiful grand experience.</p>
+          <p class="package-desc">Grand king theme experience with outfits, snacks, and music.</p>
           <ul class="package-features">
-            <li>Thematic Backdrop with Fairy Lights & Stage Decor</li>
-            <li>Gourmet 2-Tier Designer Cake (2kg)</li>
-            <li>Premium Buffet Catering for up to 60 Guests</li>
-            <li>Professional Host / MC with Interactive Games</li>
-            <li>DSLR Photography (3 Hours Coverage)</li>
+            <li>balloon/flower decor</li>
+            <li>2 pound cake</li>
+            <li>1 hour special moments coverage</li>
+            <li>social videos</li>
+            <li>additional snacks for 10 people</li>
+            <li>high bass music for dance + Karaoke system</li>
+            <li>crown, stick, backside thor style apron like king and al</li>
           </ul>
           <button class="primary-action book-pkg-btn" data-package="Diamond" type="button">Select & Book Diamond</button>
-        </div>
-
-        <!-- Platinum Package -->
-        <div class="package-card platinum-pkg">
-          <img class="package-card-img" src="assets/float-wedding.webp" alt="Platinum Package Luxury Wedding">
-          <div class="package-header">
-            <h3 class="package-title">👑 Platinum Package</h3>
-            <span class="package-price">₹75,000</span>
-          </div>
-          <p class="package-desc">A luxury all-inclusive package for truly unforgettable milestones.</p>
-          <ul class="package-features">
-            <li>Custom 3D Theme Stage Setup & Grand Floral Entry Arch</li>
-            <li>Premium Multilayer Tier Cake (4kg)</li>
-            <li>Live Food Stations & Gourmet Buffet Catering</li>
-            <li>Professional Sound, DJ System, & LED Screen</li>
-            <li>Complete Photo & Cinematic Video Coverage</li>
-          </ul>
-          <button class="primary-action book-pkg-btn" data-package="Platinum" type="button">Select & Book Platinum</button>
         </div>
       </div>
     </template>
@@ -1366,8 +1412,8 @@
           }
           
           function getHalfTrackWidth() {
-            // 17 unique slides
-            return getStep() * 17;
+            // 18 unique slides
+            return getStep() * 18;
           }
           
           function updateDrift() {
@@ -1441,13 +1487,12 @@
             shiftSlide('next');
           });
           
-          // Pause on hover
-          slider.addEventListener('mouseenter', () => {
-            isPaused = true;
-          });
-          slider.addEventListener('mouseleave', () => {
-            isPaused = false;
-          });
+          // Pause on hover, focus, or when tab is hidden
+          slider.addEventListener('mouseenter', () => { isPaused = true; });
+          slider.addEventListener('mouseleave', () => { isPaused = false; });
+          slider.addEventListener('focusin', () => { isPaused = true; });
+          slider.addEventListener('focusout', () => { isPaused = false; });
+          document.addEventListener('visibilitychange', () => { isPaused = document.hidden; });
           
           // Keyboard Arrow Keys Navigation
           window.addEventListener('keydown', (e) => {

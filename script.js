@@ -55,27 +55,16 @@ function updateRegistrationState() {
     if (!greetingBanner) {
       const banner = document.createElement("div");
       banner.id = "greetingBanner";
-      banner.style.cssText = `
-        background: linear-gradient(135deg, rgba(245, 199, 110, 0.15), rgba(178, 31, 63, 0.25));
-        border: 1px solid rgba(245, 199, 110, 0.4);
-        border-radius: 12px;
-        padding: 10px 16px;
-        margin: 12px 0 16px;
-        text-align: center;
-        color: var(--gold-100);
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      `;
-      banner.innerHTML = `Welcome back, <span style="color: #fff; text-shadow: 0 0 8px var(--gold-300);">${escapeHtml(data.fullName)}</span>! (${escapeHtml(data.role)})`;
+      banner.className = "greeting-banner";
+      banner.innerHTML = `<span class="greeting-banner-copy">Welcome back, <span class="greeting-banner-name">${escapeHtml(data.fullName)}</span>! (${escapeHtml(data.role)})</span>`;
       
       const sparkle = document.querySelector(".sparkle") || document.querySelector(".logo-hero-sparkle");
       if (sparkle) {
         sparkle.after(banner);
       }
     } else {
-      greetingBanner.innerHTML = `Welcome back, <span style="color: #fff; text-shadow: 0 0 8px var(--gold-300);">${escapeHtml(data.fullName)}</span>! (${escapeHtml(data.role)})`;
+      greetingBanner.className = "greeting-banner";
+      greetingBanner.innerHTML = `<span class="greeting-banner-copy">Welcome back, <span class="greeting-banner-name">${escapeHtml(data.fullName)}</span>! (${escapeHtml(data.role)})</span>`;
     }
 
     // Dynamic Upcoming Event Reminders & Countdown Banner
@@ -217,15 +206,14 @@ function renderCountdownBanner() {
     });
   } else {
     // Helpful reminder to configure family tree dates if empty
-    banner.style.borderStyle = "dashed";
-    banner.style.background = "rgba(245, 199, 110, 0.05)";
+    banner.className = "countdown-banner countdown-banner-empty";
     banner.innerHTML = `
       <div class="countdown-content">
         <span class="countdown-label">✦ Family Event Reminders ✦</span>
-        <span class="countdown-text" style="font-size: 11px; color: var(--soft);">
+        <span class="countdown-text countdown-text--muted">
           Configure birthdays & anniversaries to see countdowns.
         </span>
-      <a class="countdown-btn" id="countdownAddBtn" href="?panel=family&fullscreen=true" target="_blank" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25); box-shadow: none; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; height: 26px; padding: 0 10px; border-radius: 4px; font-size: 11px; font-weight: 600;">Add Dates</a>
+      <a class="countdown-btn countdown-link-btn" id="countdownAddBtn" href="?panel=family&fullscreen=true" target="_blank">Add Dates</a>
     `;
 
     const trigger = document.querySelector("#greetingBanner") || document.querySelector(".sparkle");
@@ -1827,7 +1815,7 @@ const panels = {
                     id: spouseId,
                     name: spouseNameValue,
                     gender: spouseGender,
-                    relation: member.relation,
+                    relation: "Spouse",
                     spouseId: member.id,
                     parentId: member.parentId,
                     birthDate: "",
@@ -3189,9 +3177,9 @@ function doGet(e) {
               }
               const guestsInput = form.querySelector("#bookingGuests");
               if (guestsInput) {
-                if (pkgName === "Gold") guestsInput.value = 30;
-                else if (pkgName === "Diamond") guestsInput.value = 60;
-                else if (pkgName === "Platinum") guestsInput.value = 100;
+                if (pkgName === "Silver") guestsInput.value = 5;
+                else if (pkgName === "Gold") guestsInput.value = 10;
+                else if (pkgName === "Diamond") guestsInput.value = 15;
                 guestsInput.dispatchEvent(new Event("input"));
               }
               let pkgNotice = form.querySelector(".package-booking-notice");
@@ -3437,6 +3425,23 @@ if (initialPanel && panels[initialPanel]) {
 
 // Theme Selection Logic
 document.addEventListener("DOMContentLoaded", () => {
+  const revealTargets = document.querySelectorAll('.home-section, .occasion-card, .service-card, .package-card, .photo-grid figure, .contact-list a');
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        entry.target.style.transitionDelay = `${Math.min(index * 50, 220)}ms`;
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealTargets.forEach((target, index) => {
+    target.classList.add('reveal');
+    target.style.transitionDelay = `${Math.min(index * 40, 180)}ms`;
+    revealObserver.observe(target);
+  });
+
   const themeSettingsBtn = document.getElementById("themeSettingsBtn");
   const themeDropdown = document.getElementById("themeDropdown");
   
@@ -4015,13 +4020,7 @@ function updateStaticThemesHighlight() {
   // Also update reset auto theme button state style
   const resetBtn = document.getElementById("resetAutoThemeBtn");
   if (resetBtn) {
-    if (window.currentThemeStyleIndex === -1) {
-      resetBtn.style.borderColor = "var(--gold-300)";
-      resetBtn.style.background = "rgba(245, 199, 110, 0.15)";
-    } else {
-      resetBtn.style.borderColor = "rgba(255, 255, 255, 0.15)";
-      resetBtn.style.background = "rgba(255, 255, 255, 0.05)";
-    }
+    resetBtn.classList.toggle("is-active", window.currentThemeStyleIndex === -1);
   }
 }
 
@@ -4201,6 +4200,7 @@ function initFloatingCelebration() {
   const container = document.getElementById("floatingCelebrationContainer");
   if (!container) return;
 
+  container.style.display = "block";
   container.innerHTML = "";
   if (window.floatingBubbleInterval) {
     clearInterval(window.floatingBubbleInterval);
@@ -4273,6 +4273,11 @@ function initFloatingCelebration() {
   function spawnBubble(initial = false) {
     const homeView = document.getElementById("homeView");
     if (!homeView || !homeView.classList.contains("active")) {
+      return;
+    }
+
+    const maxBubbles = window.innerWidth < 768 ? 10 : 16;
+    if (container.querySelectorAll(".float-bubble").length >= maxBubbles) {
       return;
     }
 
@@ -4350,11 +4355,16 @@ function initFloatingCelebration() {
     }, floatDuration * 1000);
   }
 
-  for (let i = 0; i < 4; i++) {
+  const initialBubbleCount = window.innerWidth < 768 ? 3 : 4;
+  for (let i = 0; i < initialBubbleCount; i++) {
     spawnBubble(true);
   }
 
-  window.floatingBubbleInterval = setInterval(() => spawnBubble(false), 2400);
+  window.floatingBubbleInterval = setInterval(() => {
+    if (document.getElementById("homeView")?.classList.contains("active")) {
+      spawnBubble(false);
+    }
+  }, 2800);
 }
 
 if (document.readyState === "interactive" || document.readyState === "complete") {
@@ -4499,9 +4509,9 @@ function initDashboardFeatures() {
           }
           const guestsInput = form.querySelector("#bookingGuests");
           if (guestsInput) {
-            if (pkgName === "Gold") guestsInput.value = 30;
-            else if (pkgName === "Diamond") guestsInput.value = 60;
-            else if (pkgName === "Platinum") guestsInput.value = 100;
+            if (pkgName === "Silver") guestsInput.value = 5;
+            else if (pkgName === "Gold") guestsInput.value = 10;
+            else if (pkgName === "Diamond") guestsInput.value = 15;
             guestsInput.dispatchEvent(new Event("input"));
           }
           const note = form.querySelector("#bookingNote");
