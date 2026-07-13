@@ -160,8 +160,35 @@ img, picture, .hero-slide img {
   color: rgba(255,255,255,0.85);
   font-size: 13px;
 }
-.hero-ctas { display:flex; gap:8px; justify-content:center; }
+.hero-ctas { display:flex; gap:8px; justify-content:center; align-items:center; }
 .hero-ctas .btn.primary { background: linear-gradient(90deg, var(--gold-300), var(--gold-500)); color: #1a0102; border: none; }
+.hero-cta-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: #25d366;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15);
+  position: relative;
+}
+.hero-cta-icon::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  display: block;
+  background: #fff;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='currentColor' d='M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.672.15-.198.297-.768.967-.942 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.672-1.612-.92-2.207-.242-.58-.487-.502-.672-.51-.173-.007-.372-.009-.571-.009-.198 0-.52.074-.792.372-.273.297-1.042 1.017-1.042 2.479 0 1.462 1.066 2.877 1.214 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.627.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.414-.074-.124-.272-.198-.57-.347zM12.004 2c-5.514 0-9.996 4.482-9.996 9.996 0 1.761.463 3.47 1.342 4.956l-1.399 5.103 5.228-1.372c1.436.783 3.06 1.2 4.825 1.2 5.514 0 9.996-4.482 9.996-9.996S17.518 2 12.004 2z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='currentColor' d='M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.672.15-.198.297-.768.967-.942 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.672-1.612-.92-2.207-.242-.58-.487-.502-.672-.51-.173-.007-.372-.009-.571-.009-.198 0-.52.074-.792.372-.273.297-1.042 1.017-1.042 2.479 0 1.462 1.066 2.877 1.214 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.627.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.414-.074-.124-.272-.198-.57-.347zM12.004 2c-5.514 0-9.996 4.482-9.996 9.996 0 1.761.463 3.47 1.342 4.956l-1.399 5.103 5.228-1.372c1.436.783 3.06 1.2 4.825 1.2 5.514 0 9.996-4.482 9.996-9.996S17.518 2 12.004 2z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.hero-cta-icon.whatsapp-icon::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  display: block;
+  background: url("assets/whatsapp-custom-v5.png") center / contain no-repeat;
+}
 
 /* Make the contact list compact and single-line */
 .contact-list {
@@ -1563,12 +1590,10 @@ select {
 
 .whatsapp-icon::before {
   content: "";
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   display: block;
-  background: #fff;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='currentColor' d='M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.672.15-.198.297-.768.967-.942 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.672-1.612-.92-2.207-.242-.58-.487-.502-.672-.51-.173-.007-.372-.009-.571-.009-.198 0-.52.074-.792.372-.273.297-1.042 1.017-1.042 2.479 0 1.462 1.066 2.877 1.214 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.627.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.414-.074-.124-.272-.198-.57-.347zM12.004 2c-5.514 0-9.996 4.482-9.996 9.996 0 1.761.463 3.47 1.342 4.956l-1.399 5.103 5.228-1.372c1.436.783 3.06 1.2 4.825 1.2 5.514 0 9.996-4.482 9.996-9.996S17.518 2 12.004 2z'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='currentColor' d='M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.672.15-.198.297-.768.967-.942 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.672-1.612-.92-2.207-.242-.58-.487-.502-.672-.51-.173-.007-.372-.009-.571-.009-.198 0-.52.074-.792.372-.273.297-1.042 1.017-1.042 2.479 0 1.462 1.066 2.877 1.214 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.627.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.414-.074-.124-.272-.198-.57-.347zM12.004 2c-5.514 0-9.996 4.482-9.996 9.996 0 1.761.463 3.47 1.342 4.956l-1.399 5.103 5.228-1.372c1.436.783 3.06 1.2 4.825 1.2 5.514 0 9.996-4.482 9.996-9.996S17.518 2 12.004 2z'/%3E%3C/svg%3E") center / contain no-repeat;
+  background: url("assets/whatsapp-custom-v5.png") center / contain no-repeat;
 }
 
 .instagram-icon::before {
@@ -1615,10 +1640,6 @@ select {
   background: #fff;
   font-size: 18px;
   color: #000;
-}
-
-.whatsapp-icon::before {
-  content: "📱";
 }
 
 .instagram-icon::before {
@@ -3336,7 +3357,7 @@ select {
   width: 30px;
   height: 30px;
   display: block;
-  background: #fff;
+  background: url("assets/whatsapp-custom-v5.png") center / contain no-repeat;
 }
 
 
@@ -7212,3 +7233,129 @@ body.fullscreen-mode .screen #panelView.active #panelContent {
 body.fullscreen-mode .screen #panelView.active #panelContent .family-workspace {
   height: 100% !important;
 }
+
+/* Drawer Navigation Menu Items Styles */
+.drawer-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 12px;
+}
+
+.drawer-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(245, 199, 110, 0.08);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.drawer-menu-item:hover {
+  background: rgba(245, 199, 110, 0.06);
+  border-color: rgba(245, 199, 110, 0.25);
+  transform: translateX(4px);
+}
+
+.drawer-menu-item:active {
+  transform: scale(0.98) translateX(2px);
+}
+
+.menu-item-icon {
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--gold-300);
+}
+
+.menu-item-icon img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.drawer-menu-item:hover .menu-item-icon {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px currentColor;
+}
+
+.menu-item-label {
+  flex: 1;
+}
+
+/* Custom panels and templates tweaks */
+.theme-plan-workspace,
+.locate-workspace,
+.surprises-workspace,
+.small-functions-workspace,
+.venues-workspace,
+.career-workspace {
+  box-sizing: border-box;
+  padding: 8px 4px 24px 4px;
+}
+
+.book-surprise-btn,
+.book-function-btn,
+.book-venue-btn {
+  width: 100%;
+  min-height: 38px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Colorful Icon Assignments */
+.drawer-menu-item[data-menu-panel="themePlan"] .menu-item-icon {
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+.drawer-menu-item[data-menu-panel="upcoming"] .menu-item-icon {
+  color: #f472b6;
+  background: rgba(236, 72, 153, 0.12);
+  border: 1px solid rgba(236, 72, 153, 0.25);
+}
+.drawer-menu-item[data-menu-panel="locate"] .menu-item-icon {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+.drawer-menu-item[data-menu-panel="surprises"] .menu-item-icon {
+  color: #fb923c;
+  background: rgba(251, 146, 60, 0.12);
+  border: 1px solid rgba(251, 146, 60, 0.25);
+}
+.drawer-menu-item[data-menu-panel="smallFunctions"] .menu-item-icon {
+  color: #22d3ee;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+}
+.drawer-menu-item[data-menu-panel="venues"] .menu-item-icon {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+.drawer-menu-item[data-menu-panel="career"] .menu-item-icon {
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+.drawer-menu-item[data-menu-panel="about"] .menu-item-icon {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+

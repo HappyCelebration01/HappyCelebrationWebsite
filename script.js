@@ -3306,6 +3306,125 @@ function doGet(e) {
       }
     }
   },
+  themePlan: {
+    title: "Theme Plan",
+    kicker: "Planner",
+    template: "themePlanTemplate",
+    setup(root) {
+      const mockMonth = root.querySelector("#mockMonth");
+      const mockDay = root.querySelector("#mockDay");
+      const resetAutoThemeBtn = root.querySelector("#resetAutoThemeBtn");
+
+      if (resetAutoThemeBtn) {
+        resetAutoThemeBtn.addEventListener("click", () => {
+          window.currentThemeStyleIndex = -1;
+          updateActiveTheme();
+          updateAirtelThemePlanningCards();
+        });
+      }
+
+      if (mockMonth && mockDay) {
+        mockMonth.addEventListener("change", () => {
+          updateActiveTheme();
+          updateAirtelThemePlanningCards();
+        });
+        mockDay.addEventListener("change", () => {
+          updateActiveTheme();
+          updateAirtelThemePlanningCards();
+        });
+      }
+
+      renderStaticThemesList();
+      updateActiveTheme();
+      updateAirtelThemePlanningCards();
+    }
+  },
+  locate: {
+    title: "Locate Us",
+    kicker: "Find Our Office",
+    template: "locateTemplate",
+  },
+  surprises: {
+    title: "Surprise Celebrations",
+    kicker: "Unique Packages",
+    template: "surprisesTemplate",
+    setup(root) {
+      root.querySelectorAll(".book-surprise-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const surpriseType = btn.dataset.surprise;
+          openPanel("book");
+          setTimeout(() => {
+            const form = document.querySelector("#bookingForm");
+            if (form) {
+              const note = form.querySelector("#bookingNote");
+              if (note) {
+                note.value = `Surprise package requested: ${surpriseType}`;
+              }
+              const typeSelect = form.querySelector("#bookingEventType");
+              if (typeSelect) {
+                typeSelect.value = "Theme Party";
+                typeSelect.dispatchEvent(new Event("change"));
+              }
+            }
+          }, 80);
+        });
+      });
+    }
+  },
+  smallFunctions: {
+    title: "Small Function Options",
+    kicker: "Intimate Gatherings",
+    template: "smallFunctionsTemplate",
+    setup(root) {
+      root.querySelectorAll(".book-function-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const functionType = btn.dataset.function;
+          openPanel("book");
+          setTimeout(() => {
+            const form = document.querySelector("#bookingForm");
+            if (form) {
+              const note = form.querySelector("#bookingNote");
+              if (note) {
+                note.value = `Intimate gathering package: ${functionType}`;
+              }
+              const typeSelect = form.querySelector("#bookingEventType");
+              if (typeSelect) {
+                typeSelect.value = "Birthday";
+                typeSelect.dispatchEvent(new Event("change"));
+              }
+            }
+          }, 80);
+        });
+      });
+    }
+  },
+  venues: {
+    title: "Partner Venues",
+    kicker: "Event Spaces",
+    template: "venuesTemplate",
+    setup(root) {
+      root.querySelectorAll(".book-venue-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const venueName = btn.dataset.venue;
+          openPanel("book");
+          setTimeout(() => {
+            const form = document.querySelector("#bookingForm");
+            if (form) {
+              const note = form.querySelector("#bookingNote");
+              if (note) {
+                note.value = `Enquiring for partner venue: ${venueName}`;
+              }
+            }
+          }, 80);
+        });
+      });
+    }
+  },
+  career: {
+    title: "Career Opportunities",
+    kicker: "Join Our Team",
+    template: "careerTemplate",
+  },
 };
 
 const homeView = document.querySelector("#homeView");
@@ -4839,21 +4958,20 @@ function initDashboardFeatures() {
     drawerOverlay.addEventListener("click", closeDrawer);
   }
 
-  // Side Drawer Tabs Switch
-  const drawerTabBtns = document.querySelectorAll(".drawer-tab-btn");
-  const drawerTabPanels = document.querySelectorAll(".drawer-tab-panel");
+  // Side Drawer Menu Item Clicks
+  const drawerMenuItems = document.querySelectorAll(".drawer-menu-item");
+  drawerMenuItems.forEach(item => {
+    item.addEventListener("click", () => {
+      const targetPanel = item.dataset.menuPanel;
+      
+      // Close drawer
+      const settingsDrawer = document.getElementById("settingsDrawer");
+      const drawerOverlay = document.getElementById("drawerOverlay");
+      if (settingsDrawer) settingsDrawer.classList.remove("open");
+      if (drawerOverlay) drawerOverlay.classList.remove("open");
 
-  drawerTabBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const targetTab = btn.dataset.drawerTab;
-      drawerTabBtns.forEach(b => b.classList.toggle("active", b === btn));
-      drawerTabPanels.forEach(panel => {
-        const isTarget = panel.dataset.panelId === targetTab;
-        panel.classList.toggle("active", isTarget);
-      });
-      if (targetTab === "upcoming-celebrations" && typeof window.updateDrawerUpcomingEvents === "function") {
-        window.updateDrawerUpcomingEvents();
-      }
+      // Open target panel
+      openPanel(targetPanel);
     });
   });
 
