@@ -1314,26 +1314,13 @@
     </template>
 
     <template id="themePlanTemplate">
-      <div class="theme-plan-workspace" style="display: flex; flex-direction: column; gap: 16px; overflow-y: auto; padding: 4px;">
-        <!-- Large Hero Card -->
-        <div class="airtel-hero-card" id="airtelHeroCard" style="margin-top: 0;">
-          <div class="airtel-hero-icon" id="airtelHeroIcon">🎉</div>
-          <div class="airtel-hero-tag" id="airtelHeroTag">Active Theme</div>
-          <h3 class="airtel-hero-title" id="airtelHeroTitle">Default Theme</h3>
-          <p class="airtel-hero-desc" id="airtelHeroDesc">Choose a date or event to preview beautiful customized celebration themes.</p>
-          <button class="airtel-hero-btn" id="airtelHeroBtn" type="button">Preview Details</button>
-        </div>
-
-        <!-- Theme Style Selector Mini Card -->
-        <div class="airtel-mini-card airtel-mini-card--accent">
+      <div class="theme-plan-workspace" style="display: flex; flex-direction: row; gap: 20px; padding: 4px; align-items: flex-start; justify-content: flex-start; width: 100%; box-sizing: border-box;">
+        <!-- Theme Style Selector Mini Card (Occasions List at the Top Left) -->
+        <div class="airtel-mini-card airtel-mini-card--accent" style="margin-top: 0; width: 380px; flex-shrink: 0; box-sizing: border-box;">
           <div>
             <div class="airtel-mini-tag">Celebration Themes Menu</div>
-            <h4 class="airtel-mini-title airtel-mini-title--compact">Occasions List</h4>
-            <p class="airtel-mini-desc airtel-mini-desc--compact">Click any theme style below to preview its custom balloons immediately.</p>
-            
-            <button class="secondary-action reset-auto-theme-btn" id="resetAutoThemeBtn" type="button" style="margin-bottom: 12px; width: 100%; min-height: 38px; border-radius: 8px; border: 1px solid rgba(245,199,110,0.25); background: rgba(255,255,255,0.04); color: #fff;">
-              <span>🔄</span> Reset to Auto-detect Date
-            </button>
+            <h4 class="airtel-mini-title airtel-mini-title--compact" style="margin-bottom: 8px;">Occasions List</h4>
+            <p class="airtel-mini-desc airtel-mini-desc--compact">Select an occasion below to customize its theme settings immediately.</p>
             
             <div id="staticThemesList" class="theme-list-scroll">
               <!-- Grouped list of all theme styles will be dynamically generated -->
@@ -1341,60 +1328,14 @@
           </div>
         </div>
 
-        <!-- Mini Card 1: Theme Planner (Mock Date Picker) -->
-        <div class="airtel-mini-card airtel-mini-card--compact">
+        <!-- Theme Details Sectionwise Options (Interactive Customization on the Right) -->
+        <div class="airtel-mini-card airtel-mini-card--accent" id="themeDetailsSections" style="display: none; flex-direction: column; gap: 16px; box-sizing: border-box; flex: 1; margin-top: 0;">
           <div>
-            <div class="airtel-mini-tag">Mock Planner</div>
-            <h4 class="airtel-mini-title">Mock Today's Date</h4>
-            <p class="airtel-mini-desc airtel-mini-desc--compact">Test dynamic themes instantly.</p>
-            <div class="mock-date-picker" style="display: flex; gap: 10px; margin-top: 10px;">
-              <select id="mockMonth" aria-label="Mock Month" style="flex: 1; padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.06); color: #fff; border: 1px solid rgba(245,199,110,0.2);">
-                <option value="0">January</option>
-                <option value="1">February</option>
-                <option value="2">March</option>
-                <option value="3">April</option>
-                <option value="4">May</option>
-                <option value="5" selected>June</option>
-                <option value="6">July</option>
-                <option value="7">August</option>
-                <option value="8">September</option>
-                <option value="9">October</option>
-                <option value="10">November</option>
-                <option value="11">December</option>
-              </select>
-              <select id="mockDay" aria-label="Mock Day" style="flex: 1; padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.06); color: #fff; border: 1px solid rgba(245,199,110,0.2);">
-                <option value="1">1st</option>
-                <option value="2">2nd</option>
-                <option value="3">3rd</option>
-                <option value="4">4th</option>
-                <option value="5">5th</option>
-                <option value="6" selected>6th</option>
-                <option value="7">7th</option>
-                <option value="8">8th</option>
-                <option value="9">9th</option>
-                <option value="10">10th</option>
-                <option value="11">11th</option>
-                <option value="12">12th</option>
-                <option value="13">13th</option>
-                <option value="14">14th</option>
-                <option value="15">15th</option>
-                <option value="16">16th</option>
-                <option value="17">17th</option>
-                <option value="18">18th</option>
-                <option value="19">19th</option>
-                <option value="20">20th</option>
-                <option value="21">21st</option>
-                <option value="22">22nd</option>
-                <option value="23">23rd</option>
-                <option value="24">24th</option>
-                <option value="25">25th</option>
-                <option value="26">26th</option>
-                <option value="27">27th</option>
-                <option value="28">28th</option>
-                <option value="29">29th</option>
-                <option value="30">30th</option>
-                <option value="31">31st</option>
-              </select>
+            <div class="airtel-mini-tag" id="themeDetailsTag">Theme Customization Options</div>
+            <h4 class="airtel-mini-title" id="themeDetailsTitle" style="margin-bottom: 8px; font-size: 13px;">Customize Your Theme</h4>
+            <p id="themeDetailsDescription" style="font-size: 11.5px; color: rgba(255, 255, 255, 0.7); margin-top: 0; margin-bottom: 16px; line-height: 1.4; border-left: 2px solid var(--gold-300); padding-left: 8px;"></p>
+            <div id="themeDetailedOptionsContainer" style="display: flex; flex-direction: column; gap: 12px;">
+              <!-- Dynamically populated sections -->
             </div>
           </div>
         </div>

@@ -3622,10 +3622,11 @@ document.addEventListener("DOMContentLoaded", () => {
 const ALL_THEME_STYLES = [
   {
     id: "boy-superhero",
-    category: "Baby Boy Birthday",
+    category: "Baby Boy Birthday theme",
     name: "Superhero Theme 🦸‍♂️",
     balloons: ["#ef4444", "#3b82f6", "#eab308"],
-    desc: "Active Theme: Superhero. Bold Red, Blue, and Yellow balloons.",
+    balloonText: "Red, blue, yellow balloons.",
+    desc: "Superhero. Bold Red, Blue, and Yellow balloons.",
     decor: "Superhero skyline backdrops, action bubble signs, and comic-style table spreads.",
     lighting: "Bright cool white spotlights with vibrant red/blue uplighting.",
     themeClass: "theme-wine",
@@ -3633,10 +3634,11 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "boy-safari",
-    category: "Baby Boy Birthday",
+    category: "Baby Boy Birthday theme",
     name: "Safari Theme 🦁",
     balloons: ["#22c55e", "#78350f", "#f97316"],
-    desc: "Active Theme: Safari. Natural Green, Brown, and Orange balloons.",
+    balloonText: "Green, brown, orange balloons.",
+    desc: "Safari. Natural Green, Brown, and Orange balloons.",
     decor: "Jungle foliage vines, inflatable wild animal figures, and wooden rustic signs.",
     lighting: "Soft warm amber wash with green accent uplights.",
     themeClass: "theme-emerald",
@@ -3644,10 +3646,11 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "boy-cars",
-    category: "Baby Boy Birthday",
+    category: "Baby Boy Birthday theme",
     name: "Cars & Trucks Theme 🏎️",
     balloons: ["#09090b", "#ef4444", "#cbd5e1"],
-    desc: "Active Theme: Cars/Trucks. Sleek Black, Red, and Silver balloons.",
+    balloonText: "Black, red, silver balloons.",
+    desc: "Cars/Trucks. Sleek Black, Red, and Silver balloons.",
     decor: "Checkered racing flags, miniature traffic cones, and racetrack floor runners.",
     lighting: "Cool white floodlights with high-contrast red neon accents.",
     themeClass: "theme-luxury",
@@ -3655,21 +3658,35 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "girl-princess",
-    category: "Baby Girl Birthday",
+    category: "Baby Girl Birthday theme",
     name: "Princess Theme 👑",
     balloons: ["#f472b6", "#eab308", "#ffffff"],
-    desc: "Active Theme: Princess. Royal Pink, Gold, and White balloons.",
+    balloonText: "Pink, gold, white balloons.",
+    desc: "Princess. Royal Pink, Gold, and White balloons.",
     decor: "Sparkling tiaras, satin table skirts, and a grand castle photo gate.",
     lighting: "Soft pink wash with warm golden fairy light backdrop.",
     themeClass: "theme-birthday-female",
     icon: "🎀"
   },
   {
+    id: "girl-superhero",
+    category: "Baby Girl Birthday theme",
+    name: "Superhero Theme 🦸‍♀️",
+    balloons: ["#f472b6", "#c084fc", "#eab308"],
+    balloonText: "Pink, purple, yellow balloons.",
+    desc: "Superhero (Girl Style). Magical Pink, Purple, and Yellow superhero balloons.",
+    decor: "Pink skyline backdrops, star shield cutouts, and glittery action signs.",
+    lighting: "Soft pink and violet spotlights with gold star accents.",
+    themeClass: "theme-birthday-female",
+    icon: "🎀"
+  },
+  {
     id: "girl-fairy",
-    category: "Baby Girl Birthday",
+    category: "Baby Girl Birthday theme",
     name: "Fairy Garden Theme 🧚‍♀️",
     balloons: ["#fbcfe8", "#c084fc", "#86efac"],
-    desc: "Active Theme: Fairy Garden. Whimsical Pastel Pink, Lavender, and Mint Green balloons.",
+    balloonText: "Pastel pink, lavender, mint green balloons.",
+    desc: "Fairy Garden. Whimsical Pastel Pink, Lavender, and Mint Green balloons.",
     decor: "Enchanted flower vines, glowing mushroom props, and fairy wing chair covers.",
     lighting: "Ethereal lavender glow with twinkling firefly lights.",
     themeClass: "theme-violet",
@@ -3677,21 +3694,59 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "girl-unicorn",
-    category: "Baby Girl Birthday",
+    category: "Baby Girl Birthday theme",
     name: "Unicorn Theme 🦄",
     balloons: ["#fbcfe8", "#c084fc", "#93c5fd", "#fef08a"],
-    desc: "Active Theme: Unicorn. Magical Rainbow Pastel balloons.",
+    balloonText: "Rainbow mix with pastel shades.",
+    desc: "Unicorn. Magical Rainbow Pastel balloons.",
     decor: "Golden unicorn horn centerpieces, fluffy cloud setups, and pastel rainbow backdrops.",
     lighting: "Dreamy pastel color-cycle washes with glittering star-projectors.",
     themeClass: "theme-birthday-female",
     icon: "🎀"
   },
   {
+    id: "adult-birthday-boy",
+    category: "Adult Boy/Girl Birthday theme",
+    name: "Adult Boy Birthday 🍺",
+    balloons: ["#d97706", "#f59e0b", "#ffffff"],
+    balloonText: "Amber, gold, and white balloons.",
+    desc: "Adult Boy Birthday. Cheers & Beers style with Gold, Amber, and White balloons.",
+    decor: "Beer mug centerpieces, vintage chalkboard signs, dartboard targets, and lounge seating.",
+    lighting: "Cozy pub-style warm low lighting with amber neon glows.",
+    themeClass: "theme-anniversary-young",
+    icon: "🎉"
+  },
+  {
+    id: "adult-birthday-girl",
+    category: "Adult Boy/Girl Birthday theme",
+    name: "Adult Girl Birthday 💄",
+    balloons: ["#fda4af", "#fef08a", "#ffffff"],
+    balloonText: "Rose gold, champagne, and white balloons.",
+    desc: "Adult Girl Birthday. Glamour spa & picnic vibes with Rose Gold and Champagne colors.",
+    decor: "Floral rings, boho picnic carpets, low wooden tables, cosmetic props, and macaron towers.",
+    lighting: "Warm fairy lighting with dreamy pink/violet uplighting.",
+    themeClass: "theme-birthday-female",
+    icon: "🎉"
+  },
+  {
+    id: "old-age-birthday",
+    category: "Old age Birthday theme",
+    name: "Elegant Elder Birthday 🧓",
+    balloons: ["#cbd5e1", "#c084fc", "#ffffff"],
+    balloonText: "Silver, lavender, and white balloons.",
+    desc: "Elder Birthday. Respectful and elegant classic birthday setting.",
+    decor: "Memory lanes with printed pictures, traditional floral arches, and comfortable cushions.",
+    lighting: "Soft warm white ambient light with twinkling background bulbs.",
+    themeClass: "theme-violet",
+    icon: "🎂"
+  },
+  {
     id: "newly-romantic",
-    category: "Newly Married Couple",
+    category: "Newly married marriage anniversary",
     name: "Romantic Elegance 🌹",
     balloons: ["#dc2626", "#ffffff", "#fda4af"],
-    desc: "Active Theme: Romantic Elegance. Passionate Red, White, and Rose-Gold balloons.",
+    balloonText: "Red, white, rose-gold balloons.",
+    desc: "Romantic Elegance. Passionate Red, White, and Rose-Gold balloons.",
     decor: "Fresh red rose petals, glass candle holders, and love letter backdrops.",
     lighting: "Intimate dim warm white candle-glow with soft rose uplighting.",
     themeClass: "theme-wine",
@@ -3699,10 +3754,11 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "newly-travel",
-    category: "Newly Married Couple",
+    category: "Newly married marriage anniversary",
     name: "Travel Adventure ✈️",
     balloons: ["#3b82f6", "#14b8a6", "#fef08a"],
-    desc: "Active Theme: Travel Adventure. Scenic Blue, Teal, and Sandy Beige balloons.",
+    balloonText: "Blue, teal, sandy beige balloons.",
+    desc: "Travel Adventure. Scenic Blue, Teal, and Sandy Beige balloons.",
     decor: "Vintage suitcases, globe centerpieces, and wanderlust map backdrops.",
     lighting: "Bright daylight white with cool teal ambient washes.",
     themeClass: "theme-sapphire",
@@ -3710,10 +3766,11 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "newly-glam",
-    category: "Newly Married Couple",
+    category: "Newly married marriage anniversary",
     name: "Modern Glam ✨",
     balloons: ["#cbd5e1", "#eab308", "#09090b"],
-    desc: "Active Theme: Modern Glam. Sophisticated Silver, Gold, and Black balloons.",
+    balloonText: "Silver, gold, black balloons.",
+    desc: "Modern Glam. Sophisticated Silver, Gold, and Black balloons.",
     decor: "Metallic sequined walls, geometric metal frames, and champagne towers.",
     lighting: "High-contrast white pinspots and golden sparkle projections.",
     themeClass: "theme-luxury",
@@ -3721,10 +3778,11 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "older-jubilee",
-    category: "Older Married Couple",
+    category: "Old age marriage anniversary",
     name: "Golden Jubilee 🏆",
     balloons: ["#eab308", "#fffbeb", "#fef9c3"],
-    desc: "Active Theme: Golden Jubilee. Majestic Gold, Ivory, and Champagne balloons.",
+    balloonText: "Gold, ivory, champagne balloons.",
+    desc: "Golden Jubilee. Majestic Gold, Ivory, and Champagne balloons.",
     decor: "Golden frame photo gallery, velvet drapery, and vintage anniversary banners.",
     lighting: "Warm amber candle-style chandeliers and golden uplights.",
     themeClass: "theme-luxury",
@@ -3732,10 +3790,11 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "older-memory",
-    category: "Older Married Couple",
+    category: "Old age marriage anniversary",
     name: "Memory Lane 📸",
     balloons: ["#ffffff", "#78350f", "#fef08a"],
-    desc: "Active Theme: Memory Lane. Retro White, Sepia Brown, and Soft Pastel balloons.",
+    balloonText: "White, sepia-toned brown, soft pastel balloons.",
+    desc: "Memory Lane. Retro White, Sepia Brown, and Soft Pastel balloons.",
     decor: "Overhead hanging polaroid cards, retro record players, and lace table overlays.",
     lighting: "Dim nostalgic incandescent edison bulb strings.",
     themeClass: "theme-wine",
@@ -3743,32 +3802,23 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "older-classic",
-    category: "Older Married Couple",
+    category: "Old age marriage anniversary",
     name: "Classic Elegance 🖤",
     balloons: ["#09090b", "#ffffff", "#cbd5e1"],
-    desc: "Active Theme: Classic Elegance. Formal Black, White, and Silver balloons.",
+    balloonText: "Black, white, silver balloons.",
+    desc: "Classic Elegance. Formal Black, White, and Silver balloons.",
     decor: "Monochromatic floral setups, crystal candelabras, and silver sequin runners.",
     lighting: "Crisp cool white wash with subtle silver shimmers.",
     themeClass: "theme-luxury",
     icon: "💖"
   },
   {
-    id: "festival-diwali-style",
-    category: "Festival Themes",
-    name: "Diwali Theme 🪔",
-    balloons: ["#f97316", "#eab308", "#ef4444"],
-    desc: "Active Theme: Diwali. Festival of Lights featuring Orange, Yellow, and Red balloons.",
-    decor: "Clay diyas, fresh marigold flower garlands, and colorful sand rangolis.",
-    lighting: "Twinkling warm fairy lights, lanterns, and bright oil lamp clusters.",
-    themeClass: "theme-festival-diwali",
-    icon: "🪔"
-  },
-  {
     id: "festival-christmas-style",
-    category: "Festival Themes",
+    category: "Christmas eve",
     name: "Christmas Theme 🎄",
     balloons: ["#ef4444", "#22c55e", "#ffffff"],
-    desc: "Active Theme: Christmas. Holiday cheer with Red, Green, and White balloons.",
+    balloonText: "Red, green, white balloons.",
+    desc: "Christmas. Holiday cheer with Red, Green, and White balloons.",
     decor: "Pine wreaths, holly leaves, hanging socks, and mistletoe.",
     lighting: "Red and green accent spots with warm white fairy lights on tree branch clusters.",
     themeClass: "theme-festival-christmas",
@@ -3776,10 +3826,11 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "festival-holi-style",
-    category: "Festival Themes",
+    category: "Holi party",
     name: "Holi Theme 🎨",
     balloons: ["#ec4899", "#3b82f6", "#eab308", "#22c55e"],
-    desc: "Active Theme: Holi. Organic Holi Splash featuring vibrant Multicolor balloons.",
+    balloonText: "Multicolor balloons (bright mix).",
+    desc: "Holi. Organic Holi Splash featuring vibrant Multicolor balloons.",
     decor: "Organic herbal colors (gulal), water guns (pichkaris), and rustic organic drapes.",
     lighting: "Bright daylight white floodlights and multi-color laser projections.",
     themeClass: "theme-festival-holi",
@@ -3787,14 +3838,51 @@ const ALL_THEME_STYLES = [
   },
   {
     id: "festival-eid-style",
-    category: "Festival Themes",
+    category: "Eid Mubarak",
     name: "Eid Theme 🌙",
     balloons: ["#22c55e", "#eab308", "#cbd5e1"],
-    desc: "Active Theme: Eid. Blessed Eid vibes with Green, Gold, and Silver balloons.",
+    balloonText: "Green, gold, silver balloons.",
+    desc: "Eid. Blessed Eid vibes with Green, Gold, and Silver balloons.",
     decor: "Crescent moon backdrops, moroccan lantern centerpieces, and calligraphy hangings.",
     lighting: "Emerald green uplighting with warm gold lantern glows.",
     themeClass: "theme-festival-eid",
     icon: "🌙"
+  },
+  {
+    id: "retirement-party",
+    category: "Retirement parties",
+    name: "Golden Retirement 🏖️",
+    balloons: ["#60a5fa", "#eab308", "#ffffff"],
+    balloonText: "Sky blue, gold, and white balloons.",
+    desc: "Retirement Party. Relaxed beachy/golf retreat theme to honor hard work.",
+    decor: "Beachy hammock installations, golf clubs, wishing well card box, and customized years-of-service timeline.",
+    lighting: "Warm sunset amber washes and relaxing dim yellow string lights.",
+    themeClass: "theme-anniversary-old",
+    icon: "🏖️"
+  },
+  {
+    id: "get-together-party",
+    category: "Get together",
+    name: "Cozy Get Together 🏡",
+    balloons: ["#fbbf24", "#fda4af", "#fef3c7"],
+    balloonText: "Warm gold, peach, and cream balloons.",
+    desc: "Get Together. Cozy housewarming or family lawn barbecue setting.",
+    decor: "Grill station setups, yard games (cornhole/giant Jenga), outdoor theater screen, and warm plaid picnic blankets.",
+    lighting: "Fairy light canopies, bonfire glow, and overhead paper lanterns.",
+    themeClass: "theme-emerald",
+    icon: "🏡"
+  },
+  {
+    id: "farewell-party",
+    category: "Farewell party",
+    name: "Bon Voyage Farewell 👋",
+    balloons: ["#1e3a8a", "#cbd5e1", "#ffffff"],
+    balloonText: "Navy blue, silver, and white balloons.",
+    desc: "Farewell Party. Celebrating new horizons and saying a warm goodbye.",
+    decor: "Bon voyage globe/map setups, corporate desk layouts, advice jars, and signing boards.",
+    lighting: "Sophisticated cool blue washes with warm spot lamps.",
+    themeClass: "theme-luxury",
+    icon: "👋"
   }
 ];
 
@@ -3976,7 +4064,7 @@ function getCelebrationThemeForDate(date) {
   return null;
 }
 
-window.currentThemeStyleIndex = -1; // -1 means auto-detect from date
+window.currentThemeStyleIndex = 0; // Default to first theme (Superhero Theme) on load
 
 function updateActiveTheme() {
   const activeStyleNameEl = document.getElementById("activeThemeStyleName");
@@ -4035,10 +4123,13 @@ function updateActiveTheme() {
   if (celebration) {
     document.body.classList.add(celebration.themeClass);
     updateAirtelHero(celebration);
+    renderThemeDetailsSections(celebration.id);
   } else {
     const savedTheme = localStorage.getItem("happyCelebrationTheme") || "wine";
     document.body.classList.add(`theme-${savedTheme}`);
     updateAirtelHero(null);
+    const detailsContainer = document.getElementById("themeDetailsSections");
+    if (detailsContainer) detailsContainer.style.display = "none";
   }
 
   // Restart floating particles
@@ -4055,14 +4146,25 @@ function renderStaticThemesList() {
   container.innerHTML = "";
 
   const categories = [
-    { name: "Baby Boy Birthday", icon: "🎂" },
-    { name: "Baby Girl Birthday", icon: "🎀" },
-    { name: "Newly Married Couple", icon: "💍" },
-    { name: "Older Married Couple", icon: "💖" },
-    { name: "Festival Themes", icon: "🎉" }
+    { name: "Baby Boy Birthday theme", icon: "🎂" },
+    { name: "Baby Girl Birthday theme", icon: "🎀" },
+    { name: "Adult Boy/Girl Birthday theme", icon: "🎉" },
+    { name: "Old age Birthday theme", icon: "🧓" },
+    { name: "Newly married marriage anniversary", icon: "💍" },
+    { name: "Old age marriage anniversary", icon: "💖" },
+    { name: "Christmas eve", icon: "🎄" },
+    { name: "Holi party", icon: "🎨" },
+    { name: "Eid Mubarak", icon: "🌙" },
+    { name: "Retirement parties", icon: "🏖️" },
+    { name: "Get together", icon: "🏡" },
+    { name: "Farewell party", icon: "👋" }
   ];
 
   categories.forEach(cat => {
+    // Check if there are themes in this category
+    const hasThemes = ALL_THEME_STYLES.some(theme => theme.category === cat.name);
+    if (!hasThemes) return;
+
     // Create header element
     const header = document.createElement("div");
     header.className = "static-category-title";
@@ -4081,32 +4183,13 @@ function renderStaticThemesList() {
           `<span class="theme-color-dot" style="background-color: ${color};"></span>`
         ).join("");
 
-        // Set balloon text precisely according to prompt
-        let balloonText = "";
-        if (theme.id === "boy-superhero") balloonText = "Red, blue, yellow balloons.";
-        else if (theme.id === "boy-safari") balloonText = "Green, brown, orange balloons.";
-        else if (theme.id === "boy-cars") balloonText = "Black, red, silver balloons.";
-        else if (theme.id === "girl-princess") balloonText = "Pink, gold, white balloons.";
-        else if (theme.id === "girl-fairy") balloonText = "Pastel pink, lavender, mint green balloons.";
-        else if (theme.id === "girl-unicorn") balloonText = "Rainbow mix with pastel shades.";
-        else if (theme.id === "newly-romantic") balloonText = "Red, white, rose-gold balloons.";
-        else if (theme.id === "newly-travel") balloonText = "Blue, teal, sandy beige balloons.";
-        else if (theme.id === "newly-glam") balloonText = "Silver, gold, black balloons.";
-        else if (theme.id === "older-jubilee") balloonText = "Gold, ivory, champagne balloons.";
-        else if (theme.id === "older-memory") balloonText = "White, sepia-toned brown, soft pastel balloons.";
-        else if (theme.id === "older-classic") balloonText = "Black, white, silver balloons.";
-        else if (theme.id === "festival-diwali-style") balloonText = "Orange, yellow, red balloons.";
-        else if (theme.id === "festival-christmas-style") balloonText = "Red, green, white balloons.";
-        else if (theme.id === "festival-holi-style") balloonText = "Multicolor balloons (bright mix).";
-        else if (theme.id === "festival-eid-style") balloonText = "Green, gold, silver balloons.";
-
         item.innerHTML = `
           <div class="static-theme-left">
             <div class="theme-color-dots">${dotsHtml}</div>
           </div>
           <div class="static-theme-content">
             <div class="static-theme-name">${theme.name}</div>
-            <div class="static-theme-balloons">${balloonText}</div>
+            <div class="static-theme-balloons">${theme.balloonText || ""}</div>
           </div>
           <div class="static-theme-status">
             <span class="active-indicator">✓</span>
@@ -4165,28 +4248,11 @@ function updateAirtelHero(celebration) {
     if (heroDesc) heroDesc.textContent = displayDesc;
     
     if (heroBtn) {
-      heroBtn.style.display = "block";
-      heroBtn.textContent = "Preview Details";
-      heroBtn.onclick = () => {
-        let detailsMsg = `✨ ${celebration.name} ✨\n\n`;
-        if (celebration.balloons) {
-          // Extract balloon descriptions
-          let balloonsText = celebration.desc;
-          if (celebration.desc.includes("balloons")) {
-            const parts = celebration.desc.split(".");
-            balloonsText = parts[1] ? parts[1].trim() : celebration.desc;
-          }
-          detailsMsg += `🎈 Balloons:\n- ${balloonsText}\n\n`;
-        }
-        if (celebration.decor) {
-          detailsMsg += `🌸 Decoration Suggestions:\n- ${celebration.decor}\n\n`;
-        }
-        if (celebration.lighting) {
-          detailsMsg += `💡 Lighting Concept:\n- ${celebration.lighting}\n\n`;
-        }
-        alert(detailsMsg);
-      };
+      heroBtn.style.display = "none";
     }
+
+    // Populate interactive detailed sections
+    renderThemeDetailsSections(celebration.id);
   } else {
     if (heroIcon) heroIcon.textContent = "🎉";
     if (heroTag) heroTag.textContent = "Theme Planner";
@@ -4195,7 +4261,545 @@ function updateAirtelHero(celebration) {
     if (heroBtn) {
       heroBtn.style.display = "none";
     }
+
+    // Hide interactive sections
+    const detailsContainer = document.getElementById("themeDetailsSections");
+    if (detailsContainer) detailsContainer.style.display = "none";
   }
+}
+
+const THEME_DETAILED_SECTIONS = {
+  "boy-superhero": {
+    characters: {
+      title: "🦸‍♂️ Select Character Style",
+      items: ["Thor (Lightning elements, hammer props)", "Spider-Man (Web shooter decorations, blue/red nets)", "Superman (Cape backdrops, classic emblem signs)", "Batman (Dark Knight motifs, bat signal lights)", "Iron Man (Arc reactor table centerpiece)"]
+    },
+    cakes: {
+      title: "🎂 Customized Birthday Cake",
+      items: ["Thor's Mjolnir Hammer 3D Cake", "Spider-Man City Skyline Sculpted Cake", "Superman Shield Multi-tier Cake", "Avengers Assembled Fondant Cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Costumes",
+      items: ["Kids Deluxe Superhero Costumes (with capes & masks)", "Personalized Family Superhero T-Shirts", "Avenger Character Capes for all guests"]
+    },
+    stuff: {
+      title: "🛡️ Props & Other Stuff",
+      items: ["Foam Thor Hammers & Captain America Shields", "Comic bubble photo booth props", "Face painting booth (Hero designs)"]
+    }
+  },
+  "girl-superhero": {
+    characters: {
+      title: "🦸‍♀️ Select Character Style",
+      items: ["Supergirl", "Batgirl", "Wonder Woman", "Harley Quinn"]
+    },
+    cakes: {
+      title: "🎂 Customized Birthday Cake",
+      items: ["Supergirl Crest Cake", "Batgirl Skyline Cake", "Wonder Woman Tiara Cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Costumes",
+      items: ["Girl Superhero capes and masks", "Custom family hero tees"]
+    },
+    stuff: {
+      title: "🛡️ Props & Other Stuff",
+      items: ["Action bubbles and star shield props", "Photo booth setups"]
+    }
+  },
+  "boy-safari": {
+    characters: {
+      title: "🦁 Safari Animal Styles",
+      items: ["Lion King style", "Friendly Giraffe & Zebra themes", "Jungle Explorer motifs"]
+    },
+    cakes: {
+      title: "🎂 Customized Birthday Cake",
+      items: ["3D Jungle Animal Treehouse Cake", "Cute Lion Cub Sculpted Fondant Cake", "Wild Safari Jeep Cream Cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Costumes",
+      items: ["Khaki Explorer Pith Hats for kids", "Custom 'Wild One' safari print family tees", "Animal ear headbands"]
+    },
+    stuff: {
+      title: "🌿 Props & Other Stuff",
+      items: ["Inflatable safari animals", "Custom jungle binoculars", "Greenery photobooth arch"]
+    }
+  },
+  "boy-cars": {
+    characters: {
+      title: "🏎️ Racetrack & Vehicle Styles",
+      items: ["Formula 1 Racing style", "Monster Truck Rally theme", "Retro Hot Rod style"]
+    },
+    cakes: {
+      title: "🎂 Customized Birthday Cake",
+      items: ["Race Car 3D Sculpted Cake", "Piston Cup Championship Trophy Cake", "Monster Truck tire fondant cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Costumes",
+      items: ["Racing Driver pitcrew jumpsuit for birthday boy", "Checkered flag pattern shirts for family", "Pitstop crew custom caps"]
+    },
+    stuff: {
+      title: "🏁 Props & Other Stuff",
+      items: ["Miniature traffic cones & warning lights", "Checkered flag photo backdrop", "Tire stack balloon columns"]
+    }
+  },
+  "girl-princess": {
+    characters: {
+      title: "👑 Royal Princess Styles",
+      items: ["Cinderella (Ice Blue & Silver)", "Belle (Royal Gold & Roses)", "Elsa (Frozen Ice Palace style)", "Ariel (Under the Sea Princess)"]
+    },
+    cakes: {
+      title: "🎂 Customized Birthday Cake",
+      items: ["3D Pink Castle & Tiara Cake", "Disney Princess character fondant cake", "Glass Slipper velvet cream cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Costumes",
+      items: ["Sparkling Deluxe Princess Gown for birthday girl", "Royal tiaras & wands for all princess guests", "Matching family pastel outfits"]
+    },
+    stuff: {
+      title: "🏰 Props & Other Stuff",
+      items: ["Royal throne chair for photos", "Satin carriage photo frame", "Glittery wand decoration booth"]
+    }
+  },
+  "girl-fairy": {
+    characters: {
+      title: "🧚‍♀️ Enchanted Forest Styles",
+      items: ["Tinkerbell Pixie Style", "Forest Elves & Wildflowers", "Dreamy Woodland Fairies"]
+    },
+    cakes: {
+      title: "🎂 Customized Birthday Cake",
+      items: ["Fairy Hollow Treehouse Cake", "Magic Mushroom & Pixie Dust Cake", "Floral crown tiered naked cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Costumes",
+      items: ["Glowing LED Fairy wings for kids", "Floral crown headbands", "Pastel tutu skirts"]
+    },
+    stuff: {
+      title: "🌸 Props & Other Stuff",
+      items: ["Giant glowing flower models", "Pixie dust bubble bottles", "Wooden fairy door installations"]
+    }
+  },
+  "girl-unicorn": {
+    characters: {
+      title: "🦄 Unicorn & Star Styles",
+      items: ["Magical Pegasus Theme", "Pastel Rainbow Unicorn Style", "Glitter & Starlight Magic"]
+    },
+    cakes: {
+      title: "🎂 Customized Birthday Cake",
+      items: ["Golden Horn Unicorn Head 3D Cake", "Over-the-rainbow multi-tier cake", "Pastel swirl drip cake with stars"]
+    },
+    clothes: {
+      title: "👕 Clothes & Costumes",
+      items: ["Unicorn horn headband & pastel dress for birthday girl", "Matching unicorn family tees", "Glittery hair clips for guests"]
+    },
+    stuff: {
+      title: "☁️ Props & Other Stuff",
+      items: ["Fluffy cotton cloud table overlays", "Giant unicorn plush backdrop", "Unicorn face paint & glitter bar"]
+    }
+  },
+  "adult-birthday-boy": {
+    characters: {
+      title: "🍺 Select Party Vibe",
+      items: ["Sports & Games Night style", "Casino & Las Vegas theme", "Classic Beer Garden vibe", "Retro Arcade setup"]
+    },
+    cakes: {
+      title: "🎂 Customized Birthday Cake",
+      items: ["3D Beer Mug Shaped Cake", "Xbox/PlayStation Console Cake", "Poker Table Fondant Cake", "Whiskey Bottle Sculpted Cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Smart casual shirts and custom caps", "Sports jerseys of preferred teams", "Custom 'Birthday Crew' t-shirts"]
+    },
+    stuff: {
+      title: "🎯 Props & Fun Stuff",
+      items: ["Dartboard & ping pong table sets", "Custom printed beer coasters", "Mini arcade basketball machine"]
+    }
+  },
+  "adult-birthday-girl": {
+    characters: {
+      title: "💄 Select Party Vibe",
+      items: ["Glamour Spa Day styling", "Dreamy Boho picnic setup", "Glitzy Cocktail Party layout", "Floral garden tea party"]
+    },
+    cakes: {
+      title: "🎂 Customized Birthday Cake",
+      items: ["High-end Cosmetics box cake", "Floral ring drip cake with gold foil", "Giant cupcake frosting tower", "Champagne bucket cake"]
+    },
+    clothes: {
+      title: "👗 Clothes & Outfits",
+      items: ["Chic cocktail dresses or pastel robes", "Matching floral dress code", "Custom personalized birthday queen sash"]
+    },
+    stuff: {
+      title: "🌸 Props & Fun Stuff",
+      items: ["Mimosa bar setups and fancy glassware", "Instagrammable floral arch with neon sign", "Plush cushions and rugs for low seating"]
+    }
+  },
+  "old-age-birthday": {
+    characters: {
+      title: "👴 Select Comfort Style",
+      items: ["Vintage Nostalgia theme", "Royal Traditional style", "Classic English Tea Party setting"]
+    },
+    cakes: {
+      title: "🎂 Customized Birthday Cake",
+      items: ["Family Tree photo-collage cake", "Fresh rose floral basket cake", "Classic elegant double-tier velvet cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Comfortable premium ethnic attire", "Warm soft shawls / coordinated sweaters", "Coordinating family color palette"]
+    },
+    stuff: {
+      title: "📸 Props & Comfort Stuff",
+      items: ["Nostalgic retro newspaper prints of birth year", "Soft armchair and cushion lounge setup", "Hanging timeline card boards of key memories"]
+    }
+  },
+  "newly-romantic": {
+    characters: {
+      title: "🌹 Romantic Styling Themes",
+      items: ["Classic Crimson Rose style", "Boho Rose Gold & Pampas Grass", "Modern Minimalist Hearts"]
+    },
+    cakes: {
+      title: "🎂 Customized Anniversary Cake",
+      items: ["Fresh Red Rose tier cake", "Elegant Silhouette Couple Cake", "Gold Foil drip velvet cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Elegant Evening Gown & Suit suggestion", "Matching Red/White couple outfits", "Embroidered anniversary initials shirts"]
+    },
+    stuff: {
+      title: "✨ Props & Other Stuff",
+      items: ["Heart-shaped balloon arch", "Marquee 'LOVE' light letters", "Personalized memory wall photo board"]
+    }
+  },
+  "newly-travel": {
+    characters: {
+      title: "✈️ Travel Adventure Styles",
+      items: ["Wanderlust & Map Theme", "Hot Air Balloon Flight style", "Parisian/Venetian City Romance"]
+    },
+    cakes: {
+      title: "🎂 Customized Anniversary Cake",
+      items: ["Globe & Vintage Suitcase cake", "Passport & boarding pass cake", "World map stencil tier cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Travel-ready safari chic outfits", "Matching custom passport-holder couple shirts", "Adventure themed jackets"]
+    },
+    stuff: {
+      title: "🗺️ Props & Other Stuff",
+      items: ["Vintage globe & map photo corner", "Mini suitcase favors", "Boarding pass style menu cards"]
+    }
+  },
+  "newly-glam": {
+    characters: {
+      title: "✨ Modern Glam Styles",
+      items: ["Great Gatsby / Art Deco Theme", "VIP Red Carpet style", "Ultra-modern Silver & Neon"]
+    },
+    cakes: {
+      title: "🎂 Customized Anniversary Cake",
+      items: ["Art Deco Geometric Gold Cake", "Sequin shimmer black & gold cake", "Champagne bottle pouring cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Black-tie Tuxedo & Sequin Dress guide", "Matching metallic accents attire", "Custom glam masquerade masks"]
+    },
+    stuff: {
+      title: "🍾 Props & Other Stuff",
+      items: ["Champagne tower display", "Silver metallic sequin backdrop", "Hollywood VIP photo step & repeat"]
+    }
+  },
+  "older-jubilee": {
+    characters: {
+      title: "🏆 Golden Jubilee Styles",
+      items: ["Grand Royal Gold style", "Vintage Floral Anniversary theme", "Classic Family Reunion theme"]
+    },
+    cakes: {
+      title: "🎂 Customized Anniversary Cake",
+      items: ["50th Golden Jubilee Tier Cake", "Vintage lace design fondant cake", "White rose cake with gold flakes"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Golden embroidered traditional outfit suggestion", "Matching silk/satin family apparel", "Golden crown/tiara for the couple"]
+    },
+    stuff: {
+      title: "📸 Props & Other Stuff",
+      items: ["Golden number '50' marquee lights", "Family tree photo display frame", "Nostalgic family memory video screen"]
+    }
+  },
+  "older-memory": {
+    characters: {
+      title: "📸 Retro Memory Styles",
+      items: ["Retro Vintage Record theme", "Sepia Classic Photo theme", "Old School Romance style"]
+    },
+    cakes: {
+      title: "🎂 Customized Anniversary Cake",
+      items: ["Vinyl Record & gramophone cake", "Nostalgic photo-printed collage cake", "Rustic naked chocolate cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Retro 70s/80s styled outfits", "Matching classic vintage design shirts", "Nostalgic color palette dress code"]
+    },
+    stuff: {
+      title: "📻 Props & Other Stuff",
+      items: ["Hanging polaroid clothesline photo wall", "Vintage radio & record player setup", "Custom retro newspaper event program"]
+    }
+  },
+  "older-classic": {
+    characters: {
+      title: "🖤 Classic Elegance Styles",
+      items: ["Monochrome Minimalism Theme", "Crystal Luxury Dinner style", "Classic Tuxedo Lounge theme"]
+    },
+    cakes: {
+      title: "🎂 Customized Anniversary Cake",
+      items: ["Classic Black Velvet Rose Cake", "White fondant cake with silver ribbon", "Tuxedo & Gown styled 2-tier cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Formal Black & White dress code", "Classic silver-accented outfits", "Matching monogrammed silk scarves"]
+    },
+    stuff: {
+      title: "🕯️ Props & Other Stuff",
+      items: ["Tall crystal candelabras", "Silver-rimmed dinnerware setups", "Monochromatic rose flower arches"]
+    }
+  },
+  "festival-christmas-style": {
+    characters: {
+      title: "🎄 Christmas Cozy Styles",
+      items: ["Rustic Woodland Cabin theme", "Winter Wonderland White theme", "Santa's Red & Green Workshop"]
+    },
+    cakes: {
+      title: "🎂 Customized Christmas Cake",
+      items: ["Traditional Yule Log Chocolate Cake", "Gingerbread House display & cupcakes", "Snowy pinecone vanilla drip cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Cozy Matching Family Christmas Sweaters", "Elf & Santa hats for all guests", "Flannel plaid pajama dress code"]
+    },
+    stuff: {
+      title: "🎁 Props & Other Stuff",
+      items: ["Custom decorated Christmas tree arch", "Personalized stockings hanging station", "Fake snow spray & mistletoe photo spots"]
+    }
+  },
+  "festival-holi-style": {
+    characters: {
+      title: "🎨 Holi Splash Styles",
+      items: ["Bright Color Powder Rain theme", "Eco-friendly Organic Gulaal style", "Retro Bollywood Holi theme"]
+    },
+    cakes: {
+      title: "🎂 Customized Holi Cake",
+      items: ["Rainbow splash tie-dye cake", "Water balloon styled cupcakes", "Colorful splash frosting cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Pure White cotton kurtas/tees (ready for colors)", "Custom matching 'Bura Na Mano Holi Hai' tees", "Cool protective colorful sunglasses"]
+    },
+    stuff: {
+      title: "💦 Props & Other Stuff",
+      items: ["Water guns (Pichkaris) & balloon bucket stations", "Organic non-toxic herbal color platters", "Holi photo booth with splash backdrops"]
+    }
+  },
+  "festival-eid-style": {
+    characters: {
+      title: "🌙 Eid Mubarak Themes",
+      items: ["Crescent Moon & Star theme", "Royal Arabic Lantern style", "Elegant Emerald Moroccan theme"]
+    },
+    cakes: {
+      title: "🎂 Customized Eid Cake",
+      items: ["Crescent Moon & Stars 3D Cake", "Eid Mubarak calligraphy gold foil cake", "Moroccan tile pattern cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Shalwar Kameez & Sherwani guidelines", "Pastel matching family Eid apparel", "Traditional embroidered caps & hijabs"]
+    },
+    stuff: {
+      title: "🏮 Props & Other Stuff",
+      items: ["Arabic lanterns with LED candles", "Moroccan pouf seating corner", "Eid gift box favors display station"]
+    }
+  },
+  "retirement-party": {
+    characters: {
+      title: "🏖️ Select Party Vibe",
+      items: ["Island Travel Getaway vibe", "Country Club Golf lounge setup", "Vintage Retro Office Farewell"]
+    },
+    cakes: {
+      title: "🎂 Customized Retirement Cake",
+      items: ["Suitcase & Travel Ticket cake", "Golf green tiered cake with flags", "Monogrammed plaque fondant cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Relaxed resort-wear or Hawaiian shirts", "Smart-casual comfortable attire", "Custom 'Officially Retired' couple sash"]
+    },
+    stuff: {
+      title: "📝 Props & Other Stuff",
+      items: ["Wishing well box for notes and cards", "Milestone career timeline photo wall", "Retirement countdown clock prop"]
+    }
+  },
+  "get-together-party": {
+    characters: {
+      title: "🏡 Select Party Vibe",
+      items: ["Backyard lawn BBQ party", "Cozy board games & karaoke night", "Traditional family potluck picnic"]
+    },
+    cakes: {
+      title: "🎂 Customized Cake",
+      items: ["Monogram family crest cake", "Assorted cupcake towers", "Rustic woodland berry naked cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Cozy flannel patterns or matching tees", "Relaxed home/lounge wear code", "Matching custom family badge pins"]
+    },
+    stuff: {
+      title: "🎬 Props & Other Stuff",
+      items: ["Outdoor projector movie screen setup", "Bonfire fire pit logs & marshallows", "Cornhole lawn game sets"]
+    }
+  },
+  "farewell-party": {
+    characters: {
+      title: "✈️ Select Party Vibe",
+      items: ["New horizons travel theme", "Retro corporate cocktail theme", "Academic graduation style"]
+    },
+    cakes: {
+      title: "🎂 Customized Farewell Cake",
+      items: ["Globe 'Bon Voyage' cake", "Office desk & coffee mug styled cake", "Stacked books graduation fondant cake"]
+    },
+    clothes: {
+      title: "👕 Clothes & Outfits",
+      items: ["Semi-formal cocktail dresses & suits", "Customized 'We will miss you' sash/ribbons", "Matching corporate colors attire"]
+    },
+    stuff: {
+      title: "✍️ Props & Other Stuff",
+      items: ["Wishes & memory jar signing cards", "Large photo board for guest signatures", "Custom suitcase gift box drops"]
+    }
+  }
+};
+
+
+function getOptionImageURL(themeId, sectionKey, itemText) {
+  const text = (itemText || "").toLowerCase();
+  const theme = (themeId || "").toLowerCase();
+
+  if (sectionKey === "cakes") {
+    if (theme.includes("superhero")) return "https://images.unsplash.com/photo-1535141192574-5d4897c13636?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("safari")) return "https://images.unsplash.com/photo-1588195538326-c5b1e9f8011b?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("cars")) return "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("princess")) return "https://images.unsplash.com/photo-1558961309-dbdf71771497?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("fairy")) return "https://images.unsplash.com/photo-1464349172961-1ff4a1360a7e?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("unicorn")) return "https://images.unsplash.com/photo-1562440499-64c9a111f713?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("adult")) return "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("christmas")) return "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("eid")) return "https://images.unsplash.com/photo-1605270864936-a36c6418b760?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("holi")) return "https://images.unsplash.com/photo-1514517604298-cf80e0fb7f1e?auto=format&fit=crop&w=300&q=80";
+    return "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80";
+  }
+  if (sectionKey === "characters") {
+    if (text.includes("thor")) return "https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?auto=format&fit=crop&w=300&q=80";
+    if (text.includes("spider-man") || text.includes("spider")) return "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&q=80";
+    if (text.includes("superman")) return "https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?auto=format&fit=crop&w=300&q=80";
+    if (text.includes("batman")) return "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=300&q=80";
+    if (text.includes("iron man") || text.includes("arc reactor")) return "https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("safari")) return "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("cars")) return "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("princess")) return "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("fairy")) return "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("unicorn")) return "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("adult")) return "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("romantic") || theme.includes("newly")) return "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("travel")) return "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("glam")) return "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("jubilee") || theme.includes("old age marriage")) return "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("memory")) return "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("classic")) return "https://images.unsplash.com/photo-1478147427282-58a87a120781?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("christmas")) return "https://images.unsplash.com/photo-1543589077-47d8160677a0?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("holi")) return "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("eid")) return "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("retirement")) return "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("together") || theme.includes("get-together")) return "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("farewell")) return "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=300&q=80";
+    return "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=300&q=80";
+  }
+  if (sectionKey === "clothes") {
+    if (theme.includes("superhero") || text.includes("costumes") || text.includes("capes")) return "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("princess") || text.includes("gown") || text.includes("dress")) return "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("safari")) return "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("cars") || text.includes("racing")) return "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("christmas") || text.includes("sweater")) return "https://images.unsplash.com/photo-1607344645866-009c320b63e0?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("holi") || text.includes("white")) return "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("eid")) return "https://images.unsplash.com/photo-1584997187878-fd9e3907a0c4?auto=format&fit=crop&w=300&q=80";
+    if (theme.includes("anniversary") || theme.includes("romantic") || theme.includes("glam") || theme.includes("newly")) return "https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&w=300&q=80";
+    return "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=300&q=80";
+  }
+
+  // Props & stuff
+  if (text.includes("water") || text.includes("gun") || text.includes("pichkaris")) return "https://images.unsplash.com/photo-1580600301354-02c529a7ba65?auto=format&fit=crop&w=300&q=80";
+  if (text.includes("lantern") || text.includes("candle") || text.includes("lamps")) return "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=300&q=80";
+  if (text.includes("balloon")) return "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=300&q=80";
+  if (text.includes("flower") || text.includes("marigold") || text.includes("garland")) return "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=300&q=80";
+  if (text.includes("photo") || text.includes("booth") || text.includes("props")) return "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=300&q=80";
+  return "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=300&q=80";
+}
+
+function getThemeConsolidatedImageURL(themeId) {
+  const theme = (themeId || "").toLowerCase();
+  if (theme === "boy-superhero") return "assets/boy_superhero_setup.png";
+  if (theme === "girl-superhero") return "assets/superhero_group.jpg";
+  if (theme.includes("safari")) return "assets/safari_theme_setup.png";
+  if (theme.includes("cars")) return "assets/car_theme_custom.png";
+  if (theme.includes("princess")) return "assets/princess_theme_setup.png";
+  if (theme.includes("fairy")) return "assets/fairy_theme_setup.png";
+  if (theme.includes("unicorn")) return "assets/unicorn_theme_setup.png";
+  if (theme.includes("adult-birthday-boy")) return "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("adult-birthday-girl")) return "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("old-age-birthday")) return "assets/elder_birthday_setup.png";
+  if (theme.includes("romantic") || theme.includes("newly-romantic")) return "assets/romantic_anniversary_setup.png";
+  if (theme.includes("travel") || theme.includes("newly-travel")) return "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("glam") || theme.includes("newly-glam")) return "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("jubilee") || theme.includes("older-jubilee")) return "assets/golden_anniversary_setup.png";
+  if (theme.includes("memory") || theme.includes("older-memory")) return "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("classic") || theme.includes("older-classic")) return "https://images.unsplash.com/photo-1478147427282-58a87a120781?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("christmas")) return "https://images.unsplash.com/photo-1543589077-47d8160677a0?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("holi")) return "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("eid")) return "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("retirement")) return "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("together") || theme.includes("get-together")) return "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80";
+  if (theme.includes("farewell")) return "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80";
+  return "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80";
+}
+
+function renderThemeDetailsSections(themeId) {
+  const detailsCard = document.getElementById("themeDetailsSections");
+  const container = document.getElementById("themeDetailedOptionsContainer");
+  const descriptionEl = document.getElementById("themeDetailsDescription");
+  if (!detailsCard || !container) return;
+
+  const data = THEME_DETAILED_SECTIONS[themeId];
+  if (!data) {
+    detailsCard.style.display = "none";
+    return;
+  }
+
+  // Find theme details to set name and description
+  const theme = ALL_THEME_STYLES.find(t => t.id === themeId);
+  if (theme && descriptionEl) {
+    descriptionEl.innerHTML = `<strong>Theme Description:</strong> ${theme.desc}<br><br><strong>Design Setup:</strong> ${theme.decor || ""} ${theme.lighting || ""}`;
+  }
+
+  detailsCard.style.display = "flex";
+  container.innerHTML = "";
+
+  // Create and append one consolidated theme image
+  const imgWrapper = document.createElement("div");
+  imgWrapper.style.width = "100%";
+  imgWrapper.style.marginTop = "12px";
+  imgWrapper.style.borderRadius = "12px";
+  imgWrapper.style.overflow = "hidden";
+  imgWrapper.style.border = "1px solid rgba(255,255,255,0.1)";
+  imgWrapper.style.boxShadow = "0 8px 30px rgba(0,0,0,0.5)";
+
+  const img = document.createElement("img");
+  img.src = getThemeConsolidatedImageURL(themeId);
+  img.alt = theme ? theme.name : "Theme Image";
+  img.style.width = "100%";
+  img.style.height = "auto";
+  img.style.maxHeight = "450px";
+  img.style.objectFit = "cover";
+  img.style.display = "block";
+
+  imgWrapper.appendChild(img);
+  container.appendChild(imgWrapper);
 }
 
 function updateAirtelThemePlanningCards() {

@@ -5845,11 +5845,13 @@ body.theme-festival-holi {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 12px;
-  padding: 8px 12px;
+  padding: 10px 14px;
+  min-height: 48px;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .static-theme-item::before {
@@ -5905,18 +5907,24 @@ body.theme-festival-holi {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
 }
 
 .static-theme-name {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   color: #ffffff;
+  line-height: 1.3;
+  margin: 0;
 }
 
 .static-theme-balloons {
-  font-size: 9.5px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.5);
+  line-height: 1.3;
+  margin: 0;
 }
 
 .static-theme-item.active .static-theme-name {
@@ -7357,5 +7365,128 @@ body.fullscreen-mode .screen #panelView.active #panelContent .family-workspace {
   background: rgba(16, 185, 129, 0.12);
   border: 1px solid rgba(16, 185, 129, 0.25);
 }
+
+/* Custom theme detailed options styling */
+.theme-custom-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.theme-custom-section-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--gold-300);
+  border-bottom: 1px solid rgba(245, 199, 110, 0.15);
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.theme-custom-option-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+@media (min-width: 500px) {
+  .theme-custom-option-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .theme-custom-option-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.theme-custom-option-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  gap: 8px;
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.3;
+  padding: 0 0 10px 0;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 156px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.theme-custom-option-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(245, 199, 110, 0.2);
+}
+
+.theme-custom-option-item.selected {
+  background: rgba(245, 199, 110, 0.08);
+  border-color: var(--gold-300);
+  color: #fff;
+  font-weight: 600;
+}
+
+.theme-option-img-container {
+  width: 100%;
+  height: 80px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.theme-option-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.theme-custom-option-item:hover .theme-option-img {
+  transform: scale(1.05);
+}
+
+.theme-option-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 8px 0 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.theme-custom-checkbox {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: transparent;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.theme-custom-option-item.selected .theme-custom-checkbox {
+  border-color: var(--gold-300);
+  background: var(--gold-300);
+  color: #100006;
+}
+
 
 
