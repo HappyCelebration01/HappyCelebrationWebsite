@@ -7488,5 +7488,84 @@ body.fullscreen-mode .screen #panelView.active #panelContent .family-workspace {
   color: #100006;
 }
 
+/* Continuous family-tree connectors */
+.tree-canvas-wrapper.circular-mode {
+  min-height: 520px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  background:
+    linear-gradient(169deg, transparent 0 20%, rgba(112, 5, 37, 0.34) 20% 43%, transparent 43%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.13) 1px, transparent 1.4px),
+    #020304 !important;
+  background-size: auto, 22px 22px, auto !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card {
+  min-width: 122px !important;
+  min-height: 82px !important;
+  border-width: 5px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(145deg, rgba(44, 0, 12, 0.98), rgba(10, 0, 4, 0.99)) !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card.male {
+  border-color: #2f7ff0 !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card.female {
+  border-color: #ed4198 !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card .node-avatar {
+  width: 31px !important;
+  height: 31px !important;
+  border: 0 !important;
+  background: linear-gradient(135deg, #8ee7c7, #14946f) !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card.rel-grandparent .node-avatar {
+  color: #2b1700 !important;
+  background: linear-gradient(135deg, #ffe7a7, #dda13a) !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card .node-relation {
+  color: #ffd05f !important;
+  font-weight: 900 !important;
+}
+
+.tree-canvas-wrapper.circular-mode .spouse-connector-line,
+.tree-canvas-wrapper.circular-mode .tree-branch.has-children > .tree-node-card::after,
+.tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch::before,
+.tree-canvas-wrapper.circular-mode .tree-children-container > .tree-branch::after,
+.tree-canvas-wrapper.circular-mode .tree-node-card.circular:not(.rel-grandparent)::before {
+  display: none !important;
+}
+
+.tree-canvas {
+  position: relative;
+}
+
+.family-connector-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.family-connector-overlay line {
+  fill: none;
+  stroke: #ffd05f;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 3px rgba(255, 208, 95, 0.42));
+}
+
+.family-connector-overlay .connector-spouse {
+  stroke: #ffd05f;
+}
+
 
 

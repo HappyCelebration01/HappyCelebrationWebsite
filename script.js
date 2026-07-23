@@ -993,6 +993,7 @@ const panels = {
           }
           
           zoomLabel.textContent = `${Math.round(zoomLevel * 100)}%`;
+          requestAnimationFrame(drawContinuousTreeConnectors);
         }
 
         zoomInBtn.addEventListener("click", () => {
@@ -2771,6 +2772,138 @@ function doGet(e) {
           `;
         }
 
+        function drawContinuousTreeConnectors() {
+          treeCanvas.querySelector(".family-connector-overlay")?.remove();
+          const rootBranches = Array.from(treeCanvas.children).filter((element) =>
+            element.classList.contains("tree-branch")
+          );
+          if (!rootBranches.length) return;
+
+          const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          svg.classList.add("family-connector-overlay");
+          svg.setAttribute("aria-hidden", "true");
+          svg.setAttribute("width", String(treeCanvas.scrollWidth));
+          svg.setAttribute("height", String(treeCanvas.scrollHeight));
+          svg.setAttribute("viewBox", `0 0 ${treeCanvas.scrollWidth} ${treeCanvas.scrollHeight}`);
+
+          const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+          const arrowMarker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+          arrowMarker.setAttribute("id", "direct-child-arrow");
+          arrowMarker.setAttribute("viewBox", "0 0 10 10");
+          arrowMarker.setAttribute("refX", "8");
+          arrowMarker.setAttribute("refY", "5");
+          arrowMarker.setAttribute("markerWidth", "9");
+          arrowMarker.setAttribute("markerHeight", "9");
+          arrowMarker.setAttribute("orient", "auto");
+          arrowMarker.setAttribute("markerUnits", "userSpaceOnUse");
+          const arrowPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          arrowPath.setAttribute("d", "M 0 0 L 10 5 L 0 10 z");
+          arrowPath.setAttribute("fill", "#ffd05f");
+          arrowMarker.appendChild(arrowPath);
+          defs.appendChild(arrowMarker);
+          svg.appendChild(defs);
+
+          const canvasRect = treeCanvas.getBoundingClientRect();
+          const scale = zoomLevel || 1;
+          const box = (element) => {
+            const rect = element.getBoundingClientRect();
+            return {
+              left: (rect.left - canvasRect.left) / scale,
+              right: (rect.right - canvasRect.left) / scale,
+              top: (rect.top - canvasRect.top) / scale,
+              bottom: (rect.bottom - canvasRect.top) / scale,
+              centerX: (rect.left + rect.width / 2 - canvasRect.left) / scale
+            };
+          };
+
+          const addLine = (x1, y1, x2, y2, type = "family") => {
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", x1.toFixed(1));
+            line.setAttribute("y1", y1.toFixed(1));
+            line.setAttribute("x2", x2.toFixed(1));
+            line.setAttribute("y2", y2.toFixed(1));
+            line.classList.add(`connector-${type}`);
+            if (type === "direct-child") {
+              line.setAttribute("marker-end", "url(#direct-child-arrow)");
+            }
+            svg.appendChild(line);
+          };
+
+          const directHeader = (branch) =>
+            Array.from(branch.children).find((element) =>
+              element.classList.contains("tree-node-card")
+            );
+
+          const drawBranch = (branch) => {
+            const header = directHeader(branch);
+            if (!header) return;
+            let coupleAnchor = null;
+
+            if (header.classList.contains("couple")) {
+              const partners = Array.from(header.children).filter((element) =>
+                element.classList.contains("family-member-card")
+              );
+              if (partners.length === 2) {
+                const leftPartner = box(partners[0]);
+                const rightPartner = box(partners[1]);
+                const partnerY = (leftPartner.top + leftPartner.bottom) / 2;
+                addLine(leftPartner.right, partnerY, rightPartner.left, partnerY, "spouse");
+                coupleAnchor = {
+                  x: (leftPartner.right + rightPartner.left) / 2,
+                  y: partnerY
+                };
+              }
+            }
+
+            const childrenContainer = Array.from(branch.children).find((element) =>
+              element.classList.contains("tree-children-container")
+            );
+            if (!childrenContainer) return;
+
+            const childBranches = Array.from(childrenContainer.children).filter((element) =>
+              element.classList.contains("tree-branch")
+            );
+            const childHeaders = childBranches.map(directHeader).filter(Boolean);
+            if (!childHeaders.length) return;
+
+            const parentBox = box(header);
+            const childTargets = childHeaders.map((childHeader) => {
+              if (!childHeader.classList.contains("couple")) return childHeader;
+              const partnerCards = Array.from(childHeader.children).filter((element) =>
+                element.classList.contains("family-member-card")
+              );
+              return partnerCards.find((card) => {
+                const childMember = members.find((member) => member.id === card.dataset.id);
+                return Boolean(childMember?.parentId);
+              }) || partnerCards[0] || childHeader;
+            });
+            const childBoxes = childTargets.map(box);
+            const childTop = Math.min(...childBoxes.map((childBox) => childBox.top));
+            const parentX = coupleAnchor?.x ?? parentBox.centerX;
+            const parentY = coupleAnchor?.y ?? parentBox.bottom;
+            const jointY = parentBox.bottom + Math.max(18, (childTop - parentBox.bottom) / 2);
+            const leftX = Math.min(...childBoxes.map((childBox) => childBox.centerX));
+            const rightX = Math.max(...childBoxes.map((childBox) => childBox.centerX));
+
+            addLine(parentX, parentY, parentX, jointY);
+            addLine(leftX, jointY, rightX, jointY);
+            childBoxes.forEach((childBox) => {
+              addLine(
+                childBox.centerX,
+                jointY,
+                childBox.centerX,
+                childBox.top,
+                "direct-child"
+              );
+            });
+
+            childBranches.forEach(drawBranch);
+          };
+
+          rootBranches.forEach(drawBranch);
+          treeCanvas.prepend(svg);
+        }
+
         function renderTree() {
           if (!members.length) {
             treeCanvas.innerHTML = `
@@ -2783,6 +2916,7 @@ function doGet(e) {
           }
           const roots = buildTree(members);
           treeCanvas.innerHTML = roots.map(rootNode => renderNodeHTML(rootNode)).join("");
+          requestAnimationFrame(drawContinuousTreeConnectors);
         }
 
         // Initial renders
