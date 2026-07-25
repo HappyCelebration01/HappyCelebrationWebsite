@@ -2602,7 +2602,7 @@ select {
 
 .family-member-card .node-name {
   font-family: 'Poppins', Inter, system-ui, sans-serif !important;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600 !important;
   color: #ffffff !important;
   text-align: center;
