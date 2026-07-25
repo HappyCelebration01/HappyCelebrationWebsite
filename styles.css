@@ -3098,26 +3098,27 @@ select {
   padding: 0 8px;
 }
 
-.modal-child-row .remove-child-btn {
+.modal-child-row .add-grandchild-btn {
   width: 32px;
   height: 32px;
   display: grid;
   place-items: center;
-  background: rgba(255, 74, 90, 0.1);
-  border: 1px solid rgba(255, 74, 90, 0.4);
-  color: #ff9aa2;
-  border-radius: 6px;
+  background: rgba(245, 199, 110, 0.12);
+  border: 1px solid rgba(245, 199, 110, 0.55);
+  color: var(--gold-100);
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 800;
   transition: all 0.2s;
   flex-shrink: 0;
 }
 
-.modal-child-row .remove-child-btn:hover {
-  background: rgba(255, 74, 90, 0.25);
-  border-color: #ff4a5a;
-  color: #fff;
+.modal-child-row .add-grandchild-btn:hover {
+  background: var(--gold-300);
+  border-color: var(--gold-100);
+  color: #2a1700;
+  transform: scale(1.06);
 }
 
 /* Modal sub-navigation tabs */

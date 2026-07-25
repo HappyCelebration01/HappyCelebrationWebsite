@@ -1600,7 +1600,7 @@ const panels = {
               <button type="button" class="gender-btn female-btn ${femaleActive}">♀</button>
               <input type="hidden" class="child-gender-input" value="${gender}">
             </div>
-            <button type="button" class="remove-child-btn" aria-label="Remove Child">&times;</button>
+            <button type="button" class="add-grandchild-btn" aria-label="Add child to ${escapeHtml(name || "this member")}" title="Add this member's child">+</button>
           `;
           
           const maleBtn = childRow.querySelector(".male-btn");
@@ -1619,8 +1619,27 @@ const panels = {
             maleBtn.classList.remove("active");
           });
           
-          childRow.querySelector(".remove-child-btn").addEventListener("click", () => {
-            childRow.remove();
+          childRow.querySelector(".add-grandchild-btn").addEventListener("click", () => {
+            const childName = childRow.querySelector(".child-name-input").value.trim();
+            if (!childName) {
+              childRow.querySelector(".child-name-input").focus();
+              return;
+            }
+
+            const existingMemberIds = new Set(members.map(member => member.id));
+            modalForm.requestSubmit();
+
+            let childMemberId = rowId.startsWith("row_") ? "" : rowId;
+            if (!childMemberId) {
+              const newlyAddedChild = [...members].reverse().find(member =>
+                !existingMemberIds.has(member.id) && member.name === childName
+              );
+              childMemberId = newlyAddedChild?.id || "";
+            }
+
+            if (childMemberId) {
+              openModal("add-child", childMemberId);
+            }
           });
           
           modalChildrenList.appendChild(childRow);
