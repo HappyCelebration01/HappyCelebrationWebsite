@@ -2794,8 +2794,9 @@ function doGet(e) {
           }
         }
 
-        function renderCardHTML(m, isCoupleMember = false) {
+        function renderCardHTML(m, isCoupleMember = false, generation = 0) {
           const genderClass = m.gender.toLowerCase();
+          const generationClass = `generation-${Math.min(generation, 2)}`;
           
           // Connectors rely on .rel-grandparent to hide top drop-lines. Root cards get .rel-grandparent.
           const isRoot = !m.parentId;
@@ -2810,8 +2811,8 @@ function doGet(e) {
           const avatarSource = m.photoData || getGenderAvatarDataUri(m.gender);
 
           const cardClasses = isCoupleMember 
-            ? `family-member-card ${genderClass} ${relationClass}`
-            : `tree-node-card circular family-member-card ${genderClass} ${relationClass}`;
+            ? `family-member-card ${genderClass} ${relationClass} ${generationClass}`
+            : `tree-node-card circular family-member-card ${genderClass} ${relationClass} ${generationClass}`;
 
           return `
             <div class="${cardClasses}" data-id="${m.id}">
@@ -2827,7 +2828,7 @@ function doGet(e) {
           `;
         }
 
-        function renderCoupleCardHTML(node) {
+        function renderCoupleCardHTML(node, generation = 0) {
           let memberLeft, memberRight;
           const isRoot = !node.member1.parentId && !node.member2.parentId;
 
@@ -2849,20 +2850,20 @@ function doGet(e) {
           
           return `
             <div class="tree-node-card circular couple ${relationClass} ${descendantClass}" data-id="${node.member1.id}">
-              ${renderCardHTML(memberLeft, true)}
+              ${renderCardHTML(memberLeft, true, generation)}
               <div class="spouse-connector-line"></div>
-              ${renderCardHTML(memberRight, true)}
+              ${renderCardHTML(memberRight, true, generation)}
             </div>
           `;
         }
 
-        function renderNodeHTML(node) {
+        function renderNodeHTML(node, generation = 0) {
           const hasChildren = node.children && node.children.length > 0;
           let headerHTML = "";
           let branchClass = "";
           
           if (node.type === "couple") {
-            headerHTML = renderCoupleCardHTML(node);
+            headerHTML = renderCoupleCardHTML(node, generation);
             const isRoot = !node.member1.parentId && !node.member2.parentId;
             if (!isRoot) {
               if (node.member1.parentId) {
@@ -2872,7 +2873,7 @@ function doGet(e) {
               }
             }
           } else {
-            headerHTML = renderCardHTML(node.member);
+            headerHTML = renderCardHTML(node.member, false, generation);
           }
           
           return `
@@ -2880,7 +2881,7 @@ function doGet(e) {
               ${headerHTML}
               ${hasChildren ? `
                 <div class="tree-children-container">
-                  ${node.children.map(child => renderNodeHTML(child)).join("")}
+                  ${node.children.map(child => renderNodeHTML(child, generation + 1)).join("")}
                 </div>
               ` : ""}
             </div>

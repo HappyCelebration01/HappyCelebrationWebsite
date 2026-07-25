@@ -7701,5 +7701,46 @@ body.fullscreen-mode .screen #panelView.active #panelContent .family-workspace {
   }
 }
 
+/* Even, generation-aware family card borders */
+.tree-canvas-wrapper.circular-mode .family-member-card {
+  box-sizing: border-box;
+  border-style: solid !important;
+  border-width: 4px !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card.generation-0 {
+  border-width: 5px !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card.generation-0.male {
+  border-color: #1858c7 !important;
+  box-shadow: 0 0 13px rgba(24, 88, 199, 0.52), 0 5px 14px rgba(0, 0, 0, 0.55) !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card.generation-0.female {
+  border-color: #bd1f68 !important;
+  box-shadow: 0 0 13px rgba(189, 31, 104, 0.52), 0 5px 14px rgba(0, 0, 0, 0.55) !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card.generation-1.male {
+  border-color: #3477dd !important;
+  box-shadow: 0 0 10px rgba(52, 119, 221, 0.4), 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card.generation-1.female {
+  border-color: #d9468d !important;
+  box-shadow: 0 0 10px rgba(217, 70, 141, 0.4), 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card.generation-2.male {
+  border-color: #6b9ee9 !important;
+  box-shadow: 0 0 8px rgba(107, 158, 233, 0.3), 0 4px 10px rgba(0, 0, 0, 0.46) !important;
+}
+
+.tree-canvas-wrapper.circular-mode .family-member-card.generation-2.female {
+  border-color: #ec82b4 !important;
+  box-shadow: 0 0 8px rgba(236, 130, 180, 0.3), 0 4px 10px rgba(0, 0, 0, 0.46) !important;
+}
+
 
 
