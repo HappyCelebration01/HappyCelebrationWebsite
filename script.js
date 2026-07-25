@@ -888,6 +888,37 @@ const panels = {
           return updated;
         }).filter(Boolean);
 
+        // Older spouse records inherited the other spouse's parents. Spouses
+        // have independent ancestry, so remove only that duplicated legacy link.
+        const checkedCouples = new Set();
+        members.forEach(member => {
+          if (!member.parentId || !member.spouseId) return;
+          const spouse = members.find(candidate => candidate.id === member.spouseId);
+          if (!spouse || spouse.parentId !== member.parentId) return;
+
+          const coupleKey = [member.id, spouse.id].sort().join("|");
+          if (checkedCouples.has(coupleKey)) return;
+          checkedCouples.add(coupleKey);
+
+          let inheritedParentMember = null;
+          if (member.relation === "Spouse" && spouse.relation !== "Spouse") {
+            inheritedParentMember = member;
+          } else if (spouse.relation === "Spouse" && member.relation !== "Spouse") {
+            inheritedParentMember = spouse;
+          } else {
+            const memberChildren = members.filter(child => child.parentId === member.id).length;
+            const spouseChildren = members.filter(child => child.parentId === spouse.id).length;
+            if (memberChildren !== spouseChildren) {
+              inheritedParentMember = memberChildren < spouseChildren ? member : spouse;
+            }
+          }
+
+          if (inheritedParentMember) {
+            inheritedParentMember.parentId = "";
+            migrated = true;
+          }
+        });
+
         if (migrated) {
           localStorage.setItem("happyCelebrationFamily", JSON.stringify(members));
         }
@@ -1924,7 +1955,7 @@ const panels = {
                     gender: spouseGender,
                     relation: "Spouse",
                     spouseId: member.id,
-                    parentId: member.parentId,
+                    parentId: "",
                     birthDate: "",
                     anniversaryDate: member.anniversaryDate,
                     phone: "",
@@ -2071,7 +2102,7 @@ const panels = {
                 gender,
                 relation: "Spouse",
                 spouseId: targetMember.id,
-                parentId: targetMember.parentId,
+                parentId: "",
                 birthDate,
                 anniversaryDate,
                 phone,
