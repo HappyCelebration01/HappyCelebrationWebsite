@@ -1986,6 +1986,99 @@ select {
   letter-spacing: 0.5px;
 }
 
+.member-photo-field {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.member-photo-field > span {
+  color: var(--soft);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.member-photo-field > span small {
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.member-photo-picker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid rgba(245, 199, 110, 0.22);
+  border-radius: 14px;
+  background: rgba(10, 0, 3, 0.3);
+}
+
+.member-photo-preview {
+  width: 76px;
+  height: 76px;
+  flex: 0 0 76px;
+  border: 3px solid var(--gold-300);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.member-photo-preview.generated-avatar {
+  border-style: dashed;
+}
+
+.member-photo-actions {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.member-photo-upload {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.member-photo-remove {
+  padding: 0;
+  border: 0;
+  color: #fda4af;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.member-photo-actions small {
+  color: rgba(255, 240, 221, 0.58);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.node-avatar {
+  overflow: hidden;
+}
+
+.node-avatar-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+@media (max-width: 380px) {
+  .member-photo-picker {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -2499,8 +2592,10 @@ select {
   display: flex !important;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  overflow: hidden;
+  min-width: 0;
+  overflow: visible;
   position: static !important;
   transform: none !important;
 }
@@ -2512,10 +2607,11 @@ select {
   color: #ffffff !important;
   text-align: center;
   width: 100%;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  line-height: 1.2;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  overflow: visible;
+  line-height: 1.15;
 }
 
 .family-member-card .node-relation {

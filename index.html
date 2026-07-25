@@ -998,6 +998,19 @@
                   </div>
                 </label>
 
+                <div class="member-photo-field">
+                  <span>Profile Image <small>(optional)</small></span>
+                  <div class="member-photo-picker">
+                    <img id="modalPhotoPreview" class="member-photo-preview" alt="Member profile preview">
+                    <div class="member-photo-actions">
+                      <label class="secondary-action member-photo-upload" for="modalPhotoInput">Choose Image</label>
+                      <button class="member-photo-remove" id="modalPhotoRemoveBtn" type="button">Remove image</button>
+                      <small id="modalPhotoHint">A gender-based avatar will be used when no image is selected.</small>
+                    </div>
+                    <input id="modalPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+                  </div>
+                </div>
+
                 <!-- Date Fields (Inline Dropdowns) -->
                 <label id="modalBirthDateLabel" style="margin-top: 14px;">
                   <span>Birth Date</span>

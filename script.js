@@ -581,6 +581,10 @@ const panels = {
         const modalName = root.querySelector("#modalName");
         const modalMaleBtn = root.querySelector("#modalMaleBtn");
         const modalFemaleBtn = root.querySelector("#modalFemaleBtn");
+        const modalPhotoInput = root.querySelector("#modalPhotoInput");
+        const modalPhotoPreview = root.querySelector("#modalPhotoPreview");
+        const modalPhotoRemoveBtn = root.querySelector("#modalPhotoRemoveBtn");
+        const modalPhotoHint = root.querySelector("#modalPhotoHint");
         const modalRelationsSection = root.querySelector("#modalRelationsSection");
         const modalAddSpouseBtn = root.querySelector("#modalAddSpouseBtn");
         const modalAddChildBtn = root.querySelector("#modalAddChildBtn");
@@ -648,6 +652,7 @@ const panels = {
         const modalMainFields = root.querySelector("#modalMainFields");
 
         let relationshipSelectorTargetId = null;
+        let modalPhotoData = "";
 
         // Populate modal Days selects (1 to 31)
         [modalBirthDay, modalAnniversaryDay].forEach(daySel => {
@@ -1206,6 +1211,8 @@ const panels = {
           modalName.value = "";
           modalSpouseName.value = "";
           modalChildrenList.innerHTML = "";
+          modalPhotoInput.value = "";
+          modalPhotoData = "";
           
           setDropdownDate(modalBirthDay, modalBirthMonth, modalBirthYear, "");
           setDropdownDate(modalAnniversaryDay, modalAnniversaryMonth, modalAnniversaryYear, "");
@@ -1238,6 +1245,7 @@ const panels = {
             if (member) {
               modalTitle.textContent = `Edit ${member.name}`;
               modalName.value = member.name;
+              modalPhotoData = member.photoData || "";
               setGenderSelection(member.gender);
               
               modalRelationsSection.style.display = "none";
@@ -1371,6 +1379,7 @@ const panels = {
             modalDeleteBtn.style.display = "none";
           }
           
+          updateModalPhotoPreview();
           treeModal.style.display = "flex";
         }
 
@@ -1524,6 +1533,55 @@ const panels = {
             modalFemaleBtn.classList.add("active");
             modalMaleBtn.classList.remove("active");
           }
+          updateModalPhotoPreview();
+        }
+
+        function getGenderAvatarDataUri(gender) {
+          const isFemale = String(gender).toLowerCase() === "female";
+          const background = isFemale ? "#7a174c" : "#173f7a";
+          const accent = isFemale ? "#f472b6" : "#60a5fa";
+          const hair = isFemale
+            ? '<path d="M25 48c0-20 11-31 25-31s25 11 25 31v17H25V48Z" fill="#321522"/><circle cx="50" cy="43" r="19" fill="#f4c7a1"/><path d="M31 42c1-17 9-25 20-25 13 0 20 11 19 27-5-4-9-10-11-17-7 8-15 12-28 15Z" fill="#321522"/>'
+            : '<circle cx="50" cy="44" r="19" fill="#f4c7a1"/><path d="M31 38c2-14 9-21 20-21 12 0 19 8 19 22-7-5-13-8-20-9-5 4-11 7-19 8Z" fill="#2a1b18"/>';
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="50" fill="${background}"/><circle cx="50" cy="50" r="45" fill="${accent}" opacity=".18"/>${hair}<path d="M18 100c2-22 14-34 32-34s30 12 32 34H18Z" fill="${accent}"/><circle cx="43" cy="46" r="2" fill="#3a221c"/><circle cx="57" cy="46" r="2" fill="#3a221c"/><path d="M43 56c4 4 10 4 14 0" fill="none" stroke="#9a4f42" stroke-width="2.5" stroke-linecap="round"/></svg>`;
+          return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+        }
+
+        function selectedModalGender() {
+          return modalForm.querySelector('input[name="modalGender"]:checked')?.value || "Male";
+        }
+
+        function updateModalPhotoPreview() {
+          if (!modalPhotoPreview) return;
+          const hasPhoto = Boolean(modalPhotoData);
+          modalPhotoPreview.src = modalPhotoData || getGenderAvatarDataUri(selectedModalGender());
+          modalPhotoPreview.classList.toggle("generated-avatar", !hasPhoto);
+          modalPhotoRemoveBtn.hidden = !hasPhoto;
+          modalPhotoHint.textContent = hasPhoto
+            ? "Selected image will be resized and saved with this member."
+            : "A gender-based avatar will be used when no image is selected.";
+        }
+
+        function resizeMemberPhoto(file) {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onerror = () => reject(new Error("Unable to read this image."));
+            reader.onload = () => {
+              const image = new Image();
+              image.onerror = () => reject(new Error("This image format could not be opened."));
+              image.onload = () => {
+                const maxSize = 480;
+                const scale = Math.min(1, maxSize / Math.max(image.naturalWidth, image.naturalHeight));
+                const canvas = document.createElement("canvas");
+                canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+                canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+                canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL("image/jpeg", 0.82));
+              };
+              image.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+          });
         }
 
         function addChildRow(name = "", gender = "Male", id = "") {
@@ -1577,6 +1635,31 @@ const panels = {
         });
         modalFemaleBtn.addEventListener("click", () => {
           setGenderSelection("Female");
+        });
+
+        modalPhotoInput.addEventListener("change", async () => {
+          const file = modalPhotoInput.files?.[0];
+          if (!file) return;
+          if (!file.type.startsWith("image/")) {
+            modalPhotoHint.textContent = "Please choose a JPG, PNG, or WebP image.";
+            modalPhotoInput.value = "";
+            return;
+          }
+          try {
+            modalPhotoHint.textContent = "Preparing image…";
+            modalPhotoData = await resizeMemberPhoto(file);
+            updateModalPhotoPreview();
+          } catch (error) {
+            modalPhotoData = "";
+            updateModalPhotoPreview();
+            modalPhotoHint.textContent = error.message;
+          }
+        });
+
+        modalPhotoRemoveBtn.addEventListener("click", () => {
+          modalPhotoData = "";
+          modalPhotoInput.value = "";
+          updateModalPhotoPreview();
         });
 
         modalAddSpouseBtn.addEventListener("click", () => {
@@ -1710,6 +1793,8 @@ const panels = {
           const gender = modalForm.querySelector('input[name="modalGender"]:checked').value;
           const phone = modalPhone ? modalPhone.value.trim() : "";
           const email = modalEmail ? modalEmail.value.trim() : "";
+          const photoData = modalPhotoData;
+          const memberCountBeforeSave = members.length;
 
           if (action !== "add-parents" && !name) return;
 
@@ -1731,6 +1816,7 @@ const panels = {
               anniversaryDate,
               phone,
               email,
+              photoData,
               isDeceased,
               deathDate
             };
@@ -1798,6 +1884,7 @@ const panels = {
               
               member.phone = phone;
               member.email = email;
+              member.photoData = photoData;
               
               // Process spouse
               const spouseNameValue = modalSpouseName.value.trim();
@@ -2123,6 +2210,14 @@ const panels = {
                 deathDate: ""
               };
               members.push(childMember);
+            }
+          }
+
+          if (action !== "edit" && photoData) {
+            const newlyAddedMembers = members.slice(memberCountBeforeSave);
+            const photographedMember = [...newlyAddedMembers].reverse().find(member => member.name === name);
+            if (photographedMember) {
+              photographedMember.photoData = photoData;
             }
           }
 
@@ -2681,7 +2776,6 @@ function doGet(e) {
         }
 
         function renderCardHTML(m, isCoupleMember = false) {
-          const initials = m.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
           const genderClass = m.gender.toLowerCase();
           
           // Connectors rely on .rel-grandparent to hide top drop-lines. Root cards get .rel-grandparent.
@@ -2694,6 +2788,7 @@ function doGet(e) {
           
           const statusText = getMemberStatusText(m);
           const statusHTML = statusText ? `<span class="node-status">${escapeHtml(statusText)}</span>` : "";
+          const avatarSource = m.photoData || getGenderAvatarDataUri(m.gender);
 
           const cardClasses = isCoupleMember 
             ? `family-member-card ${genderClass} ${relationClass}`
@@ -2701,10 +2796,11 @@ function doGet(e) {
 
           return `
             <div class="${cardClasses}" data-id="${m.id}">
-              <div class="node-avatar">${initials}</div>
+              <div class="node-avatar">
+                <img class="node-avatar-image" src="${escapeHtml(avatarSource)}" alt="">
+              </div>
               <div class="node-details">
                 <span class="node-name" title="${escapeHtml(m.name)}">${escapeHtml(m.name)}</span>
-                <span class="node-relation">${escapeHtml(m.relation)}</span>
                 ${statusHTML}
               </div>
               ${addBtnHTML}
