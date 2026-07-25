@@ -1631,7 +1631,7 @@ const panels = {
               <button type="button" class="gender-btn female-btn ${femaleActive}">♀</button>
               <input type="hidden" class="child-gender-input" value="${gender}">
             </div>
-            <button type="button" class="add-grandchild-btn" aria-label="Add child to ${escapeHtml(name || "this member")}" title="Add this member's child">+</button>
+            <button type="button" class="add-grandchild-btn" aria-label="Add a relative to ${escapeHtml(name || "this member")}" title="Add spouse or child">+</button>
           `;
           
           const maleBtn = childRow.querySelector(".male-btn");
@@ -1669,7 +1669,7 @@ const panels = {
             }
 
             if (childMemberId) {
-              openModal("add-child", childMemberId);
+              openRelationshipSelector(childMemberId);
             }
           });
           
