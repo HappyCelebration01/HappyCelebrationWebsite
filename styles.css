@@ -6311,48 +6311,14 @@ body.theme-festival-holi {
     display: none !important;
   }
 
-  /* Stats Section grid layout */
-  .stats-section {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 20px !important;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(5px);
-    border-radius: 16px;
-    border: 1.5px solid rgba(245, 199, 110, 0.15);
-    max-width: 920px;
-    margin: 40px auto;
-    padding: 24px 30px !important;
+  .service-promises {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   /* Widescreen Columns override for services-grid */
   .services-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 16px !important;
-  }
-
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .stat-number {
-    font-family: 'Outfit', sans-serif;
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--gold-300);
-    line-height: 1;
-    text-shadow: 0 0 10px rgba(245, 199, 110, 0.3);
-  }
-
-  .stat-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
   }
 
   /* Panel layout centering and width limits */
@@ -7661,6 +7627,77 @@ body.fullscreen-mode .screen #panelView.active #panelContent .family-workspace {
 
 .family-connector-overlay .connector-spouse {
   stroke: #ffd05f;
+}
+
+/* Concrete service promises replace unverifiable statistics */
+.service-promises {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: min(100%, 920px);
+  margin: 32px auto;
+  padding: 16px !important;
+  border: 1px solid rgba(245, 199, 110, 0.18);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(6px);
+}
+
+.service-promise {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid rgba(245, 199, 110, 0.14);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+}
+
+.service-promise-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border: 1px solid rgba(245, 199, 110, 0.28);
+  border-radius: 12px;
+  color: var(--gold-100);
+  background: rgba(245, 199, 110, 0.09);
+  font-size: 19px;
+}
+
+.service-promise h3 {
+  margin: 0 0 4px;
+  color: var(--gold-100);
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.service-promise p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+@media (min-width: 900px) {
+  .service-promises {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .service-promise {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 520px) {
+  .service-promises {
+    grid-template-columns: 1fr;
+    padding: 12px !important;
+  }
 }
 
 
