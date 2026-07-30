@@ -572,6 +572,7 @@ const panels = {
 
         // Modal elements
         const treeModal = root.querySelector("#treeModal");
+        const modalCloseBtn = root.querySelector("#modalCloseBtn");
         const modalTitle = root.querySelector("#modalTitle");
         const modalForm = root.querySelector("#modalForm");
         const modalActionType = root.querySelector("#modalActionType");
@@ -1722,7 +1723,13 @@ const panels = {
           openModal("add-child", targetId);
         });
 
-        modalCancelBtn.addEventListener("click", closeModal);
+        if (modalCancelBtn) modalCancelBtn.addEventListener("click", closeModal);
+        if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeModal);
+        if (treeModal) {
+          treeModal.addEventListener("click", (e) => {
+            if (e.target === treeModal) closeModal();
+          });
+        }
 
 
 
